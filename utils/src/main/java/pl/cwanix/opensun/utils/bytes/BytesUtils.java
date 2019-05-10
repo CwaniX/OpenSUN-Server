@@ -2,6 +2,7 @@ package pl.cwanix.opensun.utils.bytes;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 public class BytesUtils {
 
@@ -33,5 +34,27 @@ public class BytesUtils {
 		}
 		
 		return sb.toString();
+	}
+	
+	public static byte[] mergeArrays(byte[]... arrays) {
+		int finalLength = 0;
+		for (byte[] array: arrays) {
+			finalLength += array.length;
+		}
+		
+		byte[] dest = null;
+		int destPos = 0;
+		
+		for (byte[] array : arrays) {
+			if (dest == null) {
+				dest = Arrays.copyOf(array, finalLength);
+				destPos = array.length;
+			} else {
+				System.arraycopy(array, 0, dest, destPos, array.length);
+				destPos += array.length;
+			}
+		}
+		
+		return dest;
 	}
 }

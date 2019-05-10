@@ -1,9 +1,9 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
 import lombok.Getter;
+import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
-import pl.cwanix.opensun.utils.packets.PacketUtils;
 
 @Getter
 public class S2CHelloPacket extends ServerPacket {
@@ -22,6 +22,6 @@ public class S2CHelloPacket extends ServerPacket {
 	}
 	
 	public byte[] toByteArray() {
-		return PacketUtils.mergeArrays(size, PACKET_ID.getValue(), serverInfo.getValue(), encKey.getValue());
+		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), serverInfo.getValue(), encKey.getValue());
 	}
 }

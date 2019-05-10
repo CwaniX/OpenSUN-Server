@@ -17,8 +17,6 @@ public class AuthServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		byte[] helloPacket = new S2CHelloPacket().toByteArray();
 		
-		//System.out.println(PacketUtils.byteArrayToHexString(helloPacket));
-		
 		ByteBuf buffer = ctx.alloc().buffer(helloPacket.length);
 	    buffer.writeBytes(helloPacket);
 	    
@@ -31,9 +29,11 @@ public class AuthServerHandler extends ChannelInboundHandlerAdapter {
     	packet.process(ctx);
     }
 
+    /**
+     * Close the connection when an exception is raised.
+     */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        // Close the connection when an exception is raised.
         cause.printStackTrace();
         ctx.close();
     }
