@@ -1,0 +1,8 @@
+*.project
+*.classpath
+auth-server/.settings/
+auth-server/target/
+game-server/.settings/
+game-server/target/
+.settings/
+utils/target/
