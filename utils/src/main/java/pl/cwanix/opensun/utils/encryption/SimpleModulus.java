@@ -1,12 +1,14 @@
 package pl.cwanix.opensun.utils.encryption;
 
 import java.io.FileInputStream;
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 @Slf4j
 public class SimpleModulus {
@@ -21,6 +23,7 @@ public class SimpleModulus {
 	private int[] modulus;
 	private int[] encryptionKey;
 	private int[] decryptionKey;
+	private int[] xorKey;
 	
 	public SimpleModulus() {
 		
@@ -35,9 +38,76 @@ public class SimpleModulus {
 			log.error(MARKER, "Error when loading key file: {}", keyPath);
 		}
 	}
+	
+	protected byte[] encryptBlock(byte[] lpDest, byte[] lpSource, int iSize) {
+		int[] dwEncBuffer =  new int[4];
+		byte[] dwEncValue = new byte[2];
+		
+		for (int i=0; i<4; i++)
+		{
+			dwEncBuffer[i] = ((xorKey[i] ^ lpSource[i] ^ dwEncValue) * encryptionKey[i]) % modulus[i];
+			dwEncValue = dwEncBuffer[i] & 0xFFFF;
+		}
+		
+		for (int i=0; i<3; i++)
+		{
+			dwEncBuffer[i] = dwEncBuffer[i] ^ xorKey[i] ^ ( dwEncBuffer[i+1] & 0xFFFF );
+		}
+		
+		int iBitPos = 0;
+
+		for (int i=0; i<ENCRYPTION_KEY_SIZE; i++)
+		{
+			iBitPos = addBits(lpDest, iBitPos, dwEncBuffer[i], 0, 16);
+			iBitPos = addBits(lpDest, iBitPos, dwEncBuffer[i], 22, 2);
+		}
+
+		byte btCheckSum = (byte) 0xF8;
+		
+		for (int i=0;i<ENCRYPTION_BLOCK_SIZE;i++)
+			btCheckSum ^= lpSource[i];
+
+		dwEncValue[1] = btCheckSum ; 
+		dwEncValue[0] = (byte) (btCheckSum ^ iSize ^ 0x3D); 
+
+		return addBits(lpDest, iBitPos, dwEncValue, 0, 16);
+	}
+	
+	protected byte[] addBits(byte[] lpDest, int iDestBitPos, byte[] lpSource, int iBitSourcePos, int iBitLen) {
+		int iSourceBufferBitLen = iBitLen + iBitSourcePos;
+		int iTempBufferLen = getByteOfBit(iSourceBufferBitLen - 1);
+		
+		iTempBufferLen += 1 - getByteOfBit(iBitSourcePos);
+		
+		byte[] pTempBuffer = new byte[iTempBufferLen + 1];
+		
+		for (int i = 0; i < iTempBufferLen; i++) {
+			pTempBuffer[i] = lpSource[i + getByteOfBit(iBitSourcePos)];
+		}
+		
+		if ( (iSourceBufferBitLen%8 ) != 0 )
+		{
+			pTempBuffer[iTempBufferLen - 1] &= 255 << (8 - (iSourceBufferBitLen%8));
+		}
+		
+		int iShiftLeft = (iBitSourcePos%8);
+		int iShiftRight = (iDestBitPos%8);
+		
+		pTempBuffer = shift(pTempBuffer, iTempBufferLen, -iShiftLeft);
+		pTempBuffer = shift(pTempBuffer, iTempBufferLen+1, iShiftRight);
+		
+		int iNewTempBufferLen = (( iShiftRight <= iShiftLeft )?0:1) + iTempBufferLen;
+		byte[] tempDist = Arrays.copyOfRange(lpDest, getByteOfBit(iDestBitPos), lpDest.length);
+		
+		for ( int i=0;i<iNewTempBufferLen;i++)
+		{
+			tempDist[i] |= pTempBuffer[i];
+		}
+		
+		return tempDist;
+	}
 
 	protected byte[] shift(byte[] buffer, int size, int shiftLength) {
-
 		if (shiftLength == 0) {
 			return buffer;
 		}
@@ -60,6 +130,10 @@ public class SimpleModulus {
 		}
 		
 		return buffer;
+	}
+	
+	private int getByteOfBit(int bit) {
+		return bit >>> 3;
 	}
 
 	private int[] loadKey(String keyPath, int keyIndex) throws Exception {
