@@ -5,21 +5,47 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
+import pl.cwanix.opensun.utils.encryption.SimpleModulus.Mode;
 
 public class SimpleModulusTest {
 	
-	private SimpleModulus simpleModulus = new SimpleModulus();
+	private SimpleModulus simpleModulusEnc = new SimpleModulus("./src/test/resources/encryption/Enc1.dat", Mode.ENCRYPT);
+	private SimpleModulus simpleModulusDec = new SimpleModulus("./src/test/resources/encryption/Dec1.dat", Mode.DECRYPT);
+	
+	@Test
+	public void shouldEncrypt() {
+		byte[] result = simpleModulusEnc.encrypt("Test123456".getBytes());
+		
+		System.out.println(BytesUtils.byteArrayToHexString(result));
+		
+		byte[] dec = simpleModulusDec.decrypt(result);
+		
+		System.out.println(BytesUtils.byteArrayToHexString(dec));
+	}
+	
+	@Test
+	public void shouldEncryptBlock() {
+		byte[] source = { 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, (byte) 0x80 };
+		byte[] dest = new byte[11];
+		int result = simpleModulusEnc.encryptBlock(dest, source, 8);
+		
+		byte[] decd = new byte[8];
+		int dec = simpleModulusDec.decryptBlock(decd, dest);
+		
+		System.out.println(BytesUtils.byteArrayToHexString(decd));
+	}
 
 	@DisplayName("Shift")
 	@ParameterizedTest(name = "Shifting data: {0}, by: {1} should be: {2}")
 	@MethodSource("shiftDataSource")
 	public void shouldShiftData(byte[] input, int shiftLength, byte[] expected) {
-		byte[] result = simpleModulus.shift(input, input.length, shiftLength);
+		byte[] result = simpleModulusEnc.shift(input, input.length, shiftLength);
 		
 		assertArrayEquals(expected, result);
 	}
@@ -28,9 +54,9 @@ public class SimpleModulusTest {
 	@ParameterizedTest(name = "Add bits: {5}")
 	@MethodSource("addBitsDataSource")
 	public void shouldAddBits(byte[] output, int destBitPos, byte[] input, int sourceBitPos, int bitLength, byte[] expected) {
-		byte[] result = simpleModulus.addBits(output, destBitPos, input, sourceBitPos, bitLength);
+		simpleModulusEnc.addBits(output, destBitPos, input, sourceBitPos, bitLength);
 		
-		assertArrayEquals(expected, result);
+		assertArrayEquals(expected, output);
 	}
 	
 	@SuppressWarnings("unused")
