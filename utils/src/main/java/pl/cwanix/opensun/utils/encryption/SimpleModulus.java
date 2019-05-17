@@ -101,7 +101,7 @@ public class SimpleModulus {
 			iBitPos = addBits(dest, iBitPos, encBufferBits, 22, 2);
 		}
 
-		byte btCheckSum = (byte) 0xF8;
+		byte btCheckSum = (byte) 0xf8;
 
 		for (int i = 0; i < ENCRYPTION_BLOCK_SIZE; i++) {
 			btCheckSum ^= source[i];
@@ -110,47 +110,46 @@ public class SimpleModulus {
 		byte[] checkSum = new byte[2];
 
 		checkSum[1] = btCheckSum;
-		checkSum[0] = (byte) (btCheckSum ^ size ^ 0x3D);
+		checkSum[0] = (byte) (btCheckSum ^ size ^ 0x3d);
 
 		return addBits(dest, iBitPos, checkSum, 0, 16);
 	}
-	
+
 	public byte[] decrypt(byte[] src) {
-        int iEnc = src.length * 8 / 11;
-        byte[] dest = new byte[iEnc];
+		int iEnc = src.length * 8 / 11;
+		byte[] dest = new byte[iEnc];
 
-        int decLen = 0;
-        int destPos = 0;
-        int iResult = 0;
-        byte[] tempDest = new byte[8];
-        byte[] tempSrc = new byte[11];
+		int decLen = 0;
+		int destPos = 0;
+		int iResult = 0;
+		byte[] tempDest = new byte[8];
+		byte[] tempSrc = new byte[11];
 
-        while (decLen < src.length)
-        {
-            //Array.Copy(src, decLen, tempSrc, 0, 11);
-            
-            for (int i = 0; i < 11; i++) {
-            	src[decLen + i] = tempSrc[i];
-            }
+		while (decLen < src.length) {
+			// Array.Copy(src, decLen, tempSrc, 0, 11);
 
-            int tempResult = decryptBlock(tempDest, tempSrc);
+			for (int i = 0; i < 11; i++) {
+				src[decLen + i] = tempSrc[i];
+			}
 
-            //Array.Copy(tempDest, 0, dest, destPos, 8);
-            
-            for (int i = 0; i < 8; i++) {
-            	tempDest[i] = dest[destPos + i];
-            }
+			int tempResult = decryptBlock(tempDest, tempSrc);
 
-            if (iResult < 0)
-            	System.out.println("Error decoding buffer");
-                //throw new Exception("Error decoding buffer");
+			// Array.Copy(tempDest, 0, dest, destPos, 8);
 
-            iResult += tempResult;
-            decLen += 11;
-            destPos += 8;
-        }
+			for (int i = 0; i < 8; i++) {
+				tempDest[i] = dest[destPos + i];
+			}
 
-        return dest;
+			if (iResult < 0)
+				System.out.println("Error decoding buffer");
+			// throw new Exception("Error decoding buffer");
+
+			iResult += tempResult;
+			decLen += 11;
+			destPos += 8;
+		}
+
+		return dest;
 	}
 
 	protected int decryptBlock(byte[] dest, byte[] src) {
@@ -177,12 +176,12 @@ public class SimpleModulus {
 		for (int i = 0; i < 4; i++) {
 			Temp1 = ((decryptionKey[i] * decBuffer[i]) % modulus[i]) ^ xorKey[i] ^ Temp;
 			Temp = (short) (decBuffer[i] & 0xFFFF);
-			
+
 			byte[] temp1Bytes = BytesUtils.intToByteArray(Temp1);
 			for (int x = 0; x < 2; x++) {
 				dest[x + i * 2] = temp1Bytes[x];
 			}
-			
+
 			// Array.Copy(BitConverter.GetBytes(Temp1), 0, dest, i * 2, 2);
 		}
 
@@ -219,8 +218,8 @@ public class SimpleModulus {
 		int iShiftLeft = (sourcePosition % 8);
 		int iShiftRight = (destPosition % 8);
 
-		pTempBuffer = shift(pTempBuffer, iTempBufferLen, -iShiftLeft);
-		pTempBuffer = shift(pTempBuffer, iTempBufferLen + 1, iShiftRight);
+		shift(pTempBuffer, iTempBufferLen, -iShiftLeft);
+		shift(pTempBuffer, iTempBufferLen + 1, iShiftRight);
 
 		int iNewTempBufferLen = ((iShiftRight <= iShiftLeft) ? 0 : 1) + iTempBufferLen;
 
@@ -232,11 +231,7 @@ public class SimpleModulus {
 		return destPosition + sourceLength;
 	}
 
-	protected byte[] shift(byte[] buffer, int size, int shiftLength) {
-		if (shiftLength == 0) {
-			return buffer;
-		}
-
+	protected void shift(byte[] buffer, int size, int shiftLength) {
 		if (shiftLength > 0) {
 			for (int i = size - 1; i > 0; i--) {
 				buffer[i] = (byte) ((buffer[i - 1] << (ENCRYPTION_BLOCK_SIZE - shiftLength))
@@ -244,7 +239,7 @@ public class SimpleModulus {
 			}
 
 			buffer[0] >>>= shiftLength;
-		} else {
+		} else if (shiftLength < 0) {
 			shiftLength = -shiftLength;
 
 			for (int i = 0; i < size - 1; i++) {
@@ -254,14 +249,20 @@ public class SimpleModulus {
 
 			buffer[size - 1] <<= shiftLength;
 		}
-
-		return buffer;
 	}
 
 	private int getByteOfBit(int bit) {
 		return bit >>> 3;
 	}
 
+	/**
+	 * Loading selected key from file
+	 * 
+	 * @param keyPath
+	 * @param keyIndex
+	 * @return
+	 * @throws Exception
+	 */
 	private int[] loadKey(String keyPath, int keyIndex) throws Exception {
 		try (FileInputStream in = new FileInputStream(keyPath)) {
 			byte[] key = IOUtils.toByteArray(in);

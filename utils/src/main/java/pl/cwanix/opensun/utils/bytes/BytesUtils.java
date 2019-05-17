@@ -4,7 +4,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class BytesUtils {
+	
+	private BytesUtils() {
+		
+	}
 
 	public static void strncpy(byte[] input, byte[] output, int start) {
 		for (int i = 0; i < input.length; i++) {
@@ -34,6 +40,19 @@ public class BytesUtils {
 		}
 		
 		return sb.toString();
+	}
+	
+	public static byte[] hexStringToByteArray(String input) {
+		input = StringUtils.replace(input, "0x", "");
+		input = StringUtils.replace(input, " ", "");
+		
+		int len = input.length();
+		byte[] data = new byte[len / 2];
+		for (int i = 0; i < len; i += 2) {
+			data[i / 2] = (byte) ((Character.digit(input.charAt(i), 16) << 4) + Character.digit(input.charAt(i + 1), 16));
+		}
+		
+		return data;
 	}
 	
 	public static byte[] mergeArrays(byte[]... arrays) {
