@@ -32,6 +32,12 @@ public class BytesUtils {
 		return buffer.array();
 	}
 	
+	/**
+	 * Converts byte array to string.
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public static String byteArrayToHexString(byte[] input) {
 		StringBuilder sb = new StringBuilder();
 		
@@ -42,6 +48,12 @@ public class BytesUtils {
 		return sb.toString();
 	}
 	
+	/**
+	 * Converts string containig hexadecimal data to byte array.
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public static byte[] hexStringToByteArray(String input) {
 		input = StringUtils.replace(input, "0x", "");
 		input = StringUtils.replace(input, " ", "");
@@ -55,6 +67,12 @@ public class BytesUtils {
 		return data;
 	}
 	
+	/**
+	 * Merges several arrays into one.
+	 * 
+	 * @param arrays
+	 * @return
+	 */
 	public static byte[] mergeArrays(byte[]... arrays) {
 		int finalLength = 0;
 		for (byte[] array: arrays) {

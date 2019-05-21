@@ -6,6 +6,12 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 public class TEA {
 	
+	private static final int DELTA = 0x9E3779B9;
+	
+	private TEA() {
+		
+	}
+	
 	public static byte[] passwordEncode(String passInput, byte[] keyInput) {
 		int keyValue = BytesUtils.byteArrayToInt(keyInput);
 		byte[] passMask = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -44,31 +50,29 @@ public class TEA {
 		return result;
 	}
 	
-	public static byte[] encode(byte[] src, byte[] key) {
+	protected static byte[] encode(byte[] src, byte[] key) {
 		int v0 = BytesUtils.byteArrayToInt(Arrays.copyOfRange(src, 0, 4));
 		int v1 = BytesUtils.byteArrayToInt(Arrays.copyOfRange(src, 4, 8));
-		int delta = 0x9e3779b9;
 		int sum = 0;
 		
 		for (int i = 0; i < 32; i++) {
-			sum += delta;
-			v0 += ((v1 << 4) + key[0]) ^ (v1 + sum) ^ ((v1 >>> 5) + key[1]);
-			v1 += ((v0 << 4) + key[2]) ^ (v0 + sum) ^ ((v0 >>> 5) + key[3]);
+			sum += DELTA;
+			v0 += ((v1 << 4) + (key[0] & 0xFF)) ^ (v1 + sum) ^ ((v1 >>> 5) + (key[1] & 0xFF));
+			v1 += ((v0 << 4) + (key[2] & 0xFF)) ^ (v0 + sum) ^ ((v0 >>> 5) + (key[3] & 0xFF));
 		}
 		
 		return BytesUtils.intToByteArray(v0, v1);
 	}
 	
-	public static byte[] decode(byte[] src, byte[] key) {
+	protected static byte[] decode(byte[] src, byte[] key) {
 		int v0 = BytesUtils.byteArrayToInt(Arrays.copyOfRange(src, 0, 4));
 		int v1 = BytesUtils.byteArrayToInt(Arrays.copyOfRange(src, 4, 8));
-		int delta = 0x9e3779b9;
-		int sum = 0xc6ef3720;
+		int sum = 0xC6EF3720;
 		
 		for (int i = 0; i < 32; i++) {
-			v1 -= ((v0 << 4) + key[2]) ^ (v0 + sum) ^ ((v0 >>> 5) + key[3]);
-			v0 -= ((v1 << 4) + key[0]) ^ (v1 + sum) ^ ((v1 >>> 5) + key[1]);
-			sum -= delta;
+			v1 -= ((v0 << 4) + (key[2] & 0xFF)) ^ (v0 + sum) ^ ((v0 >>> 5) + (key[3] & 0xFF));
+			v0 -= ((v1 << 4) + (key[0] & 0xFF)) ^ (v1 + sum) ^ ((v1 >>> 5) + (key[1] & 0xFF));
+			sum -= DELTA;
 		}
 		
 		return BytesUtils.intToByteArray(v0, v1);

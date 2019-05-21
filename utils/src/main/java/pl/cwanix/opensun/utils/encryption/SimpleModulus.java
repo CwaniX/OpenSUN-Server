@@ -1,6 +1,8 @@
 package pl.cwanix.opensun.utils.encryption;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -11,6 +13,7 @@ import org.slf4j.MarkerFactory;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
+import pl.cwanix.opensun.utils.encryption.exceptions.InvalidKeyException;
 
 @Slf4j
 public class SimpleModulus {
@@ -41,8 +44,8 @@ public class SimpleModulus {
 			} else {
 				decryptionKey = loadKey(keyPath, 2);
 			}
-		} catch (Exception e) {
-			log.error(MARKER, "Error when loading key file: {}", keyPath, e);
+		} catch (InvalidKeyException e) {
+			log.error(MARKER, "Error when loading key: {}", keyPath, e);
 		}
 	}
 
@@ -85,7 +88,7 @@ public class SimpleModulus {
 		ByteBuffer encSource = ByteBuffer.wrap(source).order(ByteOrder.LITTLE_ENDIAN);
 
 		for (int i = 0; i < 4; i++) {
-			encBuffer[i] = ((xorKey[i] ^ encSource.getShort(i * 2) ^ encValue) * encryptionKey[i]) % modulus[i];
+			encBuffer[i] = (xorKey[i] ^ encSource.getShort(i * 2) ^ encValue) * encryptionKey[i] % modulus[i];
 			encValue = encBuffer[i] & 0xFFFF;
 		}
 
@@ -101,7 +104,7 @@ public class SimpleModulus {
 			iBitPos = addBits(dest, iBitPos, encBufferBits, 22, 2);
 		}
 
-		byte btCheckSum = (byte) 0xf8;
+		byte btCheckSum = (byte) 0xF8;
 
 		for (int i = 0; i < ENCRYPTION_BLOCK_SIZE; i++) {
 			btCheckSum ^= source[i];
@@ -110,7 +113,7 @@ public class SimpleModulus {
 		byte[] checkSum = new byte[2];
 
 		checkSum[1] = btCheckSum;
-		checkSum[0] = (byte) (btCheckSum ^ size ^ 0x3d);
+		checkSum[0] = (byte) (btCheckSum ^ size ^ 0x3D);
 
 		return addBits(dest, iBitPos, checkSum, 0, 16);
 	}
@@ -231,6 +234,13 @@ public class SimpleModulus {
 		return destPosition + sourceLength;
 	}
 
+	/**
+	 * Shifting data by given length.
+	 * 
+	 * @param buffer
+	 * @param size
+	 * @param shiftLength
+	 */
 	protected void shift(byte[] buffer, int size, int shiftLength) {
 		if (shiftLength > 0) {
 			for (int i = size - 1; i > 0; i--) {
@@ -256,30 +266,41 @@ public class SimpleModulus {
 	}
 
 	/**
-	 * Loading selected key from file
+	 * Loading selected key from file.
 	 * 
 	 * @param keyPath
 	 * @param keyIndex
 	 * @return
 	 * @throws Exception
 	 */
-	private int[] loadKey(String keyPath, int keyIndex) throws Exception {
+	private int[] loadKey(String keyPath, int keyIndex) throws InvalidKeyException {
 		try (FileInputStream in = new FileInputStream(keyPath)) {
 			byte[] key = IOUtils.toByteArray(in);
 			int[] result = new int[ENCRYPTION_KEY_SIZE];
+			int keyNumber = (keyIndex - 1) * 16;
 
 			if (!isValidKeyHeader(key)) {
-				throw new Exception("Wrong key data");
+				throw new InvalidKeyException("Wrong key header");
 			}
 
 			for (int i = 0; i < ENCRYPTION_KEY_SIZE; i++) {
-				result[i] = SAVE_LOAD_XOR[i] ^ key[i + 5 + (keyIndex - 1) * 4];
+				result[i] = SAVE_LOAD_XOR[i] ^ BytesUtils.byteArrayToInt(Arrays.copyOfRange(key, i * 4 + 6 + keyNumber, i * 4 + 10 + keyNumber));
 			}
 
 			return result;
+		} catch (FileNotFoundException e) {
+			throw new InvalidKeyException("File not found", e);
+		} catch (IOException e) {
+			throw new InvalidKeyException("Unable to read key data", e);
 		}
 	}
 
+	/**
+	 * Checks if the specified key has the correct header.
+	 * 
+	 * @param key
+	 * @return
+	 */
 	private boolean isValidKeyHeader(byte[] key) {
 		return key[0] == FILE_HEADER[0] && key[1] == FILE_HEADER[1];
 	}

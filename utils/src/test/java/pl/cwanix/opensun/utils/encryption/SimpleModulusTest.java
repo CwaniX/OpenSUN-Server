@@ -24,17 +24,18 @@ public class SimpleModulusTest {
 
 	@Test
 	public void shouldEncrypt() {
-		/*
-		 * System.out.println(BytesUtils.byteArrayToHexString("Test123456".getBytes()));
-		 * 
-		 * byte[] result = simpleModulusEnc.encrypt("Test123456".getBytes());
-		 * 
-		 * System.out.println(BytesUtils.byteArrayToHexString(result));
-		 * 
-		 * byte[] dec = simpleModulusDec.decrypt(result);
-		 * 
-		 * System.out.println(BytesUtils.byteArrayToHexString(dec));
-		 */
+		byte[] source = new byte[] { 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x10, 0x10, 0x10 };
+		byte[] out = new byte[11];
+		
+		simpleModulusEnc.encryptBlock(out, source, 8);
+		
+		System.out.println(BytesUtils.byteArrayToHexString(out));
+		
+		byte[] out2 = new byte[8];
+		
+		simpleModulusDec.decryptBlock(out2, out);
+		
+		System.out.println(BytesUtils.byteArrayToHexString(out2));
 	}
 
 	@DisplayName("Encrypt block")
@@ -47,7 +48,26 @@ public class SimpleModulusTest {
 		
 		simpleModulusEnc.encryptBlock(dest, source, size);
 		
-		System.out.println(BytesUtils.byteArrayToHexString(dest));
+		/*System.out.println("IN: " + BytesUtils.byteArrayToHexString(dest));
+		
+		byte[] dest2 = new byte[8];
+		
+		simpleModulusDec.decryptBlock(dest2, dest);
+		
+		System.out.println("OUT: " + BytesUtils.byteArrayToHexString(dest2));*/
+
+		assertArrayEquals(expected, dest);
+	}
+	
+	@DisplayName("Decrypt block")
+	@ParameterizedTest(name = "Decrypting block of data: {0}, result should be: {1}")
+	@CsvFileSource(resources = "/encryption/SimpleModulusDecryptBlock.csv", delimiter = ';')
+	public void shouldDecryptBlock(String sourceString, String expectedString) {
+		byte[] source = BytesUtils.hexStringToByteArray(sourceString);
+		byte[] expected = BytesUtils.hexStringToByteArray(expectedString);
+		byte[] dest = new byte[8];
+		
+		simpleModulusDec.decryptBlock(dest, source);
 
 		assertArrayEquals(expected, dest);
 	}
