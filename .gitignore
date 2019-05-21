@@ -6,3 +6,4 @@ game-server/.settings/
 game-server/target/
 .settings/
 utils/target/
+agent-server/target/
