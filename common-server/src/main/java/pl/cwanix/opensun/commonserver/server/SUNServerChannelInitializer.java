@@ -2,7 +2,6 @@ package pl.cwanix.opensun.commonserver.server;
 
 import org.springframework.stereotype.Component;
 
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.bytes.ByteArrayDecoder;
@@ -17,7 +16,7 @@ import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 public class SUNServerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final EventExecutorGroup eventExecutorGroup;
-	private final ChannelHandler serverHandler;
+	private final SUNServerChannelHandlerFactory channelFactory;
 	private final PacketDecoder packetDecoder;
 	private final PacketEncoder packetEncoder;
 
@@ -29,6 +28,6 @@ public class SUNServerChannelInitializer extends ChannelInitializer<SocketChanne
 		socketChannel.pipeline().addLast(new ByteArrayEncoder());
 		socketChannel.pipeline().addLast(packetEncoder);
 		
-		socketChannel.pipeline().addLast(eventExecutorGroup, serverHandler);
+		socketChannel.pipeline().addLast(eventExecutorGroup, channelFactory.getChannelHandler());
 	}
 }

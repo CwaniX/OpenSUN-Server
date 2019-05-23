@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +12,9 @@ import pl.cwanix.opensun.authserver.packet.c2s.C2SAskAuthPacket;
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskSrvListPacket;
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskSrvSelect;
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskVerifyPacket;
+import pl.cwanix.opensun.authserver.server.AuthServerChannelHandlerFactory;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Configuration
@@ -26,5 +29,11 @@ public class AuthServerConfiguration {
 		definitions.put(C2SAskSrvSelect.PACKET_ID, C2SAskSrvSelect::new);
 		
 		return definitions;
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public SUNServerChannelHandlerFactory sunServerChannelHandlerFactory() {
+		return new AuthServerChannelHandlerFactory();
 	}
 }

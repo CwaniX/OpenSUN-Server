@@ -15,8 +15,8 @@ import io.netty.util.concurrent.EventExecutorGroup;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 import pl.cwanix.opensun.commonserver.server.SUNServer;
+import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelInitializer;
-import pl.cwanix.opensun.commonserver.server.SUNServerHandler;
 import pl.cwanix.opensun.commonserver.server.messages.PacketDecoder;
 import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
@@ -45,14 +45,8 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public SUNServerHandler sunServerChannelHandler() {
-		return new SUNServerHandler();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public ChannelInitializer<SocketChannel> sunServerChannelInitializer(EventExecutorGroup eventExecutorGroup, SUNServerHandler sunServerChannelHandler, PacketDecoder packetDecoder, PacketEncoder packetEncoder) {
-		return new SUNServerChannelInitializer(eventExecutorGroup, sunServerChannelHandler, packetDecoder, packetEncoder);
+	public ChannelInitializer<SocketChannel> sunServerChannelInitializer(EventExecutorGroup eventExecutorGroup, SUNServerChannelHandlerFactory sunServerChannelHandlerFactory, PacketDecoder packetDecoder, PacketEncoder packetEncoder) {
+		return new SUNServerChannelInitializer(eventExecutorGroup, sunServerChannelHandlerFactory, packetDecoder, packetEncoder);
 	}
 	
 	@Bean
