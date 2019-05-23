@@ -2,6 +2,7 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsSrvListPacket;
+import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 public class C2SAskSrvListPacket extends ClientPacket {

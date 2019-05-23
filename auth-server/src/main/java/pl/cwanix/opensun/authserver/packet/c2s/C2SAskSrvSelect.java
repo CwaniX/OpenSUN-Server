@@ -3,6 +3,7 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsSrvSelect;
+import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
