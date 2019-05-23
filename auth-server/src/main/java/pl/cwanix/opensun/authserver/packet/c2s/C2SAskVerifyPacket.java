@@ -5,6 +5,7 @@ import java.util.Arrays;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsVerifyPacket;
+import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 

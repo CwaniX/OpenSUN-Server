@@ -1,6 +1,7 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
 import lombok.Getter;
+import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
