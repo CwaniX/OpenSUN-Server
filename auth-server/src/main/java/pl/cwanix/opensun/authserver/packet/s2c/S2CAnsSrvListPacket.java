@@ -14,14 +14,10 @@ public class S2CAnsSrvListPacket extends ServerPacket {
 	private byte[] value;
 	
 	public S2CAnsSrvListPacket() {
-		this.size = new byte[] { 0x27, 0x00 };
+		this.size = new byte[] { 0x25, 0x00 };
 		this.serversCount = new FixedLengthField(FixedLengthField.BYTE, (byte) 0x01);
-		this.serverName = new FixedLengthField(32, new byte[] { 0x47, 0x6C, 0x6F, 0x62, 0x61, 0x6C });
-		this.value = new byte[] { 0x00, 0x01, 0x00, 0x01,
-				00, 00, 51, 18, 01, 67, 104,
-				97, 110, 110, 101, 108, 32, 49, 00, 00, 00, 00, 00, 00, 00, 00, 00,
-				00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01,
-				01, 01, 01};
+		this.serverName = new FixedLengthField(32, new byte[] { (byte) 0xc2, (byte) 0xd2, (byte) 0xca, (byte) 0xc0, (byte) 0xd5, (byte) 0xbd, (byte) 0xbb, (byte) 0xea });
+		this.value = new byte[] { 0x00, 0x01 };
 	}
 
 	public byte[] toByteArray() {

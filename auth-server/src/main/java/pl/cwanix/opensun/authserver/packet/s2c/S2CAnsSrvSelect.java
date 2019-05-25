@@ -14,20 +14,20 @@ public class S2CAnsSrvSelect extends ServerPacket {
 	private FixedLengthField userId;
 	private FixedLengthField unknownString;
 	private FixedLengthField serverIp;
-	private FixedLengthField serverPort;
+	//private FixedLengthField serverPort;
 	private FixedLengthField unknownValue;
 
 	public S2CAnsSrvSelect() {
-		this.size = new byte[] { 0x03, 0x00 };
-		this.userId = new FixedLengthField(FixedLengthField.DWORD, new byte[] { 0x00, 0x00, 0x00, 0x00 });
-		this.unknownString = new FixedLengthField(32, new byte[] { 0x00 });
-		this.serverIp = new FixedLengthField(32, new byte[] { 0x31, 0x37, 0x34, 0x2e, 0x33, 0x35, 0x2e, 0x31, 0x32, 0x32, 0x2e, 0x31, 0x35, 0x39 });
-		this.serverPort = new FixedLengthField(FixedLengthField.DWORD, new byte[] { 0x22, 0x4e, 0x00, 0x00 });
-		this.unknownValue = new FixedLengthField(10, new byte[] { 0x00, 0x69, 0x75, 0x6b, 0x35, 0x65, 0x35, 0x71, 0x61, 0x00 });
+		this.size = new byte[] { 0x4b, 0x00 };
+		this.userId = new FixedLengthField(FixedLengthField.DWORD, new byte[] { 0x21, 0x00, 0x00, 0x00 });
+		this.unknownString = new FixedLengthField(32, new byte[] { 0x30, 0x00, 0x20, 0x00, 0x00, 0x20, 0x00, 0x00, 0x20, (byte) 0x81, 0x07, 0x20, 0x42, 0x00, 0x20, 0x0f, 0x00, 0x20, 0x00, 0x00, 0x20, 0x00, 0x00, 0x20, 0x00, 0x00, 0x20, 0x0e, 0x00, 0x20, 0x07, 0x08 });
+		this.serverIp = new FixedLengthField(32, new byte[] { 0x31, 0x39, 0x32, 0x2e, 0x31, 0x36, 0x38, 0x2e, 0x30, 0x2e, 0x31, 0x36, 0x34 });
+		//this.serverPort = new FixedLengthField(13);
+		this.unknownValue = new FixedLengthField(5, new byte[] { 0x76, (byte) 0xad, 0x00, 0x00, 0x00 });
 	}
 
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), userId.getValue(), unknownString.getValue(),
-				serverIp.getValue(), serverPort.getValue(), unknownValue.getValue());
+				serverIp.getValue(), /*serverPort.getValue(),*/ unknownValue.getValue());
 	}
 }
