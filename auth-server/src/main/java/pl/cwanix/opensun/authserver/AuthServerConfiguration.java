@@ -5,8 +5,10 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskAuthPacket;
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskSrvListPacket;
@@ -19,7 +21,7 @@ import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Configuration
 public class AuthServerConfiguration {
-	
+
 	@Bean
 	public Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions() {
 		Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> definitions = new HashMap<>();
@@ -27,13 +29,18 @@ public class AuthServerConfiguration {
 		definitions.put(C2SAskAuthPacket.PACKET_ID, C2SAskAuthPacket::new);
 		definitions.put(C2SAskSrvListPacket.PACKET_ID, C2SAskSrvListPacket::new);
 		definitions.put(C2SAskSrvSelect.PACKET_ID, C2SAskSrvSelect::new);
-		
+
 		return definitions;
 	}
-	
+
 	@Bean
 	@ConditionalOnMissingBean
 	public SUNServerChannelHandlerFactory sunServerChannelHandlerFactory() {
 		return new AuthServerChannelHandlerFactory();
+	}
+
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
 	}
 }

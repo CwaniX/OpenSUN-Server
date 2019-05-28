@@ -25,4 +25,8 @@ public class S2CHelloPacket extends ServerPacket {
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), serverInfo.getValue(), encKey.getValue());
 	}
+	
+	public void setEncKey(byte[] key) {
+		encKey.setValue(key);
+	}
 }

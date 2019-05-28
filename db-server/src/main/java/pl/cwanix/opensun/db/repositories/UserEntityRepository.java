@@ -6,4 +6,5 @@ import pl.cwanix.opensun.db.entities.UserEntity;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 
+	public UserEntity findByName(String name);
 }

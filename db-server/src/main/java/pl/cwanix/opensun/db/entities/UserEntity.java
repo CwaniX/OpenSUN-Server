@@ -18,6 +18,6 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_generator")
 	@SequenceGenerator(name = "seq_user_generator", sequenceName = "seq_user")
 	private Long id;
-	private String login;
+	private String name;
 	private String password;
 }
