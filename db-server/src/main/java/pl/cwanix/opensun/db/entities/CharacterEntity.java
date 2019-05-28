@@ -3,6 +3,10 @@ package pl.cwanix.opensun.db.entities;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +16,11 @@ import lombok.Setter;
 @Entity
 public class CharacterEntity {
 
-	private int id;
-	private UserEntity user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_generator")
+	@SequenceGenerator(name = "seq_character_generator", sequenceName = "seq_character")
+	private Long id;
+	//private UserEntity user;
 	private int classCode;
 	private String name;
 	private int heightCode;
@@ -35,26 +42,20 @@ public class CharacterEntity {
 	private int maxMp;
 	private int money;
 	private int remainStat;
-	private int remailSkill;
+	private int remainSkill;
 	private int selectedStyle;
 	private int pkState;
 	private int charState;
 	private int stateTime;
-	private int region;
-	private int locationX;
-	private int locationY;
-	private int locationZ;
+	//private CharacterPositionEntity position;
 	private int titleId;
 	private int invisibleOpt;
-	private int inventoryLock;
-	private byte[] inventoryItem;
-	private byte[] tmpInventoryItem;
-	private byte[] equipItem;
-	private byte[] skill;
-	private byte[] quick;
-	private byte[] style;
-	private byte[] quest;
-	private byte[] mission;
+	//private InventoryEntity inventory;
+	//private byte[] skill;
+	//private byte[] quick;
+	//private byte[] style;
+	//private byte[] quest;
+	//private byte[] mission;
 	private int playLimitedTime;
 	private int pvpPoint;
 	private int pvpScore;
@@ -69,8 +70,8 @@ public class CharacterEntity {
 	private int guildPosition;
 	private int guildUserPoint;
 	private String guildNickName;
-	private LocalDateTime creationDate;
-	private LocalDateTime modificationDate;
-	private LocalDateTime lastDate;
+	//private LocalDateTime creationDate;
+	//private LocalDateTime modificationDate;
+	//private LocalDateTime lastDate;
 	private boolean deleted;
 }

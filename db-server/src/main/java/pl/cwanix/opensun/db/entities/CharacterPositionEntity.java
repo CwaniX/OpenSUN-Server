@@ -12,12 +12,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class UserEntity {
+public class CharacterPositionEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_generator")
-	@SequenceGenerator(name = "seq_user_generator", sequenceName = "seq_user")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inventory_generator")
+	@SequenceGenerator(name = "seq_inventory_generator", sequenceName = "seq_inventory")
 	private Long id;
-	private String login;
-	private String password;
+	private int region;
+	private int locationX;
+	private int locationY;
+	private int locationZ;
 }
