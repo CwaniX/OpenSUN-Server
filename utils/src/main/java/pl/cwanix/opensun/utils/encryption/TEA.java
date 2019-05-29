@@ -41,7 +41,7 @@ public class TEA {
 		BytesUtils.strncpy(dec1, result, 0);
 		BytesUtils.strncpy(dec2, result, 8);
 		
-		return result;
+		return BytesUtils.cutTail(result);
 	}
 	
 	public static byte[] encode(byte[] src, byte[] key) {
@@ -71,8 +71,6 @@ public class TEA {
 			sum -= delta;
 		}
 		
-		byte[] decoded = BytesUtils.intToByteArray(v0, v1);
-		
-		return BytesUtils.cutTail(decoded);
+		return BytesUtils.intToByteArray(v0, v1);
 	}
 }
