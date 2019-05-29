@@ -19,6 +19,8 @@
 		<module>auth-server</module>
 		<module>agent-server</module>
 		<module>game-server</module>
+		<module>db-server</module>
+		<module>common-server</module>
 		<module>utils</module>
 	</modules>
 

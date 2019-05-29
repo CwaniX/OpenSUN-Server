@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -33,8 +34,8 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PacketDecoder packetDecoder(Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions) {
-		return new PacketDecoder(clientPacketDefinitions);
+	public PacketDecoder packetDecoder(Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
+		return new PacketDecoder(clientPacketDefinitions, restTemplate);
 	}
 	
 	@Bean

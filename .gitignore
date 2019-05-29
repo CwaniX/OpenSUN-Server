@@ -13,4 +13,7 @@ agent-server/bin/
 common-server/.settings/
 common-server/target/
 common-server/bin/
+db-server/.settings/
+db-server/target/
+db-server/bin/
 utils/target/
