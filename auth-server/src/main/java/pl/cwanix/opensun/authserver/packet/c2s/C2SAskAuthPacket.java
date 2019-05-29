@@ -41,9 +41,9 @@ public class C2SAskAuthPacket extends ClientPacket {
 		UserEntity userEntity = restTemplate.getForObject("http://localhost:7000/user/findByName?name=" + name.toString(), UserEntity.class);
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
 		
-		if (userEntity == null) {
+		if (userEntity == null || !decodedPass.equals(userEntity.getPassword())) {
 			ansAuthPacket.setResult((byte) 1);
-		} else if (decodedPass.equals(userEntity.getPassword())) {
+		} else {
 			ansAuthPacket.setResult((byte) 0);
 		}
 		
