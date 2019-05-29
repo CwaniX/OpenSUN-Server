@@ -17,12 +17,15 @@ public class C2SAskVerifyPacket extends ClientPacket {
 	private FixedLengthField clientVersion;
 	private FixedLengthField clientIpAddress;
 	
-	public C2SAskVerifyPacket(byte[] size, byte[] value) {
+	public C2SAskVerifyPacket(byte[] value) {
 		this.clientVersion = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
 		this.clientIpAddress = new FixedLengthField(16, Arrays.copyOfRange(value, 4, value.length));
 	}
 
 	public void process(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(new S2CAnsVerifyPacket());
+		S2CAnsVerifyPacket ansVerifyPacket = new S2CAnsVerifyPacket();
+		ansVerifyPacket.process(ctx);
+		
+		ctx.writeAndFlush(ansVerifyPacket);
 	}
 }

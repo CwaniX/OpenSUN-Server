@@ -1,5 +1,6 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
+import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
@@ -14,11 +15,16 @@ public class S2CAnsVerifyPacket extends ServerPacket {
 	private FixedLengthField result;
 	
 	public S2CAnsVerifyPacket() {
-		this.size = new byte[] { 0x03, 0x00 };
 		this.result = new FixedLengthField(FixedLengthField.BYTE, (byte) 0x00);
 	}
 	
+	@Override
+	public void process(ChannelHandlerContext ctx) {
+
+	}
+
+	@Override
 	public byte[] toByteArray() {
-		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), result.getValue());
+		return BytesUtils.mergeArrays(PACKET_ID.getValue(), result.getValue());
 	}
 }

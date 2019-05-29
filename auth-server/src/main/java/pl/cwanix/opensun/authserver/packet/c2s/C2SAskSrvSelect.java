@@ -15,12 +15,15 @@ public class C2SAskSrvSelect extends ClientPacket {
 	private FixedLengthField serverIndex;
 	private FixedLengthField channelIndex;
 	
-	public C2SAskSrvSelect(byte[] size, byte[] value) {
+	public C2SAskSrvSelect(byte[] value) {
 		this.serverIndex = new FixedLengthField(1, value[0]);
 		this.channelIndex = new FixedLengthField(1, value[1]);
 	}
 	
 	public void process(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(new S2CAnsSrvSelect());
+		S2CAnsSrvSelect ansSrvSelect = new S2CAnsSrvSelect();
+		ansSrvSelect.process(ctx);
+		
+		ctx.writeAndFlush(ansSrvSelect);
 	}
 }

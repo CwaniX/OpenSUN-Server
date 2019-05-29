@@ -1,7 +1,7 @@
 package pl.cwanix.opensun.commonserver;
 
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -34,8 +34,8 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PacketDecoder packetDecoder(Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
-		return new PacketDecoder(clientPacketDefinitions, restTemplate);
+	public PacketDecoder packetDecoder(Map<PacketHeader, Function<byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
+		return new PacketDecoder(clientPacketDefinitions);
 	}
 	
 	@Bean

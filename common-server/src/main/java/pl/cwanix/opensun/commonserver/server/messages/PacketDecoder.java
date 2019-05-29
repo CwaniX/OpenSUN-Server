@@ -3,11 +3,10 @@ package pl.cwanix.opensun.commonserver.server.messages;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,19 +24,16 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("PACKET DECODER");
 	
-	private final Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions;
-	private final RestTemplate restTemplate;
+	private final Map<PacketHeader, Function<byte[], ClientPacket>> clientPacketDefinitions;
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, byte[] msg, List<Object> out) throws Exception {
 		log.debug(MARKER, "Incoming data: {}", BytesUtils.byteArrayToHexString(msg));
 
-		byte[] size = new byte[] { msg[0], msg[1] };
-		PacketHeader id = new PacketHeader(msg[2], msg[3]);
-		byte[] value = Arrays.copyOfRange(msg, 4, msg.length);
+		PacketHeader id = new PacketHeader(msg[0], msg[1]);
+		byte[] value = Arrays.copyOfRange(msg, 2, msg.length);
 		
-		ClientPacket packet = clientPacketDefinitions.get(id).apply(size, value);
-		packet.setRestTemplate(restTemplate);
+		ClientPacket packet = clientPacketDefinitions.get(id).apply(value);
 		
 		out.add(packet);
 	}

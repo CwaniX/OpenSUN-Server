@@ -9,11 +9,15 @@ public class C2SAskAuthPacket extends ClientPacket {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0x76);
 	
-	public C2SAskAuthPacket(byte[] size, byte[] value) {
+	public C2SAskAuthPacket(byte[] value) {
 		
 	}
 	
+	@Override
 	public void process(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(new S2CAnsCharactersListPacket());
+		S2CAnsCharactersListPacket ansCharactersListPacket = new S2CAnsCharactersListPacket();
+		ansCharactersListPacket.process(ctx);
+		
+		ctx.writeAndFlush(ansCharactersListPacket);
 	}
 }
