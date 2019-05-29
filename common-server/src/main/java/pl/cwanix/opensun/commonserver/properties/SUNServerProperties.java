@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "server")
+@ConfigurationProperties(prefix = "opensun.client")
 public class SUNServerProperties {
 
 	private int port = 44405;
