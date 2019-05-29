@@ -37,14 +37,15 @@ public class C2SAskAuthPacket extends ClientPacket {
 	public void process(ChannelHandlerContext ctx) {
 		AuthServerSession session = (AuthServerSession) ctx.channel().attr(SUNServerChannelHandler.SESSION_ATTRIBUTE).get();
 		RestTemplate restTemplate = ctx.channel().attr(SUNServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
-		
-		byte[] decodedPass = TEA.passwordDecode(password.getValue(), session.getEncKey());
-		
-		UserEntity userEntity = restTemplate.getForObject("http://localhost:9999/user/findByName=" + name, UserEntity.class);
-		System.out.println(userEntity.getPassword());
-		
+		String decodedPass = new String(TEA.passwordDecode(password.getValue(), session.getEncKey()));
+		UserEntity userEntity = restTemplate.getForObject("http://localhost:7000/user/findByName?name=" + name.toString(), UserEntity.class);
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
-		ansAuthPacket.process(ctx);
+		
+		if (userEntity == null) {
+			ansAuthPacket.setResult((byte) 1);
+		} else if (decodedPass.equals(userEntity.getPassword())) {
+			ansAuthPacket.setResult((byte) 0);
+		}
 		
 		ctx.writeAndFlush(ansAuthPacket);
 	}

@@ -1,8 +1,10 @@
 package pl.cwanix.opensun.utils.bytes;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class BytesUtils {
 
@@ -56,5 +58,22 @@ public class BytesUtils {
 		}
 		
 		return dest;
+	}
+	
+	public static byte[] cutTail(byte[] input) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		
+		int counter = 0;
+		
+		while (counter < input.length) {
+			if (input[counter] != 0x00) {
+				out.write(input[counter]);
+				counter++;
+			} else {
+				break;
+			}
+		}
+		
+		return out.toByteArray();
 	}
 }

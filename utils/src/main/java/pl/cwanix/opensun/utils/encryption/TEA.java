@@ -71,6 +71,8 @@ public class TEA {
 			sum -= delta;
 		}
 		
-		return BytesUtils.intToByteArray(v0, v1);
+		byte[] decoded = BytesUtils.intToByteArray(v0, v1);
+		
+		return BytesUtils.cutTail(decoded);
 	}
 }

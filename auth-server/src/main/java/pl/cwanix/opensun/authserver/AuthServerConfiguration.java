@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskAuthPacket;
 import pl.cwanix.opensun.authserver.packet.c2s.C2SAskSrvListPacket;
@@ -28,10 +26,5 @@ public class AuthServerConfiguration {
 		definitions.put(C2SAskSrvSelect.PACKET_ID, C2SAskSrvSelect::new);
 
 		return definitions;
-	}
-
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
 	}
 }

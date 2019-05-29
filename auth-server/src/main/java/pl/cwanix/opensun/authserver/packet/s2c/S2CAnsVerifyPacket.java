@@ -1,13 +1,11 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-@Getter
 public class S2CAnsVerifyPacket extends ServerPacket {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x02);

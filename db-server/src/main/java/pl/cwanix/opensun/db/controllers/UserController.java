@@ -13,7 +13,7 @@ import pl.cwanix.opensun.db.entities.UserEntity;
 import pl.cwanix.opensun.db.repositories.UserEntityRepository;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 	
@@ -30,7 +30,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "/findByName", produces = "application/json")
-	public UserEntity findUserByName(@PathVariable("name") String name) {
+	public UserEntity findUserByName(@RequestParam("name") String name) {
 		return userEntityRepository.findByName(name);
 	}
 }

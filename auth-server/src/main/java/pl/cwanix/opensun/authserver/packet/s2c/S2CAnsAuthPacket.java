@@ -29,4 +29,8 @@ public class S2CAnsAuthPacket extends ServerPacket {
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(PACKET_ID.getValue(), result.getValue(), info.getValue());
 	}
+	
+	public void setResult(byte resultCode) {
+		result.setValue(resultCode);
+	}
 }

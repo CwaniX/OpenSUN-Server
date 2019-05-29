@@ -26,13 +26,13 @@ public class SUNServerChannelInitializer extends ChannelInitializer<SocketChanne
 
 	@Override
 	protected void initChannel(SocketChannel socketChannel) throws Exception {
-		socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(ByteOrder.BIG_ENDIAN, Integer.MAX_VALUE, 0, 2, 0, 2, true));
+		socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(ByteOrder.LITTLE_ENDIAN, Integer.MAX_VALUE, 0, 2, 0, 2, true));
 		socketChannel.pipeline().addLast(new ByteArrayDecoder());
 		socketChannel.pipeline().addLast(packetDecoder);
 		
+		socketChannel.pipeline().addLast(new LengthFieldPrepender(ByteOrder.LITTLE_ENDIAN, 2, 0, false));
 		socketChannel.pipeline().addLast(new ByteArrayEncoder());
 		socketChannel.pipeline().addLast(packetEncoder);
-		socketChannel.pipeline().addLast(new LengthFieldPrepender(ByteOrder.BIG_ENDIAN, 2, 0, false));
 		
 		socketChannel.pipeline().addLast(eventExecutorGroup, channelFactory.getChannelHandler());
 	}

@@ -1,7 +1,6 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
@@ -9,7 +8,6 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-@Getter
 public class S2CHelloPacket extends ServerPacket {
 
 	private static final int INFO_MAX_LEN = 64;
