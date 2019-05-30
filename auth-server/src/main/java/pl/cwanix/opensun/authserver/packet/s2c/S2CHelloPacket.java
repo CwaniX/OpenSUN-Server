@@ -1,12 +1,13 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
-import lombok.Getter;
+import io.netty.channel.ChannelHandlerContext;
+import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
+import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-@Getter
 public class S2CHelloPacket extends ServerPacket {
 
 	private static final int INFO_MAX_LEN = 64;
@@ -17,16 +18,18 @@ public class S2CHelloPacket extends ServerPacket {
 	private FixedLengthField encKey;
 	
 	public S2CHelloPacket() {
-		this.size = new byte[] { 0x46, 0x00 };
 		this.serverInfo = new FixedLengthField(INFO_MAX_LEN);
 		this.encKey = new FixedLengthField(FixedLengthField.DWORD);
 	}
 	
-	public byte[] toByteArray() {
-		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), serverInfo.getValue(), encKey.getValue());
+	@Override
+	public void process(ChannelHandlerContext ctx) {
+		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
+		encKey.setValue(session.getEncKey());
 	}
-	
-	public void setEncKey(byte[] key) {
-		encKey.setValue(key);
+
+	@Override
+	public byte[] toByteArray() {
+		return BytesUtils.mergeArrays(PACKET_ID.getValue(), serverInfo.getValue(), encKey.getValue());
 	}
 }

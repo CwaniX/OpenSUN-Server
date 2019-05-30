@@ -1,10 +1,10 @@
 package pl.cwanix.opensun.commonserver;
 
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -23,19 +23,18 @@ import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Configuration
-@EnableConfigurationProperties(SUNServerProperties.class)
 public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
 	public EventExecutorGroup eventExecutorGroup(SUNServerProperties properties) {
-		return new DefaultEventExecutorGroup(properties.getMaxThreadCount());
+		return new DefaultEventExecutorGroup(properties.getClient().getMaxThreadCount());
 	}
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PacketDecoder packetDecoder(Map<PacketHeader, BiFunction<byte[], byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
-		return new PacketDecoder(clientPacketDefinitions, restTemplate);
+	public PacketDecoder packetDecoder(Map<PacketHeader, Function<byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
+		return new PacketDecoder(clientPacketDefinitions);
 	}
 	
 	@Bean
@@ -54,5 +53,11 @@ public class SUNServerAutoConfiguration {
 	@ConditionalOnMissingBean
 	public SUNServer sunServer(ChannelInitializer<SocketChannel> sunServerChannelHandler, SUNServerProperties properties) {		
 		return new SUNServer(sunServerChannelHandler, properties);
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
 	}
 }

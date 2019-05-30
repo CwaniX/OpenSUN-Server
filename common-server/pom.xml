@@ -21,8 +21,8 @@
 		<dependency>
 			<groupId>pl.cwanix.opensun</groupId>
 			<artifactId>utils</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>

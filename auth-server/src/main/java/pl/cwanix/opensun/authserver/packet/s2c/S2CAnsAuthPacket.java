@@ -1,5 +1,6 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
+import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
@@ -15,12 +16,21 @@ public class S2CAnsAuthPacket extends ServerPacket {
 	private FixedLengthField info;
 	
 	public S2CAnsAuthPacket() {
-		this.size = new byte[] { 0x43, 0x00 };
 		this.result = new FixedLengthField(FixedLengthField.BYTE);
 		this.info = new FixedLengthField(INFO_MAX_LEN);
 	}
 
+	@Override
+	public void process(ChannelHandlerContext ctx) {
+
+	}
+	
+	@Override
 	public byte[] toByteArray() {
-		return BytesUtils.mergeArrays(size, PACKET_ID.getValue(), result.getValue(), info.getValue());
+		return BytesUtils.mergeArrays(PACKET_ID.getValue(), result.getValue(), info.getValue());
+	}
+	
+	public void setResult(byte resultCode) {
+		result.setValue(resultCode);
 	}
 }

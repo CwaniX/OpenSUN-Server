@@ -2,12 +2,17 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 
 import java.util.Arrays;
 
+import org.springframework.web.client.RestTemplate;
+
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
+import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
+import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.encryption.TEA;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
@@ -23,7 +28,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 	private FixedLengthField password;
 	private FixedLengthField unknown2;
 	
-	public C2SAskAuthPacket(byte[] size, byte[] value) {
+	public C2SAskAuthPacket(byte[] value) {
 		this.userId = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
 		this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 54));
 		this.unknown1 = new FixedLengthField(FixedLengthField.BYTE, value[54]);
@@ -32,12 +37,21 @@ public class C2SAskAuthPacket extends ClientPacket {
 	}
 	
 	public void process(ChannelHandlerContext ctx) {
-		AuthServerSession session = (AuthServerSession) getSession();
-		byte[] decodedPass = TEA.passwordDecode(password.getValue(), session.getEncKey());
+		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
+		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
+		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
-		UserEntity userEntity = getRestTemplate().getForObject("http://localhost:9999/user/findByName=" + name, UserEntity.class);
-		System.out.println(userEntity.getPassword());
+		String decodedPass = new String(TEA.passwordDecode(password.getValue(), session.getEncKey()));
+		UserEntity userEntity = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findByName?name=" + name.toString(), UserEntity.class);
+		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
 		
-		ctx.writeAndFlush(new S2CAnsAuthPacket());
+		if (userEntity == null || !decodedPass.equals(userEntity.getPassword())) {
+			ansAuthPacket.setResult((byte) 1);
+		} else {
+			session.setUser(userEntity);
+			ansAuthPacket.setResult((byte) 0);
+		}
+		
+		ctx.writeAndFlush(ansAuthPacket);
 	}
 }

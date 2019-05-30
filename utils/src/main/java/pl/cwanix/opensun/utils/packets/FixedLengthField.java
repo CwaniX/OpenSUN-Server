@@ -1,6 +1,7 @@
 package pl.cwanix.opensun.utils.packets;
 
 import lombok.Getter;
+import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 @Getter
 public class FixedLengthField {
@@ -37,5 +38,9 @@ public class FixedLengthField {
 				this.value[i] = 0x00;
 			}
 		}
+	}
+	
+	public String toString() {
+		return new String(BytesUtils.cutTail(value));
 	}
 }

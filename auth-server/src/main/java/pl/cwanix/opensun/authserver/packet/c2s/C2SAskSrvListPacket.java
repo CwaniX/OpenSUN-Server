@@ -10,12 +10,18 @@ public class C2SAskSrvListPacket extends ClientPacket {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x0F);
 	
-	public C2SAskSrvListPacket(byte[] size, byte[] value) {
+	public C2SAskSrvListPacket(byte[] value) {
 
 	}
 	
 	public void process(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(new S2CAnsSrvListPacket());
-		ctx.writeAndFlush(new S2CAnsSrvStatePacket());
+		S2CAnsSrvListPacket ansSrvListPacket = new S2CAnsSrvListPacket();
+		ansSrvListPacket.process(ctx);
+		
+		S2CAnsSrvStatePacket ansSrvStatePacket = new S2CAnsSrvStatePacket();
+		ansSrvStatePacket.process(ctx);
+		
+		ctx.writeAndFlush(ansSrvListPacket);
+		ctx.writeAndFlush(ansSrvStatePacket);
 	}
 }

@@ -3,7 +3,6 @@ package pl.cwanix.opensun.db.controllers;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,7 @@ import pl.cwanix.opensun.db.entities.UserEntity;
 import pl.cwanix.opensun.db.repositories.UserEntityRepository;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 	
@@ -30,7 +29,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "/findByName", produces = "application/json")
-	public UserEntity findUserByName(@PathVariable("name") String name) {
+	public UserEntity findUserByName(@RequestParam("name") String name) {
 		return userEntityRepository.findByName(name);
 	}
 }
