@@ -15,10 +15,12 @@ public class AuthServerSession implements SUNSession {
 	private byte[] encKey;
 	
 	public AuthServerSession() {
-		encKey = new byte[4];
+		//encKey = new byte[4];
 		
-		Random random = new Random();
-		random.nextBytes(getEncKey());
+		encKey = new byte[] { 0, 0, 0, 0 };
+		
+		//Random random = new Random();
+		//random.nextBytes(getEncKey());
 	}
 	
 	public boolean isAuthenticated() {
