@@ -1,9 +1,9 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
 import io.netty.channel.ChannelHandlerContext;
+import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
-import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
@@ -24,7 +24,7 @@ public class S2CHelloPacket extends ServerPacket {
 	
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		AuthServerSession session = (AuthServerSession) ctx.channel().attr(SUNServerChannelHandler.SESSION_ATTRIBUTE).get();
+		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		encKey.setValue(session.getEncKey());
 	}
 

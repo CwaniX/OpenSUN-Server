@@ -44,12 +44,12 @@ public class SUNServer {
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		serverBootstrap.group(parentGroup, childGroup).channel(setupServerSocketChannel()).handler(setupLoggingHander())
 				.childHandler(sunServerChannelInitializer)
-				.option(ChannelOption.SO_BACKLOG, properties.getMaxQueueSize())
+				.option(ChannelOption.SO_BACKLOG, properties.getClient().getMaxQueueSize())
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
 		try {
-			serverBootstrap.bind(properties.getPort()).sync();
+			serverBootstrap.bind(properties.getClient().getPort()).sync();
 		} catch (Exception e) {
 
 		}
@@ -57,17 +57,17 @@ public class SUNServer {
 	}
 
 	private void setupLoopGroups() {
-		if (properties.isEpollMode()) {
+		if (properties.getClient().isEpollMode()) {
 			parentGroup = new EpollEventLoopGroup();
-			childGroup = new EpollEventLoopGroup(properties.getMaxThreadCount());
+			childGroup = new EpollEventLoopGroup(properties.getClient().getMaxThreadCount());
 		} else {
 			parentGroup = new NioEventLoopGroup();
-			childGroup = new NioEventLoopGroup(properties.getMaxThreadCount());
+			childGroup = new NioEventLoopGroup(properties.getClient().getMaxThreadCount());
 		}
 	}
 
 	private Class<? extends ServerChannel> setupServerSocketChannel() {
-		if (properties.isEpollMode()) {
+		if (properties.getClient().isEpollMode()) {
 			return EpollServerSocketChannel.class;
 		} else {
 			return NioServerSocketChannel.class;

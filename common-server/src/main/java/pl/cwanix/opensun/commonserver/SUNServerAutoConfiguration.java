@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,13 +23,12 @@ import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Configuration
-@EnableConfigurationProperties(SUNServerProperties.class)
 public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
 	public EventExecutorGroup eventExecutorGroup(SUNServerProperties properties) {
-		return new DefaultEventExecutorGroup(properties.getMaxThreadCount());
+		return new DefaultEventExecutorGroup(properties.getClient().getMaxThreadCount());
 	}
 	
 	@Bean

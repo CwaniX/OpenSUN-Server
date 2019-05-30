@@ -8,9 +8,10 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
+import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
+import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
-import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 import pl.cwanix.opensun.utils.encryption.TEA;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
@@ -35,15 +36,18 @@ public class C2SAskAuthPacket extends ClientPacket {
 	}
 	
 	public void process(ChannelHandlerContext ctx) {
-		AuthServerSession session = (AuthServerSession) ctx.channel().attr(SUNServerChannelHandler.SESSION_ATTRIBUTE).get();
-		RestTemplate restTemplate = ctx.channel().attr(SUNServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
+		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
+		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
+		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();
+		
 		String decodedPass = new String(TEA.passwordDecode(password.getValue(), session.getEncKey()));
-		UserEntity userEntity = restTemplate.getForObject("http://localhost:7000/user/findByName?name=" + name.toString(), UserEntity.class);
+		UserEntity userEntity = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findByName?name=" + name.toString(), UserEntity.class);
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
 		
 		if (userEntity == null || !decodedPass.equals(userEntity.getPassword())) {
 			ansAuthPacket.setResult((byte) 1);
 		} else {
+			session.setUser(userEntity);
 			ansAuthPacket.setResult((byte) 0);
 		}
 		

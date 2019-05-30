@@ -24,7 +24,6 @@ public class AuthServerSessionManager implements SUNSessionManager {
 	
 	@Override
 	public AuthServerSession startNewSession() {
-		System.out.println("new session");
 		AuthServerSession newSession = new AuthServerSession();
 		sessions.add(newSession);
 		
