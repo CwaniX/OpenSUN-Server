@@ -26,5 +26,4 @@ public class AuthServerSession implements SUNSession {
 	public boolean isAuthenticated() {
 		return user != null;
 	}
-
 }

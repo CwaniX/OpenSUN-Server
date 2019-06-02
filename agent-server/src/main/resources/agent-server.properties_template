@@ -1,0 +1,9 @@
+opensun.server.port=9000
+
+opensun.client.port=44406
+opensun.client.max_queue_size=128
+opensun.client.max_thread_count=2
+opensun.client.epoll_mode=false
+
+opensun.db.ip=127.0.0.1
+opensun.db.port=7000
