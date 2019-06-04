@@ -56,11 +56,11 @@ public class CharacterEntity {
 	private int invisibleOpt;
 	@OneToOne
 	private InventoryEntity inventory;
-	//private byte[] skill;
-	//private byte[] quick;
-	//private byte[] style;
-	//private byte[] quest;
-	//private byte[] mission;
+	private byte[] skill;
+	private byte[] quick;
+	private byte[] style;
+	private byte[] quest;
+	private byte[] mission;
 	private int playLimitedTime;
 	//private int pvpPoint;
 	//private int pvpScore;
