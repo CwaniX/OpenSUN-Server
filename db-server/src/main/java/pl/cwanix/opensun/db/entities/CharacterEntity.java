@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,7 @@ public class CharacterEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_generator")
 	@SequenceGenerator(name = "seq_character_generator", sequenceName = "seq_character")
 	private Long id;
+	@JsonManagedReference
 	@ManyToOne
 	private AccountEntity account;
 	private int classCode;

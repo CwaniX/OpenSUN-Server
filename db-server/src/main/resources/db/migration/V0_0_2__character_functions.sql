@@ -32,9 +32,7 @@ CREATE SEQUENCE seq_character_set INCREMENT BY 50
 CREATE TABLE "character_set" (
 	id bigint NOT NULL,
 	experience bigint NOT NULL,
-	
 	class_name character varying(255),
-	
 	class_code integer NOT NULL,
 	dexterity integer NOT NULL,
 	inteligence integer NOT NULL,
@@ -54,7 +52,6 @@ CREATE TABLE "character_set" (
 	spirit integer NOT NULL,
 	strength integer NOT NULL,
 	vitality integer NOT NULL,
-	
 	equip_item bytea NOT NULL,
 	inventory_item bytea NOT NULL,
 	mission bytea NOT NULL,
@@ -321,16 +318,54 @@ CREATE OR REPLACE FUNCTION func_create_character(
 ) RETURNS integer LANGUAGE 'plpgsql'
 
 AS $BODY$
+	DECLARE
+		position_id bigint;
+		inventory_id bigint;	
+		
 	BEGIN
-		IF EXISTS (SELECT name FROM character WHERE name = in_name) THEN
+		IF EXISTS (SELECT name FROM "character" WHERE name = in_name) THEN
 			RETURN 1;
 		END IF;
 		
-		IF EXISTS (SELECT slot FROM character WHERE account_id = in_account_id AND slot = in_slot AND deleted = false) THEN
+		IF EXISTS (SELECT slot FROM "character" WHERE account_id = in_account_id AND slot = in_slot AND deleted = false) THEN
 			RETURN 2;
 		END IF;
 		
-		INSERT INTO character
+		INSERT INTO "character_position" (
+			id,
+			locationx,
+			locationy,
+			locationz,
+			region
+		) (SELECT
+				nextval('seq_character_position'),
+				locationx,
+				locationy,
+				locationz,
+				region
+			FROM "character_set"
+			WHERE class_code = in_class
+		) RETURNING id INTO position_id;
+		
+		INSERT INTO "inventory" (
+			id,
+			inventory_lock,
+			inventory_item,
+			tmp_inventory_item,
+			equip_item,
+			money
+		) (SELECT
+				nextval('seq_inventory'),
+				0,
+				inventory_item,
+				tmp_inventory_item,
+				equip_item,
+				money
+			FROM "character_set"
+			WHERE class_code = in_class
+		) RETURNING id INTO inventory_id;
+		
+		INSERT INTO "character"
 			(id,
 			experience,
 			char_state,
@@ -372,53 +407,53 @@ AS $BODY$
 			creation_date,
 			last_login_date,
 			modification_date,
-			deleted)
-			
-		(SELECT
-			nextval('seq_character'),
-			0,
-			0,
-			class_code,
-			dexterity,
-			in_face,
-			in_hair,
-			in_height,
-			100
-			inteligence,
-			0,
-			level,
-			max_hp,
-			max_mp,
-			10,
-			in_name,
-			0,
-			0,
-			remain_skill,
-			remain_stat,
-			selected_style,
-			skill_stat1,
-			skill_stat2,
-			spirit,
-			0,
-			strength,
-			0,
-			0,
-			vitality,
-			0,
-			0,
-			0,
-			in_slot,
-			mission,
-			quest,
-			quick,
-			skill,
-			style,
-			now(),
-			now(),
-			now(),
-			false
-		FROM character_set
-		WHERE class_code = in_class);
+			deleted
+		) (SELECT
+				nextval('seq_character'),
+				0,
+				0,
+				class_code,
+				dexterity,
+				in_face,
+				in_hair,
+				in_height,
+				100,
+				inteligence,
+				0,
+				level,
+				max_hp,
+				max_mp,
+				10,
+				in_name,
+				0,
+				0,
+				remain_skill,
+				remain_stat,
+				selected_style,
+				skill_stat1,
+				skill_stat2,
+				spirit,
+				0,
+				strength,
+				0,
+				0,
+				vitality,
+				in_account_id,
+				inventory_id,
+				position_id,
+				in_slot,
+				mission,
+				quest,
+				quick,
+				skill,
+				style,
+				now(),
+				now(),
+				now(),
+				false
+			FROM "character_set"
+			WHERE class_code = in_class
+		);
 		
 		RETURN 0;
 	END;

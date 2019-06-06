@@ -10,7 +10,7 @@ CREATE SEQUENCE seq_account INCREMENT BY 50
 ------------------------------------------------------------------
 --  TABLE account
 ------------------------------------------------------------------
-CREATE TABLE account (
+CREATE TABLE "account" (
 	id bigint NOT NULL,
 	CONSTRAINT account_pkey PRIMARY KEY (id)
 );
@@ -53,7 +53,7 @@ CREATE SEQUENCE seq_character_position INCREMENT BY 50
 ------------------------------------------------------------------
 --  TABLE character_position
 ------------------------------------------------------------------
-CREATE TABLE character_position (
+CREATE TABLE "character_position" (
 	id bigint NOT NULL,
 	locationx integer NOT NULL,
 	locationy integer NOT NULL,
@@ -74,7 +74,7 @@ CREATE SEQUENCE seq_inventory INCREMENT BY 50
 ------------------------------------------------------------------
 --  TABLE inventory
 ------------------------------------------------------------------
-CREATE TABLE inventory (
+CREATE TABLE "inventory" (
 	id bigint NOT NULL,
 	inventory_lock integer NOT NULL,
 	money integer NOT NULL,
