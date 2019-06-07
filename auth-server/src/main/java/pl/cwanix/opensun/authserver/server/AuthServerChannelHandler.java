@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CHelloPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
+import pl.cwanix.opensun.authserver.server.session.AuthServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 
@@ -19,12 +20,12 @@ public class AuthServerChannelHandler extends SUNServerChannelHandler {
 	public static final AttributeKey<AuthServerProperties> PROPERIES_ATTRIBUTE = AttributeKey.valueOf("properties");
 	
 	private final RestTemplate restTemplate;
-	private final AuthServerSession session;
+	private final AuthServerSessionManager sessionManager;
 	private final AuthServerProperties properties;
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		ctx.channel().attr(SESSION_ATTRIBUTE).set(session);
+		ctx.channel().attr(SESSION_ATTRIBUTE).set(sessionManager.startNewSession(null));
 		ctx.channel().attr(REST_TEMPLATE_ATTRIBUTE).set(restTemplate);
 		ctx.channel().attr(PROPERIES_ATTRIBUTE).set(properties);
 		

@@ -14,4 +14,6 @@ public class AuthServerProperties extends SUNServerProperties {
 
 	@NestedConfigurationProperty
 	private AuthServerDBProperties db;
+	@NestedConfigurationProperty
+	private AuthServerAgentProperties agent;
 }

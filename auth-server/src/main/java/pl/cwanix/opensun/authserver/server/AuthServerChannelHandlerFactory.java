@@ -19,6 +19,6 @@ public class AuthServerChannelHandlerFactory implements SUNServerChannelHandlerF
 
 	@Override
 	public SUNServerChannelHandler getChannelHandler() {
-		return new AuthServerChannelHandler(restTemplate, sessionManager.startNewSession(), properties);
+		return new AuthServerChannelHandler(restTemplate, sessionManager, properties);
 	}
 }

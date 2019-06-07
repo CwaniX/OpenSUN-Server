@@ -19,6 +19,6 @@ public class AgentServerChannelHandlerFactory implements SUNServerChannelHandler
 	
 	@Override
 	public SUNServerChannelHandler getChannelHandler() {
-		return new AgentServerChannelHandler(restTemplate, sessionManager.startNewSession(),  properties);
+		return new AgentServerChannelHandler(restTemplate, sessionManager,  properties);
 	}
 }

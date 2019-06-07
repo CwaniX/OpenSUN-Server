@@ -43,12 +43,17 @@ public class C2SAskAuthPacket extends ClientPacket {
 		String decodedPass = new String(TEA.passwordDecode(password.getValue(), session.getEncKey()));
 		UserEntity userEntity = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findByName?name=" + name.toString(), UserEntity.class);
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
+		Integer agentAuth = restTemplate.postForObject("http://" + properties.getAgent().getIp() + ":" + properties.getAgent().getPort() + "/user/findById?id=" + userId, Integer.class, null);
 		
 		if (userEntity == null || !decodedPass.equals(userEntity.getPassword())) {
 			ansAuthPacket.setResult((byte) 1);
 		} else {
 			session.setUser(userEntity);
 			ansAuthPacket.setResult((byte) 0);
+		}
+		
+		if (agentAuth > 0) {
+			ansAuthPacket.setResult((byte) 2);
 		}
 		
 		ctx.writeAndFlush(ansAuthPacket);

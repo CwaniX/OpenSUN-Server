@@ -1,33 +1,39 @@
 package pl.cwanix.opensun.agentserver.server.session;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.agentserver.entities.UserEntity;
 import pl.cwanix.opensun.commonserver.session.SUNSessionManager;
 
 @Slf4j
 @Getter
 @Setter
 @Component
-public class AgentServerSessionManager implements SUNSessionManager {
+public class AgentServerSessionManager implements SUNSessionManager<UserEntity> {
 	
-	private List<AgentServerSession> sessions;
+	private Map<UserEntity, AgentServerSession> sessions;
 	
 	public AgentServerSessionManager() {
-		sessions = new ArrayList<>();
+		sessions = new HashMap<>();
 	}
 
 	@Override
-	public AgentServerSession startNewSession() {
-		AgentServerSession newSession = new AgentServerSession();
-		sessions.add(newSession);
+	public AgentServerSession startNewSession(UserEntity user) {
+		AgentServerSession newSession = new AgentServerSession(user);
+		sessions.put(user, newSession);
 		
 		return newSession;
+	}
+
+	@Override
+	public AgentServerSession getSession(UserEntity user) {
+		return sessions.get(user);
 	}
 
 }

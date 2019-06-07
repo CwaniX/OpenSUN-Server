@@ -1,10 +1,12 @@
 package pl.cwanix.opensun.authserver.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = { "id", "name" })
 public class UserEntity {
 
 	private Long id;

@@ -24,7 +24,7 @@ public class C2SAskDeleteCharPacket extends ClientPacket {
 	
 	public C2SAskDeleteCharPacket(byte[] value) {
 		this.slotNumber = new FixedLengthField(1, value[0]);
-		this.deleteWord = new FixedLengthField(4, Arrays.copyOfRange(value, 1, value.length));
+		this.deleteWord = new FixedLengthField(10, Arrays.copyOfRange(value, 1, value.length));
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class C2SAskDeleteCharPacket extends ClientPacket {
 		S2CAnsDeleteCharPacket ansDeleteCharPacket = new S2CAnsDeleteCharPacket();
 		
 		if (DELETE_WORD.equals(deleteWord.toString())) {
-			restTemplate.delete("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findByName?name=" + name.toString());
+			restTemplate.delete("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.getValue()[0]);
 		}
 		
 		ctx.writeAndFlush(ansDeleteCharPacket);
