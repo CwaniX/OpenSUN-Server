@@ -18,18 +18,23 @@ public class UserController {
 	
 	private final UserEntityRepository userEntityRepository;
 	
+	@GetMapping(path = "/create", produces = "application/json")
+	public Integer create(@RequestParam("name") String name, @RequestParam("password") String password) {
+		return userEntityRepository.create("test", "test");
+	}
+	
 	@GetMapping(path = "/findAll", produces = "application/json")
-	public List<UserEntity> findAllUsers() {
+	public List<UserEntity> findAll() {
 		return userEntityRepository.findAll();
 	}
 
 	@GetMapping(path = "/findById", produces = "application/json")
-	public UserEntity findUserById(@RequestParam("id") Long id) {
+	public UserEntity findById(@RequestParam("id") Long id) {
 		return userEntityRepository.findById(id).orElse(null);
 	}
 	
 	@GetMapping(path = "/findByName", produces = "application/json")
-	public UserEntity findUserByName(@RequestParam("name") String name) {
+	public UserEntity findByName(@RequestParam("name") String name) {
 		return userEntityRepository.findByName(name);
 	}
 }

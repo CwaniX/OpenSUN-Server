@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,7 @@ public class AccountEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_account_generator")
 	@SequenceGenerator(name = "seq_account_generator", sequenceName = "seq_account")
 	private Long id;
+	@JsonBackReference
 	@OneToMany(mappedBy = "account")
 	private List<CharacterEntity> characters;
 }

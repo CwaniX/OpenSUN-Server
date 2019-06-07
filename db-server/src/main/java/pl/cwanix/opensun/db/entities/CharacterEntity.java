@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,7 @@ public class CharacterEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_generator")
 	@SequenceGenerator(name = "seq_character_generator", sequenceName = "seq_character")
 	private Long id;
+	@JsonManagedReference
 	@ManyToOne
 	private AccountEntity account;
 	private int classCode;
@@ -56,26 +59,26 @@ public class CharacterEntity {
 	private int invisibleOpt;
 	@OneToOne
 	private InventoryEntity inventory;
-	//private byte[] skill;
-	//private byte[] quick;
-	//private byte[] style;
-	//private byte[] quest;
-	//private byte[] mission;
+	private byte[] skill;
+	private byte[] quick;
+	private byte[] style;
+	private byte[] quest;
+	private byte[] mission;
 	private int playLimitedTime;
-	//private int pvpPoint;
-	//private int pvpScore;
-	//private int pvpGrade;
-	//private int pvpDraw;
-	//private int pvpSeries;
-	//private int pvpKill;
-	//private int pvpDie;
-	//private int pvpMaxKill;
-	//private int pvpMaxDie;
-	//private GuildEntity guild;
-	//private int guildPosition;
-	//private int guildUserPoint;
+	// private int pvpPoint;
+	// private int pvpScore;
+	// private int pvpGrade;
+	// private int pvpDraw;
+	// private int pvpSeries;
+	// private int pvpKill;
+	// private int pvpDie;
+	// private int pvpMaxKill;
+	// private int pvpMaxDie;
+	// private GuildEntity guild;
+	// private int guildPosition;
+	// private int guildUserPoint;
 	private String name;
-	//private String guildNickName;
+	// private String guildNickName;
 	private LocalDateTime creationDate;
 	private LocalDateTime modificationDate;
 	private LocalDateTime lastLoginDate;
