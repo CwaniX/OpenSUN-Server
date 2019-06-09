@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskAuthPacket;
+import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskCreateNewCharPackiet;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskFreeCharNamePacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskPingPacket;
@@ -29,6 +30,7 @@ public class AgentServerConfiguration {
 		definitions.put(C2SAskFreeCharNamePacket.PACKET_ID, C2SAskFreeCharNamePacket::new);
 		definitions.put(C2SAskPingPacket.PACKET_ID, C2SAskPingPacket::new);
 		definitions.put(C2SAskDeleteCharPacket.PACKET_ID, C2SAskDeleteCharPacket::new);
+		definitions.put(C2SAskCreateNewCharPackiet.PACKET_ID, C2SAskCreateNewCharPackiet::new);
 		
 		return definitions;
 	}

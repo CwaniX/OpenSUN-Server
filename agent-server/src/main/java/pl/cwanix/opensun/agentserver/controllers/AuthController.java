@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 
+@Slf4j
 @RestController
 @RequestMapping("/session")
 @RequiredArgsConstructor
@@ -24,7 +26,11 @@ public class AuthController {
 	public Integer create(@RequestParam("userId") long userId) {
 		UserEntity user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserEntity.class);
 		
-		if (user != null) {
+		if (user == null) {
+			log.debug("Unable to start session for userId: {}", userId);
+			return 1;
+		} else {
+			log.debug("Starting new session for user: {} with id: {}", user.getName(), user.getId());
 			sessionManager.startNewSession(user);
 		}
 
