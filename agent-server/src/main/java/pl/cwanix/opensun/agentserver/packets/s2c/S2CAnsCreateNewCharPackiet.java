@@ -2,16 +2,20 @@ package pl.cwanix.opensun.agentserver.packets.s2c;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.ServerPacket;
-import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class S2CAnsDeleteCharPacket extends ServerPacket {
+public class S2CAnsCreateNewCharPackiet extends ServerPacket {
 	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x07);
+	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xE2);
+	
+	public S2CAnsCreateNewCharPackiet() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public byte[] toByteArray() {
-		return BytesUtils.mergeArrays(PACKET_ID.getValue());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

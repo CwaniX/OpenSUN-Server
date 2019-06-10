@@ -9,7 +9,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = { "id", "name" })
 public class UserEntity {
 
-	private Long id;
+	private int id;
 	private String name;
 	private String password;
 }

@@ -24,7 +24,7 @@ public class AccountEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_account_generator")
 	@SequenceGenerator(name = "seq_account_generator", sequenceName = "seq_account")
-	private Long id;
+	private int id;
 	@JsonBackReference
 	@OneToMany(mappedBy = "account")
 	private List<CharacterEntity> characters;

@@ -11,7 +11,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = { "id", "name" })
 public class UserEntity {
 
-	private Long id;
+	private int id;
 	private AccountEntity account;
 	private String name;
 	private String password;

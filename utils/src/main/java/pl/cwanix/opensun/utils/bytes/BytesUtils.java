@@ -6,6 +6,10 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 public class BytesUtils {
+	
+	private BytesUtils() {
+		
+	}
 
 	public static void strncpy(byte[] input, byte[] output, int start) {
 		for (int i = 0; i < input.length; i++) {

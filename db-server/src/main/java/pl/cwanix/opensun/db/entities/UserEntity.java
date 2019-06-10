@@ -22,7 +22,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_generator")
 	@SequenceGenerator(name = "seq_user_generator", sequenceName = "seq_user")
-	private Long id;
+	private int id;
 	@OneToOne
 	private AccountEntity account;
 	private String name;

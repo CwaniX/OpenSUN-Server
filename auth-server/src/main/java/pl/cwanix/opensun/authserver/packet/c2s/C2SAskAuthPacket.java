@@ -30,7 +30,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 	public C2SAskAuthPacket(byte[] value) {
 		this.unknown1 = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
 		this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 54));
-		this.unknown2 = new FixedLengthField(FixedLengthField.BYTE, value[54]);
+		this.unknown2 = new FixedLengthField(1, value[54]);
 		this.password = new FixedLengthField(16, Arrays.copyOfRange(value, 55, 71));
 		this.unknown3 = new FixedLengthField(8, Arrays.copyOfRange(value, 71, value.length));
 	}
@@ -58,7 +58,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 		ctx.writeAndFlush(ansAuthPacket);
 	}
 	
-	private int startAgentServerSession(RestTemplate restTemplate, AuthServerProperties properties, long userId) {
+	private int startAgentServerSession(RestTemplate restTemplate, AuthServerProperties properties, int userId) {
 		return restTemplate.postForObject("http://" + properties.getAgent().getIp() + ":" + properties.getAgent().getPort() + "/session/new?userId=" + userId, null, Integer.class);
 	}
 }

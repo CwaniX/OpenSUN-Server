@@ -23,7 +23,7 @@ public class AuthController {
 	private final AgentServerProperties properties;
 	
 	@PostMapping(path = "/new", produces = "application/json")
-	public Integer create(@RequestParam("userId") long userId) {
+	public Integer create(@RequestParam("userId") int userId) {
 		UserEntity user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserEntity.class);
 		
 		if (user == null) {

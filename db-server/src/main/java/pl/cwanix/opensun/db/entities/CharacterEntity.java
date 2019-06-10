@@ -25,7 +25,7 @@ public class CharacterEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_generator")
 	@SequenceGenerator(name = "seq_character_generator", sequenceName = "seq_character")
-	private Long id;
+	private int id;
 	@JsonManagedReference
 	@ManyToOne
 	private AccountEntity account;

@@ -9,8 +9,6 @@ import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 public class S2CHelloPacket extends ServerPacket {
-
-	private static final int INFO_MAX_LEN = 64;
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x00);
 	
@@ -18,8 +16,8 @@ public class S2CHelloPacket extends ServerPacket {
 	private FixedLengthField encKey;
 	
 	public S2CHelloPacket() {
-		this.serverInfo = new FixedLengthField(INFO_MAX_LEN);
-		this.encKey = new FixedLengthField(FixedLengthField.DWORD);
+		this.serverInfo = new FixedLengthField(64);
+		this.encKey = new FixedLengthField(4);
 	}
 	
 	@Override

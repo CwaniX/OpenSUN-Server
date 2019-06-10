@@ -30,7 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/findById", produces = "application/json")
-	public UserEntity findById(@RequestParam("id") Long id) {
+	public UserEntity findById(@RequestParam("id") int id) {
 		return userEntityRepository.findById(id).orElse(null);
 	}
 	

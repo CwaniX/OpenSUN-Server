@@ -10,7 +10,6 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
-import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
@@ -30,7 +29,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 	@Override
 	public void process(ChannelHandlerContext ctx) {
 		UserEntity user = new UserEntity();
-		user.setId(new Long(BytesUtils.byteArrayToShort(userId.getValue())));
+		user.setId(userId.toInt());
 		user.setName(userName.toString());
 		
 		AgentServerSessionManager sessionManager = ctx.channel().attr(AgentServerChannelHandler.SESSION_MANAGER_ATTRIBUTE).getAndSet(null);

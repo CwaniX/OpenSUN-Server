@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.cwanix.opensun.commonserver.properties.SUNServerExternalServerProperties;
 import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 
 @Getter
@@ -13,5 +14,8 @@ import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 public class AgentServerProperties extends SUNServerProperties {
 
 	@NestedConfigurationProperty
-	private AgentServerDBProperties db;
+	private SUNServerExternalServerProperties db;
+	
+	@NestedConfigurationProperty
+	private SUNServerExternalServerProperties world;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class InventoryEntity {
 
-	private Long id;
+	private int id;
 	private int money;
 	private int inventoryLock;
 	private byte[] inventoryItem;

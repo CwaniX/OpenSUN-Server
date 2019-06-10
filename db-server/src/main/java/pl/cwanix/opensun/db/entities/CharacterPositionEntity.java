@@ -19,7 +19,7 @@ public class CharacterPositionEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_position_generator")
 	@SequenceGenerator(name = "seq_character_position_generator", sequenceName = "seq_character_position")
-	private Long id;
+	private int id;
 	private int region;
 	private int locationX;
 	private int locationY;

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class CharacterEntity {
 
-	private Long id;
+	private int id;
 	private AccountEntity account;
 	private int classCode;
 	private int heightCode;

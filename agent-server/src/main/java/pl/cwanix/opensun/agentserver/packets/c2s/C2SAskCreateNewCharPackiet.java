@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
+import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCreateNewCharPackiet;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
@@ -45,6 +46,11 @@ public class C2SAskCreateNewCharPackiet extends ClientPacket {
 				+ "&hairCode=" + hairCode.getValue()[0]
 				+ "&slot=" + 1,
 				null, Integer.class);
+		
+		S2CAnsCreateNewCharPackiet ansCreateNewCharPackiet = new S2CAnsCreateNewCharPackiet();
+		ansCreateNewCharPackiet.process(ctx);
+		
+		ctx.writeAndFlush(ansCreateNewCharPackiet);
 	}
 
 }
