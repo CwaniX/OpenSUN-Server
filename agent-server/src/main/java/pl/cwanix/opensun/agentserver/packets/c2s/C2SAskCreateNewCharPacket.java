@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCreateNewCharPackiet;
+import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCreateNewCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
@@ -13,7 +13,7 @@ import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class C2SAskCreateNewCharPackiet extends ClientPacket {
+public class C2SAskCreateNewCharPacket extends ClientPacket {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x6F);
 
@@ -23,7 +23,7 @@ public class C2SAskCreateNewCharPackiet extends ClientPacket {
 	private FixedLengthField faceCode;
 	private FixedLengthField hairCode;
 
-	public C2SAskCreateNewCharPackiet(byte[] value) {
+	public C2SAskCreateNewCharPacket(byte[] value) {
 		this.classCode = new FixedLengthField(1, value[15]);
 		this.charName = new FixedLengthField(16, Arrays.copyOfRange(value, 20, 37));
 		this.heightCode = new FixedLengthField(1, value[37]);
@@ -47,7 +47,7 @@ public class C2SAskCreateNewCharPackiet extends ClientPacket {
 				+ "&slot=" + 1,
 				null, Integer.class);
 		
-		S2CAnsCreateNewCharPackiet ansCreateNewCharPackiet = new S2CAnsCreateNewCharPackiet();
+		S2CAnsCreateNewCharPacket ansCreateNewCharPackiet = new S2CAnsCreateNewCharPacket();
 		ansCreateNewCharPackiet.process(ctx);
 		
 		ctx.writeAndFlush(ansCreateNewCharPackiet);
