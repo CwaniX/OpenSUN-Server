@@ -52,6 +52,7 @@ public class CharacterEntity {
 	private int selectedStyle;
 	private int pkState;
 	private int charState;
+	private int slot;
 	private int stateTime;
 	@OneToOne
 	private CharacterPositionEntity position;

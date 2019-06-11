@@ -22,6 +22,11 @@ public class FixedLengthField {
 		setValue(text);
 	}
 	
+	public FixedLengthField(int length, int value) {
+		this.value = new byte[length];
+		setValue(value);
+	}
+	
 	public void setValue(String text) {
 		setValue(text.getBytes());
 	}

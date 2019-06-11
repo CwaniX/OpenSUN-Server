@@ -35,6 +35,7 @@ public class CharacterEntity {
 	private int pkState;
 	private int charState;
 	private int stateTime;
+	private int slot;
 	//private CharacterPositionEntity position;
 	private int titleId;
 	private int invisibleOpt;

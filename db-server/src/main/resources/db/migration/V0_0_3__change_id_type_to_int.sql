@@ -16,7 +16,9 @@ ALTER SEQUENCE "seq_user" MAXVALUE 2147483647;
 ------------------------------------------------------------------
 --  TABLE user
 ------------------------------------------------------------------
-ALTER TABLE "user" ALTER COLUMN id TYPE integer;
+ALTER TABLE "user"
+	ALTER COLUMN id TYPE integer,
+	ALTER COLUMN account_id TYPE integer;
 
 ------------------------------------------------------------------
 --  SEQUENCE seq_character_position
@@ -46,7 +48,11 @@ ALTER SEQUENCE "seq_character" MAXVALUE 2147483647;
 ------------------------------------------------------------------
 --  TABLE character
 ------------------------------------------------------------------
-ALTER TABLE "character" ALTER COLUMN id TYPE integer;
+ALTER TABLE "character"
+	ALTER COLUMN id TYPE integer,
+	ALTER COLUMN account_id TYPE integer,
+	ALTER COLUMN inventory_id TYPE integer,
+	ALTER COLUMN position_id TYPE integer;
 
 ------------------------------------------------------------------
 --  SEQUENCE seq_character
