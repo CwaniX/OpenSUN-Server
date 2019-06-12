@@ -24,8 +24,7 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 	private FixedLengthField guildName; //16
 	private FixedLengthField playerKey; //4
 	private FixedLengthField team; //1
-	//private EquipItemInfoPacketStructure equipItemInfo;
-	private byte[] equipItemInfo;
+	private EquipItemInfoPacketStructure equipItemInfo;
 	
 	public ServerCharacterPartPacketStructure(CharacterEntity character) {
 		//charId = new FixedLengthField(1, character.getId()); //!!
@@ -45,8 +44,7 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 		guildName = new FixedLengthField(16);
 		playerKey = new FixedLengthField(4);
 		team = new FixedLengthField(1);
-		//equipItemInfo = new EquipItemInfoPacketStructure(character.getInventory().getEquipItem());
-		equipItemInfo = character.getInventory().getEquipItem();
+		equipItemInfo = new EquipItemInfoPacketStructure(character.getInventory().getEquipItem());
 	}
 
 	@Override
@@ -64,15 +62,13 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 				region.getValue(),
 				x.getValue(),
 				y.getValue(),
-				z.getValue()
-				//guildId.getValue(),
-				//guildPosition.getValue(),
-				//guildName.getValue(),
-				//playerKey.getValue(),
-				//team.getValue(),
-				//equipItemInfo.toByteArray()
-				//equipItemInfo
-				
+				z.getValue(),
+				guildId.getValue(),
+				guildPosition.getValue(),
+				guildName.getValue(),
+				playerKey.getValue(),
+				team.getValue(),
+				equipItemInfo.toByteArray()				
 			);
 	}
 }

@@ -30,7 +30,7 @@ public class S2CAnsCharListPacket extends ServerPacket {
 	public S2CAnsCharListPacket() {
 		userId = new FixedLengthField(4);
 		charCount = new FixedLengthField(1);
-		unknownField1 = new FixedLengthField(1);
+		//unknownField1 = new FixedLengthField(1);
 		characterList = new ArrayList<>();
 	}
 	
@@ -48,16 +48,17 @@ public class S2CAnsCharListPacket extends ServerPacket {
 
 	@Override
 	public byte[] toByteArray() {		
-		return BytesUtils.mergeArrays(
+		byte[] result = BytesUtils.mergeArrays(
 				PACKET_ID.getValue(),
 				userId.getValue(),
 				charCount.getValue(),
-				unknownField1.getValue(),
-				characterList.get(0) != null ? characterList.get(0).toByteArray() : null,
-				characterList.get(1) != null ? characterList.get(1).toByteArray() : null,
-				characterList.get(2) != null ? characterList.get(2).toByteArray() : null,
-				characterList.get(3) != null ? characterList.get(3).toByteArray() : null,
-				characterList.get(4) != null ? characterList.get(4).toByteArray() : null
+				charCount.getValue()
 			);
+		
+		for (ServerCharacterPartPacketStructure character : characterList) {
+			result = BytesUtils.mergeArrays(result, character.toByteArray());
+		}
+		
+		return result;
 	}
 }

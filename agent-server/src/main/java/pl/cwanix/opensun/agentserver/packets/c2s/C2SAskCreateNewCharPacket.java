@@ -69,14 +69,14 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 	}
 
 	private int findFreeSlot(List<CharacterEntity> characters) {
-		List<Integer> slots = characters.stream().map(CharacterEntity::getSlot).collect(Collectors.toList());
+		/*List<Integer> slots = characters.stream().map(CharacterEntity::getSlot).collect(Collectors.toList());
 		
 		for (int i = 0; i < 5; i++) {
 			if (!slots.contains(i)) {
 				return i;
 			}
-		}
+		}*/
 		
-		return -1;
+		return 1;
 	}
 }
