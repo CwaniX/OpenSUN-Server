@@ -7,3 +7,6 @@ opensun.client.epoll_mode=false
 
 opensun.db.ip=127.0.0.1
 opensun.db.port=7000
+
+opensun.world.ip=127.0.0.1
+opensun.world.port=7000

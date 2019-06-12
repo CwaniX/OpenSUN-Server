@@ -37,13 +37,18 @@ public class CharacterController {
 		return characterEntityRepository.delete(accountId, slot);
 	}
 	
-	@GetMapping(path = "/findByAccount", produces = "application/json")
-	public List<CharacterEntity> findAll(@RequestParam("accountId") int accountId) {
+	@GetMapping(path = "/findByAccountId", produces = "application/json")
+	public List<CharacterEntity> findByAccountId(@RequestParam("accountId") int accountId) {
 		return characterEntityRepository.findByAccountIdAndDeletedFalse(accountId);
 	}
 	
 	@GetMapping(path = "/findById", produces = "application/json")
 	public CharacterEntity findById(@RequestParam("id") int id) {
 		return characterEntityRepository.findByIdAndDeletedFalse(id);
+	}
+	
+	@GetMapping(path = "/findByAccountIdAndSlot", produces = "application/json")
+	public CharacterEntity findByAccountIdAndSlot(@RequestParam("accountId") int accountId, @RequestParam("slot") int slot) {
+		return characterEntityRepository.findByAccountIdAndSlotAndDeletedFalse(accountId, slot);
 	}
 }

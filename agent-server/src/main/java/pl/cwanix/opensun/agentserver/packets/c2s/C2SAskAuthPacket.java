@@ -2,6 +2,10 @@ package pl.cwanix.opensun.agentserver.packets.c2s;
 
 import java.util.Arrays;
 
+import org.jboss.logging.MDC;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
@@ -15,6 +19,8 @@ import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
 public class C2SAskAuthPacket extends ClientPacket {
+	
+	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK AUTH");
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0x76);
 	
@@ -27,23 +33,30 @@ public class C2SAskAuthPacket extends ClientPacket {
 	}
 	
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx) {		
 		UserEntity user = new UserEntity();
 		user.setId(userId.toInt());
 		user.setName(userName.toString());
+		
+		log.info(MARKER, "Trying to authorize user with id: {}", user.getId());
 		
 		AgentServerSessionManager sessionManager = ctx.channel().attr(AgentServerChannelHandler.SESSION_MANAGER_ATTRIBUTE).getAndSet(null);
 		AgentServerSession session = sessionManager.getSession(user);
 		
 		if (session == null) {
-			log.debug("Unable to resolve session data for user: {} with id: {}", user.getName(), user.getId());
+			log.error(MARKER, "Unable to resolve session data for user: {} with id: {}", user.getName(), user.getId());
+			
+			ctx.close();
+		} else {
+			MDC.put("userId", user.getId());
+			log.info(MARKER, "Authorized user with id: {}", user.getId());
+			
+			ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
+			
+			S2CAnsCharListPacket ansCharactersListPacket = new S2CAnsCharListPacket();
+			ansCharactersListPacket.process(ctx);
+			
+			ctx.writeAndFlush(ansCharactersListPacket);
 		}
-		
-		ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
-		
-		S2CAnsCharListPacket ansCharactersListPacket = new S2CAnsCharListPacket();
-		ansCharactersListPacket.process(ctx);
-		
-		ctx.writeAndFlush(ansCharactersListPacket);
 	}
 }

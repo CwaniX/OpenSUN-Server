@@ -12,6 +12,7 @@ import pl.cwanix.opensun.db.entities.CharacterEntity;
 public interface CharacterEntityRepository extends JpaRepository<CharacterEntity, Integer> {
 
 	public CharacterEntity findByIdAndDeletedFalse(int id);
+	public CharacterEntity findByAccountIdAndSlotAndDeletedFalse(int id, int slot);
 	public List<CharacterEntity> findByAccountIdAndDeletedFalse(int accountId);
 	
 	@Transactional

@@ -3,6 +3,9 @@ package pl.cwanix.opensun.commonserver.server;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandler;
@@ -26,6 +29,8 @@ import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 @Slf4j
 @RequiredArgsConstructor
 public class SUNServer {
+	
+	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 
 	private EventLoopGroup parentGroup = new NioEventLoopGroup();
 	private EventLoopGroup childGroup = new NioEventLoopGroup();
@@ -37,7 +42,7 @@ public class SUNServer {
 	public void startServer() throws InterruptedException {
 		setupLoopGroups();
 
-		log.info("Starting server");
+		log.info(MARKER, "Starting server");
 
 		InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE);
 
@@ -80,6 +85,7 @@ public class SUNServer {
 
 	@PreDestroy
 	public void stopServer() {
+		log.info(MARKER, "Stopping server");
 		childGroup.shutdownGracefully();
 		parentGroup.shutdownGracefully();
 	}

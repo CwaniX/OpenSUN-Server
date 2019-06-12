@@ -1,17 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.structures;
 
-import lombok.Getter;
-import lombok.Setter;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
-@Getter
-@Setter
 public class ServerCharacterPartPacketStructure implements PacketStructure {
 	
-	private FixedLengthField charId; //4
+	//private FixedLengthField charId; //4
 	private FixedLengthField slot; //1
 	private FixedLengthField charName; //16
 	private FixedLengthField heightCode; //1
@@ -22,7 +18,7 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 	private FixedLengthField region; //4
 	private FixedLengthField x; //2
 	private FixedLengthField y; //2
-	private FixedLengthField z; //2
+	private FixedLengthField z; //2 33
 	private FixedLengthField guildId; //4
 	private FixedLengthField guildPosition; //4
 	private FixedLengthField guildName; //16
@@ -32,7 +28,7 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 	private byte[] equipItemInfo;
 	
 	public ServerCharacterPartPacketStructure(CharacterEntity character) {
-		charId = new FixedLengthField(1, character.getId()); //!!
+		//charId = new FixedLengthField(1, character.getId()); //!!
 		slot = new FixedLengthField(1, character.getSlot());
 		charName = new FixedLengthField(16, character.getName());
 		heightCode = new FixedLengthField(1, character.getHeightCode());
@@ -56,7 +52,7 @@ public class ServerCharacterPartPacketStructure implements PacketStructure {
 	@Override
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(
-				charId.getValue(),
+				//charId.getValue(),
 				slot.getValue(),
 				new byte[] { 0x10 },
 				charName.getValue(),

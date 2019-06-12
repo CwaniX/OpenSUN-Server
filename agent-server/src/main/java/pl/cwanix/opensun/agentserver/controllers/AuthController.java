@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.controllers;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +20,22 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 @RequiredArgsConstructor
 public class AuthController {
 	
+	private static final Marker MARKER = MarkerFactory.getMarker("AUTH CONTROLLER");
+	
 	private final RestTemplate restTemplate;
 	private final AgentServerSessionManager sessionManager;
 	private final AgentServerProperties properties;
 	
 	@PostMapping(path = "/new", produces = "application/json")
 	public Integer create(@RequestParam("userId") int userId) {
+		log.info(MARKER, "Starting new session for user with id: {}", userId);
+		
 		UserEntity user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserEntity.class);
 		
 		if (user == null) {
-			log.debug("Unable to start session for userId: {}", userId);
+			log.error(MARKER, "Unable to start session for user with id: {}", userId);
 			return 1;
 		} else {
-			log.debug("Starting new session for user: {} with id: {}", user.getName(), user.getId());
 			sessionManager.startNewSession(user);
 		}
 
