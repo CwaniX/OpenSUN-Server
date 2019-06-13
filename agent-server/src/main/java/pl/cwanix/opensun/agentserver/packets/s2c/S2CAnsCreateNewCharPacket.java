@@ -4,7 +4,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
-import pl.cwanix.opensun.agentserver.packets.structures.ServerCharacterPartPacketStructure;
+import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
@@ -17,7 +17,7 @@ public class S2CAnsCreateNewCharPacket extends ServerPacket {
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xE2);
 	
 	private final int slot;
-	private ServerCharacterPartPacketStructure character;
+	private ClientCharacterPartPacketStructure character;
 	
 	public S2CAnsCreateNewCharPacket(int slot) {
 		this.slot = slot;
@@ -35,7 +35,7 @@ public class S2CAnsCreateNewCharPacket extends ServerPacket {
 		AgentServerProperties properties = ctx.channel().attr(AgentServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
 		CharacterEntity characterEntity = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/character/findByAccountIdAndSlot?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slot, CharacterEntity.class);
-		character = new ServerCharacterPartPacketStructure(characterEntity);
+		character = new ClientCharacterPartPacketStructure(characterEntity);
 	}
 
 }

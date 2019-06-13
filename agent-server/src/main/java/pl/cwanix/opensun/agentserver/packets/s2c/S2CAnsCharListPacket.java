@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
-import pl.cwanix.opensun.agentserver.packets.structures.ServerCharacterPartPacketStructure;
+import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
@@ -25,12 +25,12 @@ public class S2CAnsCharListPacket extends ServerPacket {
 	private FixedLengthField userId;
 	private FixedLengthField charCount;
 	private FixedLengthField unknownField1;
-	private List<ServerCharacterPartPacketStructure> characterList;
+	private List<ClientCharacterPartPacketStructure> characterList;
 
 	public S2CAnsCharListPacket() {
 		userId = new FixedLengthField(4);
 		charCount = new FixedLengthField(1);
-		//unknownField1 = new FixedLengthField(1);
+		unknownField1 = new FixedLengthField(1);
 		characterList = new ArrayList<>();
 	}
 	
@@ -43,7 +43,8 @@ public class S2CAnsCharListPacket extends ServerPacket {
 		List<CharacterEntity> characters = restTemplate.exchange("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/character/findByAccountId?accountId=" + session.getUser().getAccount().getId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>(){}).getBody();
 		userId.setValue(session.getUser().getId());
 		charCount.setValue((byte) characters.size());
-		characters.stream().forEach(character -> characterList.add(new ServerCharacterPartPacketStructure(character)));
+		unknownField1.setValue((byte) characters.size()); //??
+		characters.stream().forEach(character -> characterList.add(new ClientCharacterPartPacketStructure(character)));
 	}
 
 	@Override
@@ -52,10 +53,10 @@ public class S2CAnsCharListPacket extends ServerPacket {
 				PACKET_ID.getValue(),
 				userId.getValue(),
 				charCount.getValue(),
-				charCount.getValue()
+				unknownField1.getValue()
 			);
 		
-		for (ServerCharacterPartPacketStructure character : characterList) {
+		for (ClientCharacterPartPacketStructure character : characterList) {
 			result = BytesUtils.mergeArrays(result, character.toByteArray());
 		}
 		
