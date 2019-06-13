@@ -14,8 +14,8 @@ public class ItemSlotPacketStructure implements PacketStructure {
 	
 	public ItemSlotPacketStructure(byte[] value) {
 		position = new FixedLengthField(1, value[0]);
-		itemPart = new ItemPartPacketStructure(Arrays.copyOfRange(value, 1, 9));
-		optionPart = new OptionPartPacketStructure(Arrays.copyOfRange(value, 9, value.length));
+		itemPart = new ItemPartPacketStructure(Arrays.copyOfRange(value, 1, 8));
+		optionPart = new OptionPartPacketStructure(Arrays.copyOfRange(value, 8, value.length));
 	}
 
 	@Override

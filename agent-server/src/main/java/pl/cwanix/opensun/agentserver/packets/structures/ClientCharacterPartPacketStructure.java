@@ -39,7 +39,7 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 		x = new FixedLengthField(2, character.getPosition().getLocationX());
 		y = new FixedLengthField(2, character.getPosition().getLocationY());
 		z = new FixedLengthField(2, character.getPosition().getLocationZ());
-		equipNumber = new FixedLengthField(1);
+		equipNumber = new FixedLengthField(1, 0);
 		equipItemInfo = new EquipItemInfoPacketStructure(character.getInventory().getEquipItem());
 		unknownField1 = new FixedLengthField(1);
 		unknownField2 = new FixedLengthField(32);
@@ -59,10 +59,10 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 				classCode.getValue(),
 				level.getValue(),
 				region.getValue(),
-				equipNumber.getValue(),
 				x.getValue(),
 				y.getValue(),
 				z.getValue(),
+				equipNumber.getValue(),
 				equipItemInfo.toByteArray(),
 				unknownField1.getValue(),
 				unknownField2.getValue(),

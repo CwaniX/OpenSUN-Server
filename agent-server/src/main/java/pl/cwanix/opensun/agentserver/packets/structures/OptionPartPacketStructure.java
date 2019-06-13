@@ -4,12 +4,14 @@ import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 
 public class OptionPartPacketStructure implements PacketStructure {
 	
+	private byte[] value;
+	
 	public OptionPartPacketStructure(byte[] value) {
-		// TODO Auto-generated constructor stub
+		this.value = value;
 	}
 	
 	@Override
 	public byte[] toByteArray() {
-		return new byte[] { 00, 00, 00, 00, 00, 00, (byte) 0xc0, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 };
+		return value;
 	}
 }

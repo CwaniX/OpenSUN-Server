@@ -2,7 +2,6 @@ package pl.cwanix.opensun.agentserver.packets.c2s;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -77,6 +76,6 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 			}
 		}*/
 		
-		return 1;
+		return 3;
 	}
 }
