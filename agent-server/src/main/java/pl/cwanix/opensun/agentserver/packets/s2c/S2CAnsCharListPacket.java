@@ -40,7 +40,7 @@ public class S2CAnsCharListPacket extends ServerPacket {
 		RestTemplate restTemplate = ctx.channel().attr(AgentServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
 		AgentServerProperties properties = ctx.channel().attr(AgentServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
-		List<CharacterEntity> characters = restTemplate.exchange("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/character/findByAccountId?accountId=" + session.getUser().getAccount().getId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>(){}).getBody();
+		List<CharacterEntity> characters = restTemplate.exchange(properties.getDb().getServerUrl() + "/character/findByAccountId?accountId=" + session.getUser().getAccount().getId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>(){}).getBody();
 		userId.setValue(session.getUser().getId());
 		charCount.setValue((byte) characters.size());
 		unknownField1.setValue((byte) characters.size()); //??

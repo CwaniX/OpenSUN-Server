@@ -9,4 +9,8 @@ public class SUNServerExternalServerProperties {
 
 	private String ip;
 	private int port;
+	
+	public String getServerUrl() {
+		return "http://" + ip + ":" + port;
+	}
 }

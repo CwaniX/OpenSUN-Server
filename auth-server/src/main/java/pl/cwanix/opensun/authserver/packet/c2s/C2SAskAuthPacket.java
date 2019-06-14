@@ -41,7 +41,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
 		String decodedPass = new String(TEA.passwordDecode(password.getValue(), session.getEncKey()));
-		UserEntity userEntity = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findByName?name=" + name.toString(), UserEntity.class);
+		UserEntity userEntity = restTemplate.getForObject(properties.getDb().getServerUrl() + "/user/findByName?name=" + name.toString(), UserEntity.class);
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
 		
 		if (userEntity == null) {
@@ -59,6 +59,6 @@ public class C2SAskAuthPacket extends ClientPacket {
 	}
 	
 	private int startAgentServerSession(RestTemplate restTemplate, AuthServerProperties properties, int userId) {
-		return restTemplate.postForObject("http://" + properties.getAgent().getIp() + ":" + properties.getAgent().getPort() + "/session/new?userId=" + userId, null, Integer.class);
+		return restTemplate.postForObject(properties.getAgent().getServerUrl() + "/session/new?userId=" + userId, null, Integer.class);
 	}
 }

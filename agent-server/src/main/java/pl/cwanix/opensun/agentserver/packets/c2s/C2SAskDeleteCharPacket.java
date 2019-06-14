@@ -42,7 +42,7 @@ public class C2SAskDeleteCharPacket extends ClientPacket {
 		
 		if (DELETE_WORD.equals(deleteWord.toString())) {
 			log.info(MARKER, "Deletig character");
-			restTemplate.delete("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.getValue()[0]);
+			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.getValue()[0]);
 		} else {
 			log.info(MARKER, "Unable to delete character");
 		}
