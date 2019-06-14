@@ -13,7 +13,7 @@ public class S2CAnsVerifyPacket extends ServerPacket {
 	private FixedLengthField result;
 	
 	public S2CAnsVerifyPacket() {
-		this.result = new FixedLengthField(FixedLengthField.BYTE, (byte) 0x00);
+		this.result = new FixedLengthField(1, (byte) 0x00);
 	}
 	
 	@Override

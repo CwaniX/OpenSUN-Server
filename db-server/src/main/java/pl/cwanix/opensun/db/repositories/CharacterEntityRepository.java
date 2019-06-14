@@ -9,15 +9,16 @@ import org.springframework.data.jpa.repository.query.Procedure;
 
 import pl.cwanix.opensun.db.entities.CharacterEntity;
 
-public interface CharacterEntityRepository extends JpaRepository<CharacterEntity, Long> {
+public interface CharacterEntityRepository extends JpaRepository<CharacterEntity, Integer> {
 
-	public CharacterEntity findByIdAndDeletedFalse(Long id);
-	public List<CharacterEntity> findByAccountIdAndDeletedFalse(long accountId);
+	public CharacterEntity findByIdAndDeletedFalse(int id);
+	public CharacterEntity findByAccountIdAndSlotAndDeletedFalse(int id, int slot);
+	public List<CharacterEntity> findByAccountIdAndDeletedFalse(int accountId);
 	
 	@Transactional
 	@Procedure(procedureName = "func_create_character")
-	public Integer create(long accountId, String name, int classCode, int heightCode, int faceCode, int hairCode, int slot);
+	public Integer create(int accountId, String name, int classCode, int heightCode, int faceCode, int hairCode, int slot);
 	
 	@Procedure(procedureName = "func_delete_character")
-	public Integer delete(long accountId, int slot);
+	public Integer delete(int accountId, int slot);
 }

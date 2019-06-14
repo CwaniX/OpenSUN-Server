@@ -7,8 +7,6 @@ import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 public class S2CAnsAuthPacket extends ServerPacket {
-	
-	private static final int INFO_MAX_LEN = 64;
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x0E);
 	
@@ -16,8 +14,8 @@ public class S2CAnsAuthPacket extends ServerPacket {
 	private FixedLengthField info;
 	
 	public S2CAnsAuthPacket() {
-		this.result = new FixedLengthField(FixedLengthField.BYTE);
-		this.info = new FixedLengthField(INFO_MAX_LEN);
+		this.result = new FixedLengthField(1);
+		this.info = new FixedLengthField(64);
 	}
 
 	@Override

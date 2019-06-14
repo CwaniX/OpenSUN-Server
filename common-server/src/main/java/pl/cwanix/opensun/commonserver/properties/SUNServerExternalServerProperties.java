@@ -1,11 +1,11 @@
-package pl.cwanix.opensun.authserver.properties;
+package pl.cwanix.opensun.commonserver.properties;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthServerDBProperties {
+public class SUNServerExternalServerProperties {
 
 	private String ip;
 	private int port;

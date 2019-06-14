@@ -22,7 +22,7 @@ public class CharacterController {
 
 	@PostMapping(path = "/create", produces = "application/json")
 	public Integer create(
-			@RequestParam("accountId") long accountId,
+			@RequestParam("accountId") int accountId,
 			@RequestParam("name") String name,
 			@RequestParam("classCode") int classCode,
 			@RequestParam("heightCode") int heightCode,
@@ -33,17 +33,22 @@ public class CharacterController {
 	}
 	
 	@DeleteMapping(path = "/delete", produces = "application/json")
-	public Integer delete(@RequestParam("accountId") long accountId, @RequestParam("slot") int slot) {
+	public Integer delete(@RequestParam("accountId") int accountId, @RequestParam("slot") int slot) {
 		return characterEntityRepository.delete(accountId, slot);
 	}
 	
-	@GetMapping(path = "/findByAccount", produces = "application/json")
-	public List<CharacterEntity> findAll(@RequestParam("accountId") long accountId) {
+	@GetMapping(path = "/findByAccountId", produces = "application/json")
+	public List<CharacterEntity> findByAccountId(@RequestParam("accountId") int accountId) {
 		return characterEntityRepository.findByAccountIdAndDeletedFalse(accountId);
 	}
 	
 	@GetMapping(path = "/findById", produces = "application/json")
-	public CharacterEntity findById(@RequestParam("id") Long id) {
+	public CharacterEntity findById(@RequestParam("id") int id) {
 		return characterEntityRepository.findByIdAndDeletedFalse(id);
+	}
+	
+	@GetMapping(path = "/findByAccountIdAndSlot", produces = "application/json")
+	public CharacterEntity findByAccountIdAndSlot(@RequestParam("accountId") int accountId, @RequestParam("slot") int slot) {
+		return characterEntityRepository.findByAccountIdAndSlotAndDeletedFalse(accountId, slot);
 	}
 }

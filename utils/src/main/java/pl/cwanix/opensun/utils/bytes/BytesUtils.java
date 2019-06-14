@@ -4,9 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class BytesUtils {
+	
+	private BytesUtils() {
+		
+	}
 
 	public static void strncpy(byte[] input, byte[] output, int start) {
 		for (int i = 0; i < input.length; i++) {
@@ -16,6 +19,10 @@ public class BytesUtils {
 	
 	public static int byteArrayToInt(byte[] input) {
 		return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getInt();
+	}
+	
+	public static short byteArrayToShort(byte[] input) {
+		return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getShort();
 	}
 	
 	public static byte[] intToByteArray(int... input) {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 
 import pl.cwanix.opensun.db.entities.UserEntity;
 
-public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
+public interface UserEntityRepository extends JpaRepository<UserEntity, Integer> {
 
 	public UserEntity findByName(String name);
 	

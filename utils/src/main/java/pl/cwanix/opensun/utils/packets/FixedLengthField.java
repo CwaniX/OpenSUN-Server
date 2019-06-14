@@ -5,10 +5,6 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 @Getter
 public class FixedLengthField {
-	
-	public static final int BYTE = 1;
-	public static final int WORD = 2;
-	public static final int DWORD = 4;
 
 	private byte[] value;
 	
@@ -26,6 +22,11 @@ public class FixedLengthField {
 		setValue(text);
 	}
 	
+	public FixedLengthField(int length, int value) {
+		this.value = new byte[length];
+		setValue(value);
+	}
+	
 	public void setValue(String text) {
 		setValue(text.getBytes());
 	}
@@ -38,6 +39,14 @@ public class FixedLengthField {
 				this.value[i] = 0x00;
 			}
 		}
+	}
+	
+	public void setValue(int value) {
+		setValue(BytesUtils.intToByteArray(value));
+	}
+	
+	public int toInt() {
+		return BytesUtils.byteArrayToInt(value);
 	}
 	
 	public String toString() {

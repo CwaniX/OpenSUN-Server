@@ -25,7 +25,7 @@ public class CharacterEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_character_generator")
 	@SequenceGenerator(name = "seq_character_generator", sequenceName = "seq_character")
-	private Long id;
+	private int id;
 	@JsonManagedReference
 	@ManyToOne
 	private AccountEntity account;
@@ -52,6 +52,7 @@ public class CharacterEntity {
 	private int selectedStyle;
 	private int pkState;
 	private int charState;
+	private int slot;
 	private int stateTime;
 	@OneToOne
 	private CharacterPositionEntity position;
