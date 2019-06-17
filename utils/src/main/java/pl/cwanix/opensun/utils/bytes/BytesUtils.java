@@ -53,7 +53,7 @@ public class BytesUtils {
 		ByteBuffer buffer = ByteBuffer.allocate(input.length * 2).order(ByteOrder.LITTLE_ENDIAN);
 		
 		for (short i : input) {
-			buffer.putInt(i);
+			buffer.putShort(i);
 		}
 		
 		return buffer.array();
