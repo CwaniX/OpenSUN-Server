@@ -51,4 +51,9 @@ public class CharacterController {
 	public CharacterEntity findByAccountIdAndSlot(@RequestParam("accountId") int accountId, @RequestParam("slot") int slot) {
 		return characterEntityRepository.findByAccountIdAndSlotAndDeletedFalse(accountId, slot);
 	}
+	
+	@GetMapping(path = "/findFreeSlotByAccountId", produces = "application/json")
+	public Integer findFreeSlotByAccountId(@RequestParam("accountId") int accountId) {
+		return characterEntityRepository.findFreeSlot(accountId);
+	}
 }

@@ -1,7 +1,6 @@
 package pl.cwanix.opensun.agentserver.packets.c2s;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -9,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCreateNewCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -47,10 +45,12 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 
 		log.info(MARKER, "Creating new character");
 		
-		int slot = findFreeSlot(session.getUser().getAccount().getCharacters());
+		int slot = restTemplate.getForObject(properties.getDb().getServerUrl()
+				+ "/character/findFreeSlotByAccountId?accountId="
+				+ session.getUser().getAccount().getId(), Integer.class);
 		
 		if (slot > -1) {
-			restTemplate.postForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort()
+			restTemplate.postForObject(properties.getDb().getServerUrl()
 					+ "/character/create?accountId=" + session.getUser().getAccount().getId()
 					+ "&name=" + charName.toString()
 					+ "&classCode=" + classCode.getValue()[0]
@@ -64,18 +64,8 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 			ansCreateNewCharPackiet.process(ctx);
 			
 			ctx.writeAndFlush(ansCreateNewCharPackiet);
+		} else {
+			log.info(MARKER, "Unable to create new character. There is not free slot!");
 		}
-	}
-
-	private int findFreeSlot(List<CharacterEntity> characters) {
-		/*List<Integer> slots = characters.stream().map(CharacterEntity::getSlot).collect(Collectors.toList());
-		
-		for (int i = 0; i < 5; i++) {
-			if (!slots.contains(i)) {
-				return i;
-			}
-		}*/
-		
-		return 3;
 	}
 }

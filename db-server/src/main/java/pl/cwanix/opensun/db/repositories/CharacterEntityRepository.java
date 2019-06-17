@@ -21,4 +21,7 @@ public interface CharacterEntityRepository extends JpaRepository<CharacterEntity
 	
 	@Procedure(procedureName = "func_delete_character")
 	public Integer delete(int accountId, int slot);
+	
+	@Procedure(procedureName = "func_find_free_slot")
+	public Integer findFreeSlot(int accountId);
 }
