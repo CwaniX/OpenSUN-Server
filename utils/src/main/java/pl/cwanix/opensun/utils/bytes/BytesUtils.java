@@ -17,6 +17,10 @@ public class BytesUtils {
 		}
 	}
 	
+	public static long byteArrayToLong(byte[] input) {
+		return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getLong();
+	}
+	
 	public static int byteArrayToInt(byte[] input) {
 		return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getInt();
 	}
@@ -25,10 +29,30 @@ public class BytesUtils {
 		return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getShort();
 	}
 	
+	public static byte[] longToByteArray(long... input) {
+		ByteBuffer buffer = ByteBuffer.allocate(input.length * 8).order(ByteOrder.LITTLE_ENDIAN);
+		
+		for (long i : input) {
+			buffer.putLong(i);
+		}
+		
+		return buffer.array();
+	}
+	
 	public static byte[] intToByteArray(int... input) {
 		ByteBuffer buffer = ByteBuffer.allocate(input.length * 4).order(ByteOrder.LITTLE_ENDIAN);
 		
 		for (int i : input) {
+			buffer.putInt(i);
+		}
+		
+		return buffer.array();
+	}
+	
+	public static byte[] shortToByteArray(short... input) {
+		ByteBuffer buffer = ByteBuffer.allocate(input.length * 2).order(ByteOrder.LITTLE_ENDIAN);
+		
+		for (short i : input) {
 			buffer.putInt(i);
 		}
 		
