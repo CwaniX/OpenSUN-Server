@@ -29,18 +29,18 @@ public class OptionPartPacketStructure implements PacketStructure {
 	
 	private long bytes8;
 	private short bytes2;
-	private byte[] unknownValue = { (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc }; 
+	private byte[] unknownValue = { (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc, (byte) 0xcc };
 	
 	public OptionPartPacketStructure(byte[] value) {
-		bytes8 = BytesUtils.byteArrayToLong(Arrays.copyOfRange(value, 0, 64));
-		bytes2 = BytesUtils.byteArrayToShort(Arrays.copyOfRange(value, 64, 80));
+		bytes8 = BytesUtils.byteArrayToLong(Arrays.copyOfRange(value, 0, 8));
+		bytes2 = BytesUtils.byteArrayToShort(Arrays.copyOfRange(value, 8, 11));
 	}
 	
 	@Override
 	public byte[] toByteArray() {
 		byte[] bytes8array = BytesUtils.longToByteArray(bytes8);
 		byte[] bytes2array = BytesUtils.shortToByteArray(bytes2);
-		
+
 		return BytesUtils.mergeArrays(bytes8array, bytes2array, unknownValue);
 	}
 }
