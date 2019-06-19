@@ -2,11 +2,11 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsSrvSelectPacket;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class C2SAskSrvSelectPacket extends ClientPacket {
+public class C2SAskSrvSelectPacket extends Packet {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x13);
 	
@@ -23,5 +23,11 @@ public class C2SAskSrvSelectPacket extends ClientPacket {
 		ansSrvSelect.process(ctx);
 		
 		ctx.writeAndFlush(ansSrvSelect);
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

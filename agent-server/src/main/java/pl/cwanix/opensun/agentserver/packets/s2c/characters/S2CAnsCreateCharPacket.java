@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.packets.s2c;
+package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -8,18 +8,18 @@ import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacke
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
-import pl.cwanix.opensun.commonserver.packets.ServerPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class S2CAnsCreateNewCharPacket extends ServerPacket {
+public class S2CAnsCreateCharPacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xE2);
 	
 	private final int slot;
 	private ClientCharacterPartPacketStructure character;
 	
-	public S2CAnsCreateNewCharPacket(int slot) {
+	public S2CAnsCreateCharPacket(int slot) {
 		this.slot = slot;
 	}
 

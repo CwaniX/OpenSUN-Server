@@ -11,13 +11,13 @@ import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.encryption.TEA;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Getter
-public class C2SAskAuthPacket extends ClientPacket {
+public class C2SAskAuthPacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x03);
 	
@@ -60,5 +60,11 @@ public class C2SAskAuthPacket extends ClientPacket {
 	
 	private int startAgentServerSession(RestTemplate restTemplate, AuthServerProperties properties, int userId) {
 		return restTemplate.postForObject(properties.getAgent().getServerUrl() + "/session/new?userId=" + userId, null, Integer.class);
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

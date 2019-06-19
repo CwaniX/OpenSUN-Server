@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.packets.c2s;
+package pl.cwanix.opensun.agentserver.packets.c2s.connection;
 
 import java.util.Arrays;
 
@@ -9,16 +9,18 @@ import org.slf4j.MarkerFactory;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
-import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCharListPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
-public class C2SAskAuthPacket extends ClientPacket {
+@IncomingPacket
+public class C2SAskEnterServerPacket extends Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK AUTH");
 
@@ -27,7 +29,7 @@ public class C2SAskAuthPacket extends ClientPacket {
 	private FixedLengthField userId;
 	private FixedLengthField userName;
 	
-	public C2SAskAuthPacket(byte[] value) {
+	public C2SAskEnterServerPacket(byte[] value) {
 		this.userId = new FixedLengthField(4, Arrays.copyOfRange(value, 2, 6));
 		this.userName = new FixedLengthField(50, Arrays.copyOfRange(value, 7, 54));
 	}
@@ -53,10 +55,16 @@ public class C2SAskAuthPacket extends ClientPacket {
 			
 			ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
 			
-			S2CAnsCharListPacket ansCharactersListPacket = new S2CAnsCharListPacket();
+			S2CAnsEnterServerPacket ansCharactersListPacket = new S2CAnsEnterServerPacket();
 			ansCharactersListPacket.process(ctx);
 			
 			ctx.writeAndFlush(ansCharactersListPacket);
 		}
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

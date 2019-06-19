@@ -13,7 +13,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 import pl.cwanix.opensun.commonserver.server.SUNServer;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
@@ -33,7 +33,7 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PacketDecoder packetDecoder(Map<PacketHeader, Function<byte[], ClientPacket>> clientPacketDefinitions, RestTemplate restTemplate) {
+	public PacketDecoder packetDecoder(Map<PacketHeader, Function<byte[], Packet>> clientPacketDefinitions, RestTemplate restTemplate) {
 		return new PacketDecoder(clientPacketDefinitions);
 	}
 	

@@ -13,7 +13,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
@@ -24,7 +24,7 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("PACKET DECODER");
 	
-	private final Map<PacketHeader, Function<byte[], ClientPacket>> clientPacketDefinitions;
+	private final Map<PacketHeader, Function<byte[], Packet>> clientPacketDefinitions;
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, byte[] msg, List<Object> out) throws Exception {
@@ -33,7 +33,7 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
 		PacketHeader id = new PacketHeader(msg[0], msg[1]);
 		byte[] value = Arrays.copyOfRange(msg, 2, msg.length);
 		
-		ClientPacket packet = clientPacketDefinitions.get(id).apply(value);
+		Packet packet = clientPacketDefinitions.get(id).apply(value);
 		
 		out.add(packet);
 	}

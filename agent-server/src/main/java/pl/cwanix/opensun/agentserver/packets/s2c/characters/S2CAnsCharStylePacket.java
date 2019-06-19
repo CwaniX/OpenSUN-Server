@@ -1,11 +1,11 @@
-package pl.cwanix.opensun.agentserver.packets.s2c;
+package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.commonserver.packets.ServerPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class S2CA5C1Packet extends ServerPacket {
+public class S2CAnsCharStylePacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xC1);
 	

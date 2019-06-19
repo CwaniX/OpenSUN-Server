@@ -3,12 +3,12 @@ package pl.cwanix.opensun.authserver.packet.s2c;
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
-import pl.cwanix.opensun.commonserver.packets.ServerPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class S2CHelloPacket extends ServerPacket {
+public class S2CHelloPacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x00);
 	
