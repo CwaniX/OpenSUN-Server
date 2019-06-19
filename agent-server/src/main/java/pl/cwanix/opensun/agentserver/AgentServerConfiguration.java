@@ -14,6 +14,7 @@ import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskCreateNewCharPacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskFreeCharNamePacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskPingPacket;
+import pl.cwanix.opensun.agentserver.packets.c2s.C2SAskSelectCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.commonserver.packets.ClientPacket;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
@@ -31,6 +32,7 @@ public class AgentServerConfiguration {
 		definitions.put(C2SAskPingPacket.PACKET_ID, C2SAskPingPacket::new);
 		definitions.put(C2SAskDeleteCharPacket.PACKET_ID, C2SAskDeleteCharPacket::new);
 		definitions.put(C2SAskCreateNewCharPacket.PACKET_ID, C2SAskCreateNewCharPacket::new);
+		definitions.put(C2SAskSelectCharPacket.PACKET_ID, C2SAskSelectCharPacket::new);
 		
 		return definitions;
 	}
