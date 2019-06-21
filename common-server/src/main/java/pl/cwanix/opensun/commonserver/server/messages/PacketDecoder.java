@@ -3,7 +3,6 @@ package pl.cwanix.opensun.commonserver.server.messages;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
+import pl.cwanix.opensun.utils.functions.ThrowingFunction;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
@@ -24,7 +24,7 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("PACKET DECODER");
 	
-	private final Map<PacketHeader, Function<byte[], Packet>> clientPacketDefinitions;
+	private final Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions;
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, byte[] msg, List<Object> out) throws Exception {

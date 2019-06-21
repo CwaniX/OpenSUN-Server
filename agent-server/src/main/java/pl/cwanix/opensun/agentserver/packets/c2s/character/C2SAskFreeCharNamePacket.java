@@ -1,10 +1,14 @@
 package pl.cwanix.opensun.agentserver.packets.c2s.character;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
+@Slf4j
+@Getter
 @IncomingPacket
 public class C2SAskFreeCharNamePacket extends Packet {
 	
@@ -19,11 +23,4 @@ public class C2SAskFreeCharNamePacket extends Packet {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

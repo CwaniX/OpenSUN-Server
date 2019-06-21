@@ -7,6 +7,7 @@ import org.slf4j.MarkerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
@@ -18,6 +19,7 @@ import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
+@Getter
 @IncomingPacket
 public class C2SAskDeleteCharPacket extends Packet {
 	
@@ -51,11 +53,4 @@ public class C2SAskDeleteCharPacket extends Packet {
 		
 		ctx.writeAndFlush(ansDeleteCharPacket);
 	}
-
-	@Override
-	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
