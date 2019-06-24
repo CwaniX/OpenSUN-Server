@@ -16,6 +16,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
+import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketException;
@@ -28,6 +29,7 @@ import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 import pl.cwanix.opensun.utils.functions.ThrowingFunction;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
+@Slf4j
 @Configuration
 public class SUNServerAutoConfiguration {
 	
@@ -68,8 +70,8 @@ public class SUNServerAutoConfiguration {
 	}
 	
 	@Bean
-	@ConditionalOnMissingBean
-	@SuppressWarnings("unchecked")
+	//@ConditionalOnMissingBean
+	//@SuppressWarnings("unchecked")
 	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws Exception {
 		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
 		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
@@ -87,6 +89,7 @@ public class SUNServerAutoConfiguration {
 				}
 			};
 			
+			log.debug("Loaded packet: {}", packetClass.getName());
 			definitions.put((PacketHeader) packetClass.getDeclaredField("PACKET_ID").get(null), packetConstructorFunction);
 		}
 		
