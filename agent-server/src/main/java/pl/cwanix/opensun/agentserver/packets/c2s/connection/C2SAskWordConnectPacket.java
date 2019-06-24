@@ -13,7 +13,7 @@ import pl.cwanix.opensun.utils.packets.PacketHeader;
 @IncomingPacket
 public class C2SAskWordConnectPacket extends Packet  {
 	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0xdf);
+	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0xDF);
 	
 	public C2SAskWordConnectPacket(byte[] value) {
 		// TODO Auto-generated constructor stub
