@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 
 @RequiredArgsConstructor
@@ -32,7 +32,7 @@ public class AgentServerChannelHandler extends SUNServerChannelHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    	ClientPacket packet = (ClientPacket) msg;
+    	Packet packet = (Packet) msg;
     	packet.process(ctx);
     }
 }

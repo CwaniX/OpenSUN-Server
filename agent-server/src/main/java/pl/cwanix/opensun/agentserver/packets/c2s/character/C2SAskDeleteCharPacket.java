@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.packets.c2s;
+package pl.cwanix.opensun.agentserver.packets.c2s.character;
 
 import java.util.Arrays;
 
@@ -7,17 +7,21 @@ import org.slf4j.MarkerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsDeleteCharPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
-public class C2SAskDeleteCharPacket extends ClientPacket {
+@Getter
+@IncomingPacket
+public class C2SAskDeleteCharPacket extends Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
 	
@@ -49,5 +53,4 @@ public class C2SAskDeleteCharPacket extends ClientPacket {
 		
 		ctx.writeAndFlush(ansDeleteCharPacket);
 	}
-
 }
