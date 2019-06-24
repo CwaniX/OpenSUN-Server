@@ -7,6 +7,9 @@ auth-server/bin/
 game-server/.settings/
 game-server/target/
 game-server/bin/
+world-server/.settings/
+world-server/target/
+world-server/bin/
 agent-server/.settings/
 agent-server/target/
 agent-server/bin/
