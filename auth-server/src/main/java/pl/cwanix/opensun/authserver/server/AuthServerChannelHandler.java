@@ -9,7 +9,7 @@ import pl.cwanix.opensun.authserver.packet.s2c.S2CHelloPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSessionManager;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 
 @RequiredArgsConstructor
@@ -37,7 +37,7 @@ public class AuthServerChannelHandler extends SUNServerChannelHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    	ClientPacket packet = (ClientPacket) msg;
+    	Packet packet = (Packet) msg;
     	packet.process(ctx);
     }
 }

@@ -1,10 +1,11 @@
 package pl.cwanix.opensun.agentserver.packets.structures;
 
+import lombok.Getter;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
+@Getter
 public class ClientCharacterPartPacketStructure implements PacketStructure {
 	
 	private FixedLengthField slot;
@@ -47,7 +48,7 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 		unknownField4 = new FixedLengthField(4);
 	}
 
-	@Override
+	/*@Override
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(
 				slot.getValue(),
@@ -69,5 +70,5 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 				unknownField3.getValue(),
 				unknownField4.getValue()
 			);
-	}
+	}*/
 }

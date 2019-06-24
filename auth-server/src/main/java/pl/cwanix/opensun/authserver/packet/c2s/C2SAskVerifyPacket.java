@@ -3,12 +3,18 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 import java.util.Arrays;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsVerifyPacket;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class C2SAskVerifyPacket extends ClientPacket {
+@Slf4j
+@Getter
+@IncomingPacket
+public class C2SAskVerifyPacket extends Packet {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x01);
 	

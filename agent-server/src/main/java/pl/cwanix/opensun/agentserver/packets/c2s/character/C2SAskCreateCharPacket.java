@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.packets.c2s;
+package pl.cwanix.opensun.agentserver.packets.c2s.character;
 
 import java.util.Arrays;
 
@@ -7,17 +7,21 @@ import org.slf4j.MarkerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.agentserver.packets.s2c.S2CAnsCreateNewCharPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCreateCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
-public class C2SAskCreateNewCharPacket extends ClientPacket {
+@Getter
+@IncomingPacket
+public class C2SAskCreateCharPacket extends Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> CREATE NEW CHAR");
 	
@@ -29,7 +33,7 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 	private FixedLengthField faceCode;
 	private FixedLengthField hairCode;
 
-	public C2SAskCreateNewCharPacket(byte[] value) {
+	public C2SAskCreateCharPacket(byte[] value) {
 		this.classCode = new FixedLengthField(1, value[15]);
 		this.charName = new FixedLengthField(16, Arrays.copyOfRange(value, 20, 37));
 		this.heightCode = new FixedLengthField(1, value[37]);
@@ -60,7 +64,7 @@ public class C2SAskCreateNewCharPacket extends ClientPacket {
 					+ "&slot=" + slot,
 					null, Integer.class);
 			
-			S2CAnsCreateNewCharPacket ansCreateNewCharPackiet = new S2CAnsCreateNewCharPacket(slot);
+			S2CAnsCreateCharPacket ansCreateNewCharPackiet = new S2CAnsCreateCharPacket(slot);
 			ansCreateNewCharPackiet.process(ctx);
 			
 			ctx.writeAndFlush(ansCreateNewCharPackiet);

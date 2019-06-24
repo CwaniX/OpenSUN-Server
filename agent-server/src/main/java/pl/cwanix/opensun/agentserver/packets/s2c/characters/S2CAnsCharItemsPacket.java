@@ -1,11 +1,17 @@
-package pl.cwanix.opensun.agentserver.packets.s2c;
+package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.commonserver.packets.ServerPacket;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public class S2CA52APacket extends ServerPacket {
+@Slf4j
+@Getter
+@OutgoingPacket
+public class S2CAnsCharItemsPacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x2A);
 	
@@ -19,14 +25,8 @@ public class S2CA52APacket extends ServerPacket {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, (byte) 0xff,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x53, 0x00, 0x35, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, (byte) 0xa5, (byte) 0x9f,
-			0x01, 0x00, (byte) 0xe1, 0x2e, 0x03, 0x00, (byte) 0xa5, (byte) 0xbe, 0x00, 0x00
+			0x01, 0x00, (byte) 0xe1, 0x2e, 0x03, 0x00, (byte) 0xa5, (byte) 0xbe, 0x00
 	};
-
-	@Override
-	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
-	}
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
@@ -34,4 +34,9 @@ public class S2CA52APacket extends ServerPacket {
 		
 	}
 
+	@Override
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
+	}
 }

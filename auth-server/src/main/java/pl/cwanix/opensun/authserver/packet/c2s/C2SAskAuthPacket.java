@@ -6,18 +6,22 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
-import pl.cwanix.opensun.commonserver.packets.ClientPacket;
+import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.encryption.TEA;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
+@Slf4j
 @Getter
-public class C2SAskAuthPacket extends ClientPacket {
+@IncomingPacket
+public class C2SAskAuthPacket extends Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x03);
 	
