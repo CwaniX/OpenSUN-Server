@@ -13,11 +13,17 @@ import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 public abstract class Packet {
 	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x00, (byte) 0x00);
-	
 	public abstract void process(ChannelHandlerContext ctx);
-	public byte[] toByteArray() throws Exception {		
-		PacketHeader currentHeader = (PacketHeader) this.getClass().getDeclaredField("PACKET_ID").get(null);
+	public byte[] toByteArray() throws Exception {
+		PacketHeader currentHeader;
+		
+		if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
+			currentHeader = new PacketHeader(this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(), this.getClass().getAnnotation(IncomingPacket.class).type());
+		} else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
+			currentHeader = new PacketHeader(this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(), this.getClass().getAnnotation(IncomingPacket.class).type());
+		} else {
+			throw new PacketException("Wrong packet definition!");
+		}
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		baos.write(currentHeader.getValue());
