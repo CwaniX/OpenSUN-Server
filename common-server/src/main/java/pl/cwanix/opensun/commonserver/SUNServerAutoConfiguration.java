@@ -3,6 +3,8 @@ package pl.cwanix.opensun.commonserver;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -32,6 +34,8 @@ import pl.cwanix.opensun.utils.packets.PacketHeader;
 @Slf4j
 @Configuration
 public class SUNServerAutoConfiguration {
+	
+	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 	
 	@Bean
 	@ConditionalOnMissingBean
@@ -70,8 +74,7 @@ public class SUNServerAutoConfiguration {
 	}
 	
 	@Bean
-	//@ConditionalOnMissingBean
-	//@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws Exception {
 		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
 		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
@@ -89,8 +92,10 @@ public class SUNServerAutoConfiguration {
 				}
 			};
 			
-			log.debug("Loaded packet: {}", packetClass.getName());
-			definitions.put((PacketHeader) packetClass.getDeclaredField("PACKET_ID").get(null), packetConstructorFunction);
+			log.debug(MARKER, "Loaded incoming packet type: {}", packetClass.getSimpleName());
+			
+			PacketHeader header = new PacketHeader(packetClass.getAnnotation(IncomingPacket.class).category().getCategory(), packetClass.getAnnotation(IncomingPacket.class).type());
+			definitions.put(header, packetConstructorFunction);
 		}
 		
 		return definitions;
