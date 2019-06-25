@@ -15,19 +15,17 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
 @Getter
-@IncomingPacket
+@IncomingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0x89)
 public class C2SAskDeleteCharPacket extends Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
 	
 	private static final String DELETE_WORD = "delete";
-	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x89);
 	
 	private FixedLengthField slotNumber;
 	private FixedLengthField deleteWord;

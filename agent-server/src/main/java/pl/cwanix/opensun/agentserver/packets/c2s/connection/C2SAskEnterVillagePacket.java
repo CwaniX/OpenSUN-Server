@@ -7,15 +7,13 @@ import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCharItemsPacke
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCharStylePacket;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
 @Getter
-@IncomingPacket
+@IncomingPacket(category = PacketCategory.CONNECTION, type = 0x1F)
 public class C2SAskEnterVillagePacket extends Packet {
-	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0x1F);
 	
 	private FixedLengthField selectedChar;
 	
