@@ -15,6 +15,6 @@ public class ServerUnitStructure implements PacketStructure {
 	public ServerUnitStructure(ServerEntity server) {
 		this.serverName = new FixedLengthField(32, server.getName());
 		this.serverId = new FixedLengthField(1, server.getId());
-		this.unknown = new FixedLengthField(1);
+		this.unknown = new FixedLengthField(1, 0x01);
 	}
 }

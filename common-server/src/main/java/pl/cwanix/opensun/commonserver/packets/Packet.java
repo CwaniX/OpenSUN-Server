@@ -20,7 +20,7 @@ public abstract class Packet {
 		if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
 			currentHeader = new PacketHeader(this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(), this.getClass().getAnnotation(IncomingPacket.class).type());
 		} else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
-			currentHeader = new PacketHeader(this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(), this.getClass().getAnnotation(IncomingPacket.class).type());
+			currentHeader = new PacketHeader(this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(), this.getClass().getAnnotation(OutgoingPacket.class).type());
 		} else {
 			throw new PacketException("Wrong packet definition!");
 		}
