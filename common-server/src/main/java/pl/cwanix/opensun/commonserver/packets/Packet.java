@@ -1,20 +1,23 @@
 package pl.cwanix.opensun.commonserver.packets;
 
-import java.beans.PropertyDescriptor;
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-public abstract class Packet {
+public interface Packet extends PacketStructure {
 	
-	public abstract void process(ChannelHandlerContext ctx);
-	public byte[] toByteArray() throws Exception {
+	public void process(ChannelHandlerContext ctx);
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public default byte[] toByteArray() throws Exception {		
 		PacketHeader currentHeader;
 		
 		if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
@@ -27,18 +30,22 @@ public abstract class Packet {
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		baos.write(currentHeader.getValue());
-
-		for (PropertyDescriptor descriptor : BeanUtils.getPropertyDescriptors(this.getClass())) {
-			if (FixedLengthField.class.equals(descriptor.getPropertyType())) {
-				Method getter = descriptor.getReadMethod();
-				FixedLengthField field = (FixedLengthField) getter.invoke(this);
+		
+		for (Field field : this.getClass().getDeclaredFields()) {
+			if (FixedLengthField.class.equals(field.getType())) {
+				FixedLengthField fieldValue = (FixedLengthField) FieldUtils.readField(field, this, true);
 				
-				baos.write(field.getValue());
-			} else if (ArrayUtils.contains(descriptor.getPropertyType().getInterfaces(), PacketStructure.class)) {
-				Method getter = descriptor.getReadMethod();
-				PacketStructure field = (PacketStructure) getter.invoke(this);
+				baos.write(fieldValue.getValue());
+			} else if (ArrayUtils.contains(field.getType().getInterfaces(), PacketStructure.class)) {
+				PacketStructure fieldValue = (PacketStructure) FieldUtils.readField(field, this, true);
 				
-				baos.write(field.toByteArray());
+				baos.write(fieldValue.toByteArray());
+			} else if (ArrayUtils.contains(field.getType().getInterfaces(), List.class)) {
+				List<PacketStructure> fieldValue = (List<PacketStructure>) FieldUtils.readField(field, this, true);
+				
+				for (PacketStructure value : fieldValue) {
+					baos.write(value.toByteArray());
+				}
 			}
 		}
 		

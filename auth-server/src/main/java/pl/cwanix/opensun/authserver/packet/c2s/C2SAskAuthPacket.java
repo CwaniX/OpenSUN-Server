@@ -5,8 +5,6 @@ import java.util.Arrays;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
@@ -18,10 +16,8 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.encryption.TEA;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
-@Slf4j
-@Getter
 @IncomingPacket(category = PacketCategory.AUTH, type = 0x03)
-public class C2SAskAuthPacket extends Packet {
+public class C2SAskAuthPacket implements Packet {
 	
 	private FixedLengthField unknown1;
 	private FixedLengthField name;

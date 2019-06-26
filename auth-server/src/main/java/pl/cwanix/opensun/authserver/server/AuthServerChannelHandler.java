@@ -24,7 +24,7 @@ public class AuthServerChannelHandler extends SUNServerChannelHandler {
 	private final AuthServerProperties properties;
 	
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {		
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		ctx.channel().attr(SESSION_ATTRIBUTE).set(sessionManager.startNewSession(null));
 		ctx.channel().attr(REST_TEMPLATE_ATTRIBUTE).set(restTemplate);
 		ctx.channel().attr(PROPERIES_ATTRIBUTE).set(properties);

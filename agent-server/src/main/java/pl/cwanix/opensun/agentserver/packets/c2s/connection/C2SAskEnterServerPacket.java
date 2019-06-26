@@ -7,7 +7,6 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
@@ -20,9 +19,8 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
 @Slf4j
-@Getter
 @IncomingPacket(category = PacketCategory.CONNECTION, type = 0x76)
-public class C2SAskEnterServerPacket extends Packet {
+public class C2SAskEnterServerPacket implements Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK AUTH");
 	

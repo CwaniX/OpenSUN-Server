@@ -8,8 +8,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.authserver.entities.ServerEntity;
 import pl.cwanix.opensun.authserver.packet.structures.ServerUnitStructure;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
@@ -17,13 +15,10 @@ import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
-@Slf4j
-@Getter
 @OutgoingPacket(category = PacketCategory.AUTH, type = 0x11)
-public class S2CAnsSrvListPacket extends Packet {
+public class S2CAnsSrvListPacket implements Packet {
 
 	private FixedLengthField serversCount;
 	private List<ServerUnitStructure> serverList;
@@ -33,7 +28,6 @@ public class S2CAnsSrvListPacket extends Packet {
 		this.serverList = new ArrayList<>();
 	}
 
-	@Override
 	public void process(ChannelHandlerContext ctx) {
 		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
 		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();
@@ -42,16 +36,5 @@ public class S2CAnsSrvListPacket extends Packet {
 
 		serversCount.setValue(servers.size());
 		servers.stream().forEach(server -> serverList.add(new ServerUnitStructure(server)));
-	}
-	
-	@Override
-	public byte[] toByteArray() {
-		try {
-			return BytesUtils.mergeArrays(new byte[] { 0x33, 0x11 }, serversCount.getValue(), serverList.get(0).toByteArray());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

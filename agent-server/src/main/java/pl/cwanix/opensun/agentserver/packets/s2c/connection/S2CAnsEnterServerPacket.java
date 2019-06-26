@@ -8,8 +8,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
@@ -18,14 +16,11 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
-@Slf4j
-@Getter
 @OutgoingPacket(category = PacketCategory.CONNECTION, type = (byte) 0x98)
-public class S2CAnsEnterServerPacket extends Packet {
+public class S2CAnsEnterServerPacket implements Packet {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0x98);
 
@@ -52,21 +47,5 @@ public class S2CAnsEnterServerPacket extends Packet {
 		charCount.setValue((byte) characters.size());
 		unknownField1.setValue((byte) characters.size()); //??
 		characters.stream().forEach(character -> characterList.add(new ClientCharacterPartPacketStructure(character)));
-	}
-
-	@Override
-	public byte[] toByteArray() throws Exception {		
-		byte[] result = BytesUtils.mergeArrays(
-				PACKET_ID.getValue(),
-				userId.getValue(),
-				charCount.getValue(),
-				unknownField1.getValue()
-			);
-		
-		for (ClientCharacterPartPacketStructure character : characterList) {
-			result = BytesUtils.mergeArrays(result, character.toByteArray());
-		}
-		
-		return result;
 	}
 }

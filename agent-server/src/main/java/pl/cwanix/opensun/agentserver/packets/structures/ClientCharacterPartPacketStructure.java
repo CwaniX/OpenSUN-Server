@@ -1,11 +1,9 @@
 package pl.cwanix.opensun.agentserver.packets.structures;
 
-import lombok.Getter;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 import pl.cwanix.opensun.utils.packets.FixedLengthField;
 
-@Getter
 public class ClientCharacterPartPacketStructure implements PacketStructure {
 	
 	private FixedLengthField slot;
@@ -47,28 +45,4 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 		unknownField3 = new FixedLengthField(3);
 		unknownField4 = new FixedLengthField(4);
 	}
-
-	/*@Override
-	public byte[] toByteArray() {
-		return BytesUtils.mergeArrays(
-				slot.getValue(),
-				size.getValue(),
-				charName.getValue(),
-				heightCode.getValue(),
-				faceCode.getValue(),
-				hairCode.getValue(),
-				classCode.getValue(),
-				level.getValue(),
-				region.getValue(),
-				x.getValue(),
-				y.getValue(),
-				z.getValue(),
-				equipNumber.getValue(),
-				equipItemInfo.toByteArray(),
-				unknownField1.getValue(),
-				unknownField2.getValue(),
-				unknownField3.getValue(),
-				unknownField4.getValue()
-			);
-	}*/
 }
