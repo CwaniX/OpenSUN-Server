@@ -2,6 +2,7 @@ package pl.cwanix.opensun.commonserver.packets;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -31,7 +32,7 @@ public interface Packet extends PacketStructure {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		baos.write(currentHeader.getValue());
 		
-		for (Field field : this.getClass().getDeclaredFields()) {
+		for (Field field : this.getClass().getDeclaredFields()) {			
 			if (FixedLengthField.class.equals(field.getType())) {
 				FixedLengthField fieldValue = (FixedLengthField) FieldUtils.readField(field, this, true);
 				
@@ -40,7 +41,7 @@ public interface Packet extends PacketStructure {
 				PacketStructure fieldValue = (PacketStructure) FieldUtils.readField(field, this, true);
 				
 				baos.write(fieldValue.toByteArray());
-			} else if (ArrayUtils.contains(field.getType().getInterfaces(), List.class)) {
+			} else if (ArrayUtils.contains(field.getType().getInterfaces(), Collection.class)) {
 				List<PacketStructure> fieldValue = (List<PacketStructure>) FieldUtils.readField(field, this, true);
 				
 				for (PacketStructure value : fieldValue) {
