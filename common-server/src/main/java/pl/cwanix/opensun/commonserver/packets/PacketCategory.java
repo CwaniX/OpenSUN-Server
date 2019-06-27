@@ -8,7 +8,8 @@ public enum PacketCategory {
 	AUTH(0x33),
 	CONNECTION(0x48),
 	CHAR_INFO(0xA5),
-	SYNC(0xFD);
+	SYNC(0xFD),
+	STATUS(0x59);
 	
 	private int category;
 	

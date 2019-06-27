@@ -1,9 +1,9 @@
 package pl.cwanix.opensun.agentserver.packets.c2s.connection;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CA5DBPacket;
-import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCharItemsPacket;
-import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCharStylePacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsStatePacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsItemsPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsStylePacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsQuickPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsSkillsPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterVillagePacket;
@@ -23,11 +23,11 @@ public class C2SAskEnterVillagePacket implements Packet {
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(new S2CAnsCharItemsPacket());
+		ctx.writeAndFlush(new S2CAnsItemsPacket());
 		ctx.writeAndFlush(new S2CAnsSkillsPacket());
 		ctx.writeAndFlush(new S2CAnsQuickPacket());
-		ctx.writeAndFlush(new S2CAnsCharStylePacket());
-		ctx.writeAndFlush(new S2CA5DBPacket());
+		ctx.writeAndFlush(new S2CAnsStylePacket());
+		ctx.writeAndFlush(new S2CAnsStatePacket());
 		ctx.writeAndFlush(new S2CAnsEnterVillagePacket());
 	}
 }

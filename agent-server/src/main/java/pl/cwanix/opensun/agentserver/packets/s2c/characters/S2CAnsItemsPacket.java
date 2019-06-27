@@ -8,7 +8,7 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @OutgoingPacket(category = PacketCategory.CHAR_INFO, type = 0x2A)
-public class S2CAnsCharItemsPacket implements Packet {
+public class S2CAnsItemsPacket implements Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x2A);
 	
