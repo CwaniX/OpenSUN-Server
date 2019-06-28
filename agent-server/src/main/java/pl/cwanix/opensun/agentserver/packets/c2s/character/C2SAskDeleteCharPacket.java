@@ -15,7 +15,7 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
 @IncomingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0x89)
@@ -42,7 +42,7 @@ public class C2SAskDeleteCharPacket implements Packet {
 		
 		if (DELETE_WORD.equals(deleteWord.toString())) {
 			log.info(MARKER, "Deletig character");
-			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.getValue()[0]);
+			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.toByteArray()[0]);
 		} else {
 			log.info(MARKER, "Unable to delete character");
 		}

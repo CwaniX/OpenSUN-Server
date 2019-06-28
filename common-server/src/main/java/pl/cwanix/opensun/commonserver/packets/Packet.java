@@ -9,8 +9,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.utils.datatypes.PacketHeader;
+import pl.cwanix.opensun.utils.datatypes.SUNDataType;
 
 public interface Packet extends PacketStructure {
 	
@@ -33,12 +33,8 @@ public interface Packet extends PacketStructure {
 		baos.write(currentHeader.getValue());
 		
 		for (Field field : this.getClass().getDeclaredFields()) {			
-			if (FixedLengthField.class.equals(field.getType())) {
-				FixedLengthField fieldValue = (FixedLengthField) FieldUtils.readField(field, this, true);
-				
-				baos.write(fieldValue.getValue());
-			} else if (ArrayUtils.contains(field.getType().getInterfaces(), PacketStructure.class)) {
-				PacketStructure fieldValue = (PacketStructure) FieldUtils.readField(field, this, true);
+			if (ArrayUtils.contains(field.getType().getInterfaces(), SUNDataType.class)) {
+				SUNDataType fieldValue = (SUNDataType) FieldUtils.readField(field, this, true);
 				
 				baos.write(fieldValue.toByteArray());
 			} else if (ArrayUtils.contains(field.getType().getInterfaces(), Collection.class)) {

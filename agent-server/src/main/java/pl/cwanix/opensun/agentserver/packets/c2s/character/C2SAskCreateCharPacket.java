@@ -15,7 +15,7 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
 @IncomingPacket(category = PacketCategory.CHAR_INFO, type = 0x6F)
@@ -53,10 +53,10 @@ public class C2SAskCreateCharPacket implements Packet {
 			restTemplate.postForObject(properties.getDb().getServerUrl()
 					+ "/character/create?accountId=" + session.getUser().getAccount().getId()
 					+ "&name=" + charName.toString()
-					+ "&classCode=" + classCode.getValue()[0]
-					+ "&heightCode=" + heightCode.getValue()[0]
-					+ "&faceCode=" + faceCode.getValue()[0]
-					+ "&hairCode=" + hairCode.getValue()[0]
+					+ "&classCode=" + classCode.toByteArray()[0]
+					+ "&heightCode=" + heightCode.toByteArray()[0]
+					+ "&faceCode=" + faceCode.toByteArray()[0]
+					+ "&hairCode=" + hairCode.toByteArray()[0]
 					+ "&slot=" + slot,
 					null, Integer.class);
 			

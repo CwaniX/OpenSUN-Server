@@ -16,7 +16,7 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
 @IncomingPacket(category = PacketCategory.CONNECTION, type = 0x76)

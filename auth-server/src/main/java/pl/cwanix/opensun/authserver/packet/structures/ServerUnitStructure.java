@@ -3,7 +3,7 @@ package pl.cwanix.opensun.authserver.packet.structures;
 import lombok.Getter;
 import pl.cwanix.opensun.authserver.entities.ServerEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Getter
 public class ServerUnitStructure implements PacketStructure {

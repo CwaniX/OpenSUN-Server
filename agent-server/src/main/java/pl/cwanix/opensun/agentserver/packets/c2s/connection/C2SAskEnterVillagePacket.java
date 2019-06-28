@@ -10,7 +10,7 @@ import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterVillagePa
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @IncomingPacket(category = PacketCategory.CONNECTION, type = 0x1F)
 public class C2SAskEnterVillagePacket implements Packet {

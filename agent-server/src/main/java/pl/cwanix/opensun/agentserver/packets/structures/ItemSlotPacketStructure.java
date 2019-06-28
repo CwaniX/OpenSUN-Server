@@ -3,7 +3,7 @@ package pl.cwanix.opensun.agentserver.packets.structures;
 import java.util.Arrays;
 
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class ItemSlotPacketStructure implements PacketStructure {
 	

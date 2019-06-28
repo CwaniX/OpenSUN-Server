@@ -16,8 +16,8 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
 @OutgoingPacket(category = PacketCategory.CONNECTION, type = (byte) 0x98)
 public class S2CAnsEnterServerPacket implements Packet {

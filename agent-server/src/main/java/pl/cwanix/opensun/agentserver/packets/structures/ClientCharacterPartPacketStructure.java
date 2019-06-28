@@ -2,7 +2,7 @@ package pl.cwanix.opensun.agentserver.packets.structures;
 
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class ClientCharacterPartPacketStructure implements PacketStructure {
 	

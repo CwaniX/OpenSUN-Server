@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class EquipItemInfoPacketStructure implements PacketStructure {
 	
