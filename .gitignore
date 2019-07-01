@@ -19,4 +19,7 @@ common-server/bin/
 db-server/.settings/
 db-server/target/
 db-server/bin/
+console/.settings/
+console/target/
+console/bin/
 utils/target/
