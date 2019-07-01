@@ -6,7 +6,7 @@ import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
-@OutgoingPacket(category = PacketCategory.SYNC, type = (byte) 0x8D)
+@OutgoingPacket(category = PacketCategory.SYNC, type = (byte) 0x1F)
 public class S2CAnsPlayerEnterPacket implements Packet {
 	
 	private FixedLengthField value;
