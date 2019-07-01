@@ -28,8 +28,8 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelInitializer;
 import pl.cwanix.opensun.commonserver.server.messages.PacketDecoder;
 import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
+import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 import pl.cwanix.opensun.utils.functions.ThrowingFunction;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
 @Configuration

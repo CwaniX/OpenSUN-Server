@@ -20,9 +20,11 @@ public class PacketEncoder extends MessageToMessageEncoder<Packet> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
-		log.debug(MARKER, "Outgoing data: {}", BytesUtils.byteArrayToHexString(msg.toByteArray()));
+		byte[] result = msg.toByteArray();
 		
-	    out.add(msg.toByteArray());
+		log.debug(MARKER, "Outgoing data: {}", BytesUtils.byteArrayToHexString(result));
+		
+	    out.add(result);
 	}
 
 }

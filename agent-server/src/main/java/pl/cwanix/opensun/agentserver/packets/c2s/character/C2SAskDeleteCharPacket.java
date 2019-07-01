@@ -7,7 +7,6 @@ import org.slf4j.MarkerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
@@ -15,19 +14,16 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
-@Getter
-@IncomingPacket
-public class C2SAskDeleteCharPacket extends Packet {
+@IncomingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0x89)
+public class C2SAskDeleteCharPacket implements Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
 	
 	private static final String DELETE_WORD = "delete";
-	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x89);
 	
 	private FixedLengthField slotNumber;
 	private FixedLengthField deleteWord;
@@ -46,7 +42,7 @@ public class C2SAskDeleteCharPacket extends Packet {
 		
 		if (DELETE_WORD.equals(deleteWord.toString())) {
 			log.info(MARKER, "Deletig character");
-			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.getValue()[0]);
+			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.toByteArray()[0]);
 		} else {
 			log.info(MARKER, "Unable to delete character");
 		}

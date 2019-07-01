@@ -7,7 +7,6 @@ import org.slf4j.MarkerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCreateCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
@@ -15,17 +14,14 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
-@Getter
-@IncomingPacket
-public class C2SAskCreateCharPacket extends Packet {
+@IncomingPacket(category = PacketCategory.CHAR_INFO, type = 0x6F)
+public class C2SAskCreateCharPacket implements Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> CREATE NEW CHAR");
-	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x6F);
 
 	private FixedLengthField classCode;
 	private FixedLengthField charName;
@@ -57,10 +53,10 @@ public class C2SAskCreateCharPacket extends Packet {
 			restTemplate.postForObject(properties.getDb().getServerUrl()
 					+ "/character/create?accountId=" + session.getUser().getAccount().getId()
 					+ "&name=" + charName.toString()
-					+ "&classCode=" + classCode.getValue()[0]
-					+ "&heightCode=" + heightCode.getValue()[0]
-					+ "&faceCode=" + faceCode.getValue()[0]
-					+ "&hairCode=" + hairCode.getValue()[0]
+					+ "&classCode=" + classCode.toByteArray()[0]
+					+ "&heightCode=" + heightCode.toByteArray()[0]
+					+ "&faceCode=" + faceCode.toByteArray()[0]
+					+ "&hairCode=" + hairCode.toByteArray()[0]
 					+ "&slot=" + slot,
 					null, Integer.class);
 			

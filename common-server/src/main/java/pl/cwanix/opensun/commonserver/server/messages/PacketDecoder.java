@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
+import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 import pl.cwanix.opensun.utils.functions.ThrowingFunction;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
 
 @Slf4j
 @ChannelHandler.Sharable

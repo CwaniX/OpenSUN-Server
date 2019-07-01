@@ -1,30 +1,31 @@
 package pl.cwanix.opensun.commonserver.packets;
 
-import java.beans.PropertyDescriptor;
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
+import pl.cwanix.opensun.utils.datatypes.SUNDataType;
 
-public interface PacketStructure {
+public interface PacketStructure extends SUNDataType {
 
-	public default byte[] toByteArray() throws Exception {				
+	@SuppressWarnings("unchecked")
+	public default byte[] toByteArray() throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		for (PropertyDescriptor descriptor : BeanUtils.getPropertyDescriptors(this.getClass())) {
-			if (FixedLengthField.class.equals(descriptor.getPropertyType())) {
-				Method getter = descriptor.getReadMethod();
-				FixedLengthField field = (FixedLengthField) getter.invoke(this);
+		
+		for (Field field : this.getClass().getDeclaredFields()) {
+			if (ArrayUtils.contains(field.getType().getInterfaces(), SUNDataType.class)) {
+				SUNDataType fieldValue = (SUNDataType) FieldUtils.readField(field, this, true);
 				
-				baos.write(field.getValue());
-			} else if (ArrayUtils.contains(descriptor.getPropertyType().getInterfaces(), PacketStructure.class)) {
-				Method getter = descriptor.getReadMethod();
-				PacketStructure field = (PacketStructure) getter.invoke(this);
+				baos.write(fieldValue.toByteArray());
+			} else if (ArrayUtils.contains(field.getType().getInterfaces(), List.class)) {
+				List<PacketStructure> fieldValue = (List<PacketStructure>) FieldUtils.readField(field, this, true);
 				
-				baos.write(field.toByteArray());
+				for (PacketStructure value : fieldValue) {
+					baos.write(value.toByteArray());
+				}
 			}
 		}
 		

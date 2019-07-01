@@ -7,7 +7,6 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
@@ -16,17 +15,14 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.utils.packets.FixedLengthField;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
-@Getter
-@IncomingPacket
-public class C2SAskEnterServerPacket extends Packet {
+@IncomingPacket(category = PacketCategory.CONNECTION, type = 0x76)
+public class C2SAskEnterServerPacket implements Packet {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK AUTH");
-
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x48, (byte) 0x76);
 	
 	private FixedLengthField userId;
 	private FixedLengthField userName;

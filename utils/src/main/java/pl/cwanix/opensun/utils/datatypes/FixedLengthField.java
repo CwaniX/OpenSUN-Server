@@ -1,10 +1,8 @@
-package pl.cwanix.opensun.utils.packets;
+package pl.cwanix.opensun.utils.datatypes;
 
-import lombok.Getter;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
-@Getter
-public class FixedLengthField {
+public class FixedLengthField implements SUNDataType {
 
 	private byte[] value;
 	
@@ -51,5 +49,10 @@ public class FixedLengthField {
 	
 	public String toString() {
 		return new String(BytesUtils.cutTail(value));
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		return value;
 	}
 }

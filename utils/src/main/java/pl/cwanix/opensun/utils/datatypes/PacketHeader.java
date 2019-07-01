@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.utils.packets;
+package pl.cwanix.opensun.utils.datatypes;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

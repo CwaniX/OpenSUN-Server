@@ -36,6 +36,8 @@ $BODY$;
 ------------------------------------------------------------------
 --  FUNCTION func_delete_character
 ------------------------------------------------------------------
+DROP FUNCTION func_delete_character(bigint, integer);
+
 CREATE OR REPLACE FUNCTION func_delete_character(
 	in_account_id integer,
 	in_slot integer
@@ -54,6 +56,8 @@ $BODY$;
 ------------------------------------------------------------------
 --  FUNCTION func_create_character
 ------------------------------------------------------------------
+DROP FUNCTION func_create_character(bigint, character varying, integer, integer, integer, integer, integer);
+
 CREATE OR REPLACE FUNCTION func_create_character(
 	in_account_id integer,
 	in_name character varying,

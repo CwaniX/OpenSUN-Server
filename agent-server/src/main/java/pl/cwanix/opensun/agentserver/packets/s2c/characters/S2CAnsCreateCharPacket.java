@@ -3,8 +3,6 @@ package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
@@ -12,16 +10,13 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.utils.packets.PacketHeader;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 
-@Slf4j
-@Getter
-@OutgoingPacket
-public class S2CAnsCreateCharPacket extends Packet {
-	
-	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xE2);
+@OutgoingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0xE2)
+public class S2CAnsCreateCharPacket implements Packet {
 	
 	private final int slot;
+	
 	private ClientCharacterPartPacketStructure character;
 	
 	public S2CAnsCreateCharPacket(int slot) {
