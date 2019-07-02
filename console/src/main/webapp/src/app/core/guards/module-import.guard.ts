@@ -1,0 +1,20 @@
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ModuleImportGuard implements CanActivate {
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return true;
+  }
+}
+
+export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
+  if (parentModule) {
+    throw new Error(`${moduleName} has already been loaded.`);
+  }
+}

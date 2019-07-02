@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-pink p-1 pl-3 mb-3">
+    <div class="navbar-collapse">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/servers/add"><span class="fas fa-plus-square"></span>&nbsp;<span>Dodaj</span></a>
+        <ng-container *ngIf="selectedServer">
+          <a class="nav-item nav-link" [routerLink]="'/servers/edit/' + selectedServer.id"><span
+              class="fas fa-pen-square"></span>&nbsp;<span>Edytuj</span></a>
+          <button class="btn btn-link nav-item nav-link" [swal]="deleteSwal"><span class="fas fa-minus-square"></span>&nbsp;<span>Usuń</span></button>
+        </ng-container>
+      </div>
+      <div class="navbar-nav w-100"></div>
+      <div class="navbar-nav">
+        <ng-container *ngIf="selectedServer">
+          <button class="btn btn-link nav-item nav-link"><span class="fas fa-square"></span>&nbsp;<span>Restart</span></button>
+        </ng-container>
+      </div>
+      <div class="navbar-nav w-100"></div>
+      <div class="navbar-nav">
+        <ng-container *ngIf="selectedServer">
+          <a class="nav-item nav-link" [routerLink]="'/servers/' + selectedServer.id" *ngIf="selectedServer"><span class="fas fa-square"></span>&nbsp;<span>Szczegóły</span></a>
+        </ng-container>
+      </div>
+    </div>
+  </nav>
+
+<div class="container">
+  <form>
+    <h5 class="mb-3">Database Proxy Server</h5>
+    <div class="container-row">
+      <div class="alert alert-warning">
+        <strong>Warning!</strong>&nbsp;
+        <span>All actions performed on the database from the administration console will be performed through selected
+          proxy server.</span>
+      </div>
+
+      <div class="card bg-dark">
+        <div class="card-body p-0">
+          <table class="table table-dark table-hover table-striped table-borderless">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>IP address</th>
+                <th>Port</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="(serversList | async) as servers; else spinner;">
+                <tr *ngFor="let server of servers; let i = index;" [ngClass]="{'table-success text-success': selectedServer?.id === server.id}"
+                  (click)="selectServer(server)">
+                  <th scope="row"><span class="fas fa-desktop"></span></th>
+                  <td>{{server.id}}</td>
+                  <td>{{server.name}}</td>
+                  <td>{{server.ip}}</td>
+                  <td>{{server.port}}</td>
+                </tr>
+              </ng-container>
+              <ng-template #spinner>
+                <tr>
+                  <td colspan="4" class="text-center"><span class="spinner-border spinner-border-sm text-info"></span></td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<swal #deleteSwal title="Czy na pewno chcesz usunąć serwer {{selectedServer?.name}}?" type="warning" text="Wybranej operacji nie będzie można cofnąć."
+  showCancelButton="true" confirmButtonText="Tak" cancelButtonText="Anuluj" (confirm)="deleteServer(selectedServer)"></swal>
+
+<!--<div class="container">
+  <form>
+    <h5 class="mb-3">Database Proxy Server</h5>
+    <div class="container-row">
+      <div class="alert alert-warning">
+        <strong>Warning!</strong>&nbsp;
+        <span>All actions performed on the database from the administration console will be performed through selected
+          proxy server.</span>
+      </div>
+
+      <app-server-input></app-server-input>
+    </div>
+  </form>
+</div>-->

@@ -10,7 +10,16 @@
       <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active"><span class="fas fa-home mr-2"></span><span>Statistics</span></a>
       <a class="nav-item nav-link" routerLink="/servers" routerLinkActive="active"><span class="fas fa-desktop mr-2"></span><span>Servers</span></a>
       <a class="nav-item nav-link" routerLink="/database" routerLinkActive="active"><span class="fas fa-desktop mr-2"></span><span>Database</span></a>
-      <a class="nav-item nav-link" routerLink="/config" routerLinkActive="active"><span class="fas fa-desktop mr-2"></span><span>Configuration</span></a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="configDropdown" data-toggle="dropdown"><span class="fas fa-cog mr-2"></span><span>Configuration</span></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/config/auth">Authorization servers</a>
+          <a class="dropdown-item" routerLink="/config/agent">Agent servers</a>
+          <a class="dropdown-item" routerLink="/config/game">Game servers</a>
+          <a class="dropdown-item" routerLink="/config/world">World servers</a>
+          <a class="dropdown-item" routerLink="/config/dbproxy">Database proxy servers</a>
+        </div>
+      </li>
     </div>
   </div>
 </nav>

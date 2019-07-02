@@ -34,5 +34,13 @@ body {
 }
 
 .bg-pink {
-    background-color: #a72867 !important;
+    //background-color: #a72867 !important;
+    background-color: #494949 !important;
+}
+
+.container-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 1rem;
 }

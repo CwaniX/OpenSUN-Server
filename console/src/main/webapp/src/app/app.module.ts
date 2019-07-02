@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from 'src/app/modules/layout/layout.module';
 import { ServersModule } from 'src/app/modules/servers/servers.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ConfigurationModule } from 'src/app/modules/configuration/configuration.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ErrorInterceptor } from 'src/app/core/interceptors/error.interceptor';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [
@@ -14,8 +18,11 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     LayoutModule,
     ServersModule,
+    ConfigurationModule,
+    CoreModule,
     SweetAlert2Module.forRoot({
       buttonsStyling: false,
       customClass: 'modal-content',
@@ -23,7 +30,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
       cancelButtonClass: 'btn btn-danger mx-3'
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
