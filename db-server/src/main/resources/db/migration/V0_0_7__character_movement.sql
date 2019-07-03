@@ -18,7 +18,7 @@ ALTER TABLE "character_set"
 --  FUNCTION func_update_character_position
 ------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION func_update_character_position(
-	in_id character varying,
+	in_id integer,
 	in_x real,
 	in_y real,
 	in_z real
