@@ -56,4 +56,13 @@ public class CharacterController {
 	public Integer findFreeSlotByAccountId(@RequestParam("accountId") int accountId) {
 		return characterEntityRepository.findFreeSlot(accountId);
 	}
+	
+	@PostMapping(path = "/updatePosition", produces = "application/json")
+	public Integer updatePosition(
+			@RequestParam("id") int id,
+			@RequestParam("x") float x,
+			@RequestParam("y") float y,
+			@RequestParam("z") float z) {
+		return characterEntityRepository.updatePosition(id, x, y, z);
+	}
 }

@@ -24,4 +24,7 @@ public interface CharacterEntityRepository extends JpaRepository<CharacterEntity
 	
 	@Procedure(procedureName = "func_find_free_slot")
 	public Integer findFreeSlot(int accountId);
+	
+	@Procedure(procedureName = "func_update_character_position")
+	public Integer updatePosition(int id, float x, float y, float z);
 }

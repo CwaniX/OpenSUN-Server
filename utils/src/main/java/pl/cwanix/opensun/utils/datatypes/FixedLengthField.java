@@ -25,6 +25,11 @@ public class FixedLengthField implements SUNDataType {
 		setValue(value);
 	}
 	
+	public FixedLengthField(int length, float value) {
+		this.value = new byte[length];
+		setValue(value);
+	}
+	
 	public void setValue(String text) {
 		setValue(text.getBytes());
 	}
@@ -41,6 +46,10 @@ public class FixedLengthField implements SUNDataType {
 	
 	public void setValue(int value) {
 		setValue(BytesUtils.intToByteArray(value));
+	}
+	
+	public void setValue(float value) {
+		setValue(BytesUtils.floatToByteArray(value));
 	}
 	
 	public int toInt() {

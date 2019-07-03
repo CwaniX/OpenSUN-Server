@@ -9,7 +9,7 @@ public class CharacterPositionEntity {
 
 	private int id;
 	private int region;
-	private int locationX;
-	private int locationY;
-	private int locationZ;
+	private float locationX;
+	private float locationY;
+	private float locationZ;
 }
