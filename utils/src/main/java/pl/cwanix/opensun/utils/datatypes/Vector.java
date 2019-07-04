@@ -32,6 +32,6 @@ public class Vector implements SUNDataType {
 	
 	@Override
 	public byte[] toByteArray() {
-		return ByteBuffer.allocate(12).putFloat(x).putFloat(y).putFloat(z).array();
+		return ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN).putFloat(x).putFloat(y).putFloat(z).array();
 	}
 }

@@ -5,7 +5,7 @@ import org.slf4j.MarkerFactory;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.agentserver.packets.s2c.sync.S2CAnsVillageMovePacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.zone.S2CAnsVillageMovePacket;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;

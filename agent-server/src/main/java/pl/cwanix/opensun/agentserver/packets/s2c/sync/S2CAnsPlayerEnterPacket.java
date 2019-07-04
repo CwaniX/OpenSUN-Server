@@ -7,15 +7,18 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 
 @OutgoingPacket(category = PacketCategory.SYNC, type = (byte) 0x1F)
 public class S2CAnsPlayerEnterPacket implements Packet {
 	
 	private Vector currentPosition;
+	private FixedLengthField unknown;
 	
 	public S2CAnsPlayerEnterPacket() {
 		currentPosition = new Vector();
+		unknown = new FixedLengthField(2);
 	}
 
 	@Override
