@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharErrorPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -38,13 +39,17 @@ public class C2SAskDeleteCharPacket implements Packet {
 		AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 		RestTemplate restTemplate = ctx.channel().attr(AgentServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
 		AgentServerProperties properties = ctx.channel().attr(AgentServerChannelHandler.PROPERIES_ATTRIBUTE).get();
-		S2CAnsDeleteCharPacket ansDeleteCharPacket = new S2CAnsDeleteCharPacket();
+		Packet ansDeleteCharPacket;
 		
 		if (DELETE_WORD.equals(deleteWord.toString())) {
 			log.info(MARKER, "Deletig character");
 			restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slotNumber.toByteArray()[0]);
+			
+			ansDeleteCharPacket = new S2CAnsDeleteCharPacket();
 		} else {
 			log.info(MARKER, "Unable to delete character");
+			
+			ansDeleteCharPacket = new S2CAnsDeleteCharErrorPacket();
 		}
 		
 		ctx.writeAndFlush(ansDeleteCharPacket);

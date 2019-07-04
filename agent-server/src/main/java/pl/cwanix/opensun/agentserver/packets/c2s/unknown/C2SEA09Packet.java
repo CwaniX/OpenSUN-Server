@@ -16,7 +16,6 @@ public class C2SEA09Packet implements Packet {
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
 		ctx.writeAndFlush(new S2CAnsRecoverAttrPacket());
 		ctx.writeAndFlush(new S2CAnsRecoverAttrMpPacket());
 	}

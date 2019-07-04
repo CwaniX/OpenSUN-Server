@@ -10,7 +10,8 @@ public enum PacketCategory {
 	CHAR_INFO(0xA5),
 	SYNC(0xFD),
 	STATUS(0x59),
-	UNKNOWN(0xEA);
+	UNKNOWN(0xEA),
+	ZONE(0x6F);
 	
 	private int category;
 	

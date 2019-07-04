@@ -39,7 +39,7 @@ public class C2SAskKeyboardMovePacket implements Packet {
 		RestTemplate restTemplate = ctx.channel().attr(AgentServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
 		AgentServerProperties properties = ctx.channel().attr(AgentServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
-		log.debug(MARKER, "setting new position: {} {} {}", currentPosition.getX(), currentPosition.getY(), currentPosition.getZ());
+		log.debug(MARKER, "Updating character position: {} {} {}", currentPosition.getX(), currentPosition.getY(), currentPosition.getZ());
 		
 		restTemplate.postForObject(properties.getDb().getServerUrl()
 				+ "/character/updatePosition?id=" + session.getCharacter().getId()
