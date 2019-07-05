@@ -1,7 +1,6 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
 import io.netty.channel.ChannelHandlerContext;
-import pl.cwanix.opensun.agentserver.packets.structures.RenderEquipInfoPacketStructure;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -17,12 +16,9 @@ public class S2CAnsAllPlayersEquipInfoPacket implements Packet {
 
 	public S2CAnsAllPlayersEquipInfoPacket() {
 		value = new FixedLengthField(42,
-				new byte[] { 0x01, 0x04, 0x00, 0x00,
-						
-						0x00,
-						
+				new byte[] { 0x01,
+						0x04, 0x00, 0x00, 0x00,
 						0x09,
-						
 						0x00, (byte) 0x89, 0x00, 0x0c,
 						0x00,
 						0x01, (byte) 0xb5,

@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharErrorPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CErrDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -49,7 +49,7 @@ public class C2SAskDeleteCharPacket implements Packet {
 		} else {
 			log.info(MARKER, "Unable to delete character");
 			
-			ansDeleteCharPacket = new S2CAnsDeleteCharErrorPacket();
+			ansDeleteCharPacket = new S2CErrDeleteCharPacket();
 		}
 		
 		ctx.writeAndFlush(ansDeleteCharPacket);

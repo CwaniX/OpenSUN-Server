@@ -9,12 +9,12 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.AUTH, type = 0x00)
-public class S2CHelloPacket implements Packet {
+public class S2CAnsHelloPacket implements Packet {
 	
 	private FixedLengthField serverInfo;
 	private FixedLengthField encKey;
 	
-	public S2CHelloPacket() {
+	public S2CAnsHelloPacket() {
 		this.serverInfo = new FixedLengthField(64);
 		this.encKey = new FixedLengthField(4);
 	}
