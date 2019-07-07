@@ -60,10 +60,7 @@ public class C2SAskCreateCharPacket implements Packet {
 					+ "&slot=" + slot,
 					null, Integer.class);
 			
-			S2CAnsCreateCharPacket ansCreateNewCharPackiet = new S2CAnsCreateCharPacket(slot);
-			ansCreateNewCharPackiet.process(ctx);
-			
-			ctx.writeAndFlush(ansCreateNewCharPackiet);
+			ctx.writeAndFlush(new S2CAnsCreateCharPacket(slot));
 		} else {
 			log.info(MARKER, "Unable to create new character. There is not free slot!");
 		}

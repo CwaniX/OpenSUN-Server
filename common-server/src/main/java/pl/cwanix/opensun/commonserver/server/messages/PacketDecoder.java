@@ -33,9 +33,12 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
 		PacketHeader id = new PacketHeader(msg[0], msg[1]);
 		byte[] value = Arrays.copyOfRange(msg, 2, msg.length);
 		
-		Packet packet = clientPacketDefinitions.get(id).apply(value);
+		ThrowingFunction<byte[], Packet, Exception> packetCreationFunction = clientPacketDefinitions.get(id);
 		
-		out.add(packet);
+		if (packetCreationFunction == null) {
+			log.error(MARKER, "Unknown packet: {}", BytesUtils.byteArrayToHexString(id.getValue()));
+		} else {
+			out.add(packetCreationFunction.apply(value));
+		}
 	}
-
 }

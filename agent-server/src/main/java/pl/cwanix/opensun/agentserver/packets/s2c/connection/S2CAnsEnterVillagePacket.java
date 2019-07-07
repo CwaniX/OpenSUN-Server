@@ -1,6 +1,8 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 
 import io.netty.channel.ChannelHandlerContext;
+import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
+import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -9,16 +11,17 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 @OutgoingPacket(category = PacketCategory.CONNECTION, type = (byte) 0x83)
 public class S2CAnsEnterVillagePacket implements Packet {
 	
-	private FixedLengthField value;
+	private FixedLengthField playerKey;
 	
 	public S2CAnsEnterVillagePacket() {
-		value = new FixedLengthField(8, new byte[] { 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
+		playerKey = new FixedLengthField(4);
 	}
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
+		AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 		
+		playerKey.setValue(session.getCharacter().getId());
 	}
 
 }

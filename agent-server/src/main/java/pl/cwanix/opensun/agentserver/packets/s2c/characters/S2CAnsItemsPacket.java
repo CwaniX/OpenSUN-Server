@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -23,12 +22,6 @@ public class S2CAnsItemsPacket implements Packet {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, (byte) 0xff,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x53, 0x00, 0x35, 0x00, 0x00, 0x00, 0x00
 	};
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public byte[] toByteArray() {

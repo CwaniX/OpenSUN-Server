@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.status;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -16,11 +15,4 @@ public class S2CAnsRecoverAttrMpPacket implements Packet {
 				new byte[] { 0x21, 0x00, 0x00, 0x00, (byte) 0x4e, 0x08, 0x00, 0x00,
 						(byte) 0xc4, 0x03, 0x00, 0x00 });
 	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

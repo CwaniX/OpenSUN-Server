@@ -14,14 +14,9 @@ public class C2SAskSrvListPacket implements Packet {
 
 	}
 	
-	public void process(ChannelHandlerContext ctx) {
-		S2CAnsSrvListPacket ansSrvListPacket = new S2CAnsSrvListPacket();
-		ansSrvListPacket.process(ctx);
-		
-		S2CAnsSrvStatePacket ansSrvStatePacket = new S2CAnsSrvStatePacket();
-		ansSrvStatePacket.process(ctx);
-		
-		ctx.writeAndFlush(ansSrvListPacket);
-		ctx.writeAndFlush(ansSrvStatePacket);
+	@Override
+	public void process(ChannelHandlerContext ctx) {		
+		ctx.writeAndFlush(new S2CAnsSrvListPacket());
+		ctx.writeAndFlush(new S2CAnsSrvStatePacket());
 	}
 }

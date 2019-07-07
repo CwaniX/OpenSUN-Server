@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -16,10 +15,6 @@ public class S2CAnsSrvStatePacket implements Packet {
 	
 	public S2CAnsSrvStatePacket() {
 		this.value = new byte[] { 0x01, 0x31, (byte) 0xcf, (byte) 0xdf, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x05, 0x01, (byte) 0xcc };
-	}
-
-	public void process(ChannelHandlerContext ctx) {
-
 	}
 
 	@Override

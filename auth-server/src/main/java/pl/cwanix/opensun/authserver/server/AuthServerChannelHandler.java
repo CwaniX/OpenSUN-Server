@@ -5,7 +5,7 @@ import org.springframework.web.client.RestTemplate;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.RequiredArgsConstructor;
-import pl.cwanix.opensun.authserver.packet.s2c.S2CHelloPacket;
+import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsHelloPacket;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSessionManager;
@@ -29,7 +29,7 @@ public class AuthServerChannelHandler extends SUNServerChannelHandler {
 		ctx.channel().attr(REST_TEMPLATE_ATTRIBUTE).set(restTemplate);
 		ctx.channel().attr(PROPERIES_ATTRIBUTE).set(properties);
 		
-		S2CHelloPacket packet = new S2CHelloPacket();
+		S2CAnsHelloPacket packet = new S2CAnsHelloPacket();
 		packet.process(ctx);
 		
 		ctx.writeAndFlush(packet);

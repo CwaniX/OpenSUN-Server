@@ -21,7 +21,7 @@ public class CharacterPositionEntity {
 	@SequenceGenerator(name = "seq_character_position_generator", sequenceName = "seq_character_position")
 	private int id;
 	private int region;
-	private int locationX;
-	private int locationY;
-	private int locationZ;
+	private float locationX;
+	private float locationY;
+	private float locationZ;
 }

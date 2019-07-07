@@ -39,6 +39,16 @@ public class BytesUtils {
 		return buffer.array();
 	}
 	
+	public static byte[] floatToByteArray(float... input) {
+		ByteBuffer buffer = ByteBuffer.allocate(input.length * 4).order(ByteOrder.LITTLE_ENDIAN);
+		
+		for (float i : input) {
+			buffer.putFloat(i);
+		}
+		
+		return buffer.array();
+	}
+	
 	public static byte[] intToByteArray(int... input) {
 		ByteBuffer buffer = ByteBuffer.allocate(input.length * 4).order(ByteOrder.LITTLE_ENDIAN);
 		

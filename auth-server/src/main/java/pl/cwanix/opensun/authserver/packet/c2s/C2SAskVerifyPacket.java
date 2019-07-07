@@ -20,10 +20,8 @@ public class C2SAskVerifyPacket implements Packet {
 		this.clientIpAddress = new FixedLengthField(16, Arrays.copyOfRange(value, 4, value.length));
 	}
 
+	@Override
 	public void process(ChannelHandlerContext ctx) {
-		S2CAnsVerifyPacket ansVerifyPacket = new S2CAnsVerifyPacket();
-		ansVerifyPacket.process(ctx);
-		
-		ctx.writeAndFlush(ansVerifyPacket);
+		ctx.writeAndFlush(new S2CAnsVerifyPacket());
 	}
 }

@@ -18,10 +18,8 @@ public class C2SAskSrvSelectPacket implements Packet {
 		this.channelIndex = new FixedLengthField(1, value[1]);
 	}
 	
-	public void process(ChannelHandlerContext ctx) {
-		S2CAnsSrvSelectPacket ansSrvSelect = new S2CAnsSrvSelectPacket();
-		ansSrvSelect.process(ctx);
-		
-		ctx.writeAndFlush(ansSrvSelect);
+	@Override
+	public void process(ChannelHandlerContext ctx) {		
+		ctx.writeAndFlush(new S2CAnsSrvSelectPacket());
 	}
 }

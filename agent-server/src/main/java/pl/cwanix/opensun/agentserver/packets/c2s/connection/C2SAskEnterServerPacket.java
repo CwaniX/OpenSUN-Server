@@ -53,10 +53,7 @@ public class C2SAskEnterServerPacket implements Packet {
 			
 			ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
 			
-			S2CAnsEnterServerPacket ansCharactersListPacket = new S2CAnsEnterServerPacket();
-			ansCharactersListPacket.process(ctx);
-			
-			ctx.writeAndFlush(ansCharactersListPacket);
+			ctx.writeAndFlush(new S2CAnsEnterServerPacket());
 		}
 	}
 }

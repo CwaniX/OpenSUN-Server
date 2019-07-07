@@ -14,7 +14,9 @@ import pl.cwanix.opensun.utils.datatypes.SUNDataType;
 
 public interface Packet extends PacketStructure {
 	
-	public void process(ChannelHandlerContext ctx);
+	public default void process(ChannelHandlerContext ctx) {
+		
+	}
 	
 	@Override
 	@SuppressWarnings("unchecked")

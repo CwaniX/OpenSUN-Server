@@ -1,13 +1,14 @@
-package pl.cwanix.opensun.agentserver.packets.c2s.character;
+package pl.cwanix.opensun.agentserver.packets.c2s.sync;
 
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 
-@IncomingPacket(category = PacketCategory.CHAR_INFO, type = 0x51)
-public class C2SAskFreeCharNamePacket implements Packet {
+@IncomingPacket(category = PacketCategory.SYNC, type = 0x73)
+public class C2SAskJumpMovePacket implements Packet {
 	
-	public C2SAskFreeCharNamePacket(byte[] value) {
+	public C2SAskJumpMovePacket(byte[] value) {
 		// TODO Auto-generated constructor stub
 	}
+
 }

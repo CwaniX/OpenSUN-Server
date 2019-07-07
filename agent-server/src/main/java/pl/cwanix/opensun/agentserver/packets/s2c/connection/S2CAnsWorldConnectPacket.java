@@ -13,12 +13,10 @@ public class S2CAnsWorldConnectPacket implements Packet {
 
 	private FixedLengthField worldServerIp;
 	private FixedLengthField worldServerPort;
-	//private FixedLengthField unknownValue;
 
 	public S2CAnsWorldConnectPacket() {
 		worldServerIp = new FixedLengthField(32);
 		worldServerPort = new FixedLengthField(2);
-		//unknownValue = new FixedLengthField(4, new byte[] { 0x02, 0x00, 0x48, (byte) 0xdf });
 	}
 
 	@Override
