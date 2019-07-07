@@ -41,14 +41,11 @@ public class C2SAskEnterVillagePacket implements Packet {
 		
 		session.setCharacter(selectedCharacter);
 		
-		S2CAnsEnterVillagePacket enterVillagePacket = new S2CAnsEnterVillagePacket();
-		enterVillagePacket.process(ctx);
-		
 		ctx.writeAndFlush(new S2CAnsItemsPacket());
 		ctx.writeAndFlush(new S2CAnsSkillsPacket());
 		ctx.writeAndFlush(new S2CAnsQuickPacket());
 		ctx.writeAndFlush(new S2CAnsStylePacket());
 		ctx.writeAndFlush(new S2CAnsStatePacket());
-		ctx.writeAndFlush(enterVillagePacket);
+		ctx.writeAndFlush(new S2CAnsEnterVillagePacket());
 	}
 }

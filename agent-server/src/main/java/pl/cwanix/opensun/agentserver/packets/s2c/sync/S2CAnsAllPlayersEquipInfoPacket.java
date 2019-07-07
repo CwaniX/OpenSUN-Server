@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -34,11 +33,4 @@ public class S2CAnsAllPlayersEquipInfoPacket implements Packet {
 						(byte) 0xba,
 						(byte) 0xe8, 0x0c, 0x00, 0x07 });
 	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

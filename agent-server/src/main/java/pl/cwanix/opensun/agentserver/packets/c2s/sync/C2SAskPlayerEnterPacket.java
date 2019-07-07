@@ -20,10 +20,7 @@ public class C2SAskPlayerEnterPacket implements Packet {
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		S2CAnsPlayerEnterPacket enterPlayer = new S2CAnsPlayerEnterPacket();
-		enterPlayer.process(ctx);
-		
-		ctx.writeAndFlush(enterPlayer);
+		ctx.writeAndFlush(new S2CAnsPlayerEnterPacket());
 		ctx.writeAndFlush(new S2CAnsAllPlayersGuildInfoPacket());
 		ctx.writeAndFlush(new S2CAnsAllPlayersEquipInfoPacket());
 	}

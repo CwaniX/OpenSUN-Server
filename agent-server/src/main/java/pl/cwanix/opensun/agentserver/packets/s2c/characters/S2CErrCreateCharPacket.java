@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -13,12 +12,6 @@ public class S2CErrCreateCharPacket implements Packet {
 	
 	public S2CErrCreateCharPacket() {
 		errorCode = new FixedLengthField(4);
-	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

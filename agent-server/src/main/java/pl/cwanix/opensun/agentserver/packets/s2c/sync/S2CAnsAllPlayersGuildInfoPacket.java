@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -18,11 +17,4 @@ public class S2CAnsAllPlayersGuildInfoPacket implements Packet {
 						(byte) 0xd2, (byte) 0xe5, (byte) 0xd3, (byte) 0xc0, (byte) 0xba, (byte) 0xe3, 0x00, 0x00, 0x00,
 						0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x04, 0x00, 0x00 });
 	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

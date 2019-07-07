@@ -28,6 +28,7 @@ public class S2CAnsSrvListPacket implements Packet {
 		this.serverList = new ArrayList<>();
 	}
 
+	@Override
 	public void process(ChannelHandlerContext ctx) {
 		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
 		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();

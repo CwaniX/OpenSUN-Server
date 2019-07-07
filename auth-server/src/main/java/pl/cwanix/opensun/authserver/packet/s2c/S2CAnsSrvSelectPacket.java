@@ -23,6 +23,7 @@ public class S2CAnsSrvSelectPacket implements Packet {
 		serverPort = new FixedLengthField(5, new byte[] { 0x76, (byte) 0xad, 0x00, 0x00, 0x00 });
 	}
 
+	@Override
 	public void process(ChannelHandlerContext ctx) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		userId.setValue(session.getUser().getId());

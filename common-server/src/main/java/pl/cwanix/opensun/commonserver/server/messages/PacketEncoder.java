@@ -20,6 +20,7 @@ public class PacketEncoder extends MessageToMessageEncoder<Packet> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
+		msg.process(ctx);
 		byte[] result = msg.toByteArray();
 		
 		log.debug(MARKER, "Outgoing data: {}", BytesUtils.byteArrayToHexString(result));

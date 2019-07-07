@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.zone;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -16,11 +15,4 @@ public class S2CAnsVillageMovePacket implements Packet {
 		moveType = new FixedLengthField(1, type);
 		villageMapCode = new FixedLengthField(4, mapCode);
 	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

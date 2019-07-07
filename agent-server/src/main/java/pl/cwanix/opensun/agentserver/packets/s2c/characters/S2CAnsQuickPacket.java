@@ -1,6 +1,5 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -13,12 +12,6 @@ public class S2CAnsQuickPacket implements Packet {
 	
 	public S2CAnsQuickPacket() {
 		value = new FixedLengthField(1);
-	}
-
-	@Override
-	public void process(ChannelHandlerContext ctx) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

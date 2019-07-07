@@ -19,6 +19,7 @@ public class S2CAnsHelloPacket implements Packet {
 		this.encKey = new FixedLengthField(4);
 	}
 	
+	@Override
 	public void process(ChannelHandlerContext ctx) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		encKey.setValue(session.getEncKey());
