@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
@@ -23,5 +25,9 @@ public class S2CAnsEnterVillagePacket implements Packet {
 		
 		playerKey.setValue(session.getCharacter().getId());
 	}
-
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(playerKey);
+	}
 }

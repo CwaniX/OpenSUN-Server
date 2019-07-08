@@ -1,5 +1,6 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -32,5 +33,9 @@ public class S2CAnsCreateCharPacket implements Packet {
 		CharacterEntity characterEntity = restTemplate.getForObject(properties.getDb().getServerUrl() + "/character/findByAccountIdAndSlot?accountId=" + session.getUser().getAccount().getId() + "&slot=" + slot, CharacterEntity.class);
 		character = new ClientCharacterPartPacketStructure(characterEntity);
 	}
-
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(character);
+	}
 }

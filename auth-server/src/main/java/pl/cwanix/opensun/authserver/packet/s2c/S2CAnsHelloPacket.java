@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
@@ -23,5 +25,10 @@ public class S2CAnsHelloPacket implements Packet {
 	public void process(ChannelHandlerContext ctx) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		encKey.setValue(session.getEncKey());
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(serverInfo, encKey);
 	}
 }

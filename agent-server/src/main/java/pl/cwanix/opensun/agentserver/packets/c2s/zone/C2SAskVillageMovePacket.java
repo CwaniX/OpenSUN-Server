@@ -26,9 +26,11 @@ public class C2SAskVillageMovePacket implements Packet {
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		log.debug(MARKER, "Moving to map: {}", BytesUtils.byteArrayToShort(villageMapCode.toByteArray()));
+		short newMapNumber = BytesUtils.byteArrayToShort(villageMapCode.toByteArray());
 		
-		ctx.writeAndFlush(new S2CAnsVillageMovePacket(BytesUtils.byteArrayToShort(villageMapCode.toByteArray()), 0x68));
+		log.info(MARKER, "Moving to map: {}", newMapNumber);
+		
+		ctx.writeAndFlush(new S2CAnsVillageMovePacket(newMapNumber, 0x68));
 	}
 
 }

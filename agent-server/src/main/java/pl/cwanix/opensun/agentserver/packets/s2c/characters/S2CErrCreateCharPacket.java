@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -14,4 +16,8 @@ public class S2CErrCreateCharPacket implements Packet {
 		errorCode = new FixedLengthField(4);
 	}
 
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(errorCode);
+	}
 }

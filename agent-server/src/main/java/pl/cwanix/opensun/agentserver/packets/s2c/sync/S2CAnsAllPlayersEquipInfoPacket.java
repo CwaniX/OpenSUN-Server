@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -32,5 +34,10 @@ public class S2CAnsAllPlayersEquipInfoPacket implements Packet {
 						(byte) 0xe8, 0x0c, 0x00, 0x06,
 						(byte) 0xba,
 						(byte) 0xe8, 0x0c, 0x00, 0x07 });
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(value);
 	}
 }

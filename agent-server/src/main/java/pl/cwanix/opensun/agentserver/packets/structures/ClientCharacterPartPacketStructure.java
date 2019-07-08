@@ -1,11 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.structures;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class ClientCharacterPartPacketStructure implements PacketStructure {
-	
+
 	private FixedLengthField slot;
 	private FixedLengthField size;
 	private FixedLengthField charName;
@@ -20,11 +22,11 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 	private FixedLengthField z;
 	private FixedLengthField equipNumber;
 	private EquipItemInfoPacketStructure equipItemInfo;
-	private FixedLengthField unknownField1;
-	private FixedLengthField unknownField2;
-	private FixedLengthField unknownField3;
-	private FixedLengthField unknownField4;
-	
+	private FixedLengthField unknown1;
+	private FixedLengthField unknown2;
+	private FixedLengthField unknown3;
+	private FixedLengthField unknown4;
+
 	public ClientCharacterPartPacketStructure(CharacterEntity character) {
 		slot = new FixedLengthField(1, character.getSlot());
 		size = new FixedLengthField(1, 0x10);
@@ -40,9 +42,15 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
 		z = new FixedLengthField(2, character.getPosition().getLocationZ());
 		equipNumber = new FixedLengthField(1, 0);
 		equipItemInfo = new EquipItemInfoPacketStructure(character.getInventory().getEquipItem());
-		unknownField1 = new FixedLengthField(1);
-		unknownField2 = new FixedLengthField(32);
-		unknownField3 = new FixedLengthField(3);
-		unknownField4 = new FixedLengthField(4);
+		unknown1 = new FixedLengthField(1);
+		unknown2 = new FixedLengthField(32);
+		unknown3 = new FixedLengthField(3);
+		unknown4 = new FixedLengthField(4);
+	}
+
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(slot, size, charName, heightCode, faceCode, hairCode, classCode, level, region, x, y,
+				z, equipNumber, equipItemInfo, unknown1, unknown2, unknown3, unknown4);
 	}
 }

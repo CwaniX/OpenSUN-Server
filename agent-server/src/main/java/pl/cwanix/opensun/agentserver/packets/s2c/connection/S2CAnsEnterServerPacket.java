@@ -3,6 +3,7 @@ package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
@@ -23,14 +24,14 @@ public class S2CAnsEnterServerPacket implements Packet {
 
 	private FixedLengthField userId;
 	private FixedLengthField charCount;
-	private FixedLengthField unknownField1;
-	private List<ClientCharacterPartPacketStructure> characterList;
+	private FixedLengthField unknown;
+	private List<ClientCharacterPartPacketStructure> charactersList;
 
 	public S2CAnsEnterServerPacket() {
 		userId = new FixedLengthField(4);
 		charCount = new FixedLengthField(1);
-		unknownField1 = new FixedLengthField(1);
-		characterList = new ArrayList<>();
+		unknown = new FixedLengthField(1);
+		charactersList = new ArrayList<>();
 	}
 	
 	@Override
@@ -42,7 +43,12 @@ public class S2CAnsEnterServerPacket implements Packet {
 		List<CharacterEntity> characters = restTemplate.exchange(properties.getDb().getServerUrl() + "/character/findByAccountId?accountId=" + session.getUser().getAccount().getId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>(){}).getBody();
 		userId.setValue(session.getUser().getId());
 		charCount.setValue((byte) characters.size());
-		unknownField1.setValue((byte) characters.size()); //??
-		characters.stream().forEach(character -> characterList.add(new ClientCharacterPartPacketStructure(character)));
+		unknown.setValue((byte) characters.size()); //??
+		characters.stream().forEach(character -> charactersList.add(new ClientCharacterPartPacketStructure(character)));
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(userId, charCount, unknown, charactersList);
 	}
 }

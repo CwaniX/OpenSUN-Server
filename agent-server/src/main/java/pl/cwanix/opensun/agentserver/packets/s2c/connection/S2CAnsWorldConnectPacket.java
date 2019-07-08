@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -25,5 +27,10 @@ public class S2CAnsWorldConnectPacket implements Packet {
 		
 		worldServerIp.setValue(properties.getWorld().getIp());
 		worldServerPort.setValue(properties.getWorld().getPort());
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(worldServerIp, worldServerPort);
 	}
 }

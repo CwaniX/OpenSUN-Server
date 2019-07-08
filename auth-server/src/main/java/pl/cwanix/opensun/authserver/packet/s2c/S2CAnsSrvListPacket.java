@@ -3,6 +3,7 @@ package pl.cwanix.opensun.authserver.packet.s2c;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
@@ -37,5 +38,10 @@ public class S2CAnsSrvListPacket implements Packet {
 
 		serversCount.setValue(servers.size());
 		servers.stream().forEach(server -> serverList.add(new ServerUnitStructure(server)));
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(serversCount, serverList);
 	}
 }

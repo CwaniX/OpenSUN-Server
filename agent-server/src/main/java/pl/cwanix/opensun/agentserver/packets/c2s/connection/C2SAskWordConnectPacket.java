@@ -15,9 +15,6 @@ public class C2SAskWordConnectPacket implements Packet  {
 
 	@Override
 	public void process(ChannelHandlerContext ctx) {
-		S2CAnsWorldConnectPacket ansPing = new S2CAnsWorldConnectPacket();
-		ansPing.process(ctx);
-		
-		ctx.writeAndFlush(ansPing);
+		ctx.writeAndFlush(new S2CAnsWorldConnectPacket());
 	}
 }
