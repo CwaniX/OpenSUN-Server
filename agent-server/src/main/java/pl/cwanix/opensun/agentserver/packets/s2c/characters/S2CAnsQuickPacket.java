@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -14,4 +16,8 @@ public class S2CAnsQuickPacket implements Packet {
 		value = new FixedLengthField(1);
 	}
 
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(value);
+	}
 }

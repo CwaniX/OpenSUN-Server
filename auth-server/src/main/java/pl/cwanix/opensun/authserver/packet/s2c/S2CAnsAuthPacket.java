@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -18,5 +20,10 @@ public class S2CAnsAuthPacket implements Packet {
 	
 	public void setResult(byte resultCode) {
 		result.setValue(resultCode);
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(result, info);
 	}
 }

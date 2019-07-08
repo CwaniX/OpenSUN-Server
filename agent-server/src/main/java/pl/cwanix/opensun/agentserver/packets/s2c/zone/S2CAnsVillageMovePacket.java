@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.zone;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -14,5 +16,10 @@ public class S2CAnsVillageMovePacket implements Packet {
 	public S2CAnsVillageMovePacket(short mapCode, int type) {
 		moveType = new FixedLengthField(1, type);
 		villageMapCode = new FixedLengthField(4, mapCode);
+	}
+	
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(moveType, villageMapCode);
 	}
 }

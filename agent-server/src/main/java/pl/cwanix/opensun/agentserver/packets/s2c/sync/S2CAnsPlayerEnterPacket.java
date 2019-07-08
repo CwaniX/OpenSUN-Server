@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -32,4 +34,8 @@ public class S2CAnsPlayerEnterPacket implements Packet {
 		currentPosition.setZ(character.getPosition().getLocationZ());
 	}
 
+	@Override
+	public Object[] getOrderedFields() {
+		return ArrayUtils.toArray(currentPosition, unknown);
+	}
 }
