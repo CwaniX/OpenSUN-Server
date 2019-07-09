@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "inventory")
+@Table(name = "inventory", schema="public")
 public class InventoryEntity {
 
 	@Id
