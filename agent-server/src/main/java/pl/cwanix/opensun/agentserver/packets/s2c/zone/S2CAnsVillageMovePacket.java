@@ -1,5 +1,10 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.zone;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import javax.xml.bind.DatatypeConverter;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
@@ -14,12 +19,20 @@ public class S2CAnsVillageMovePacket implements Packet {
 	private FixedLengthField villageMapCode;
 	
 	public S2CAnsVillageMovePacket(short mapCode, int type) {
-		moveType = new FixedLengthField(1, type);
-		villageMapCode = new FixedLengthField(4, mapCode);
+		/*try {
+			byte[] data = DatatypeConverter.parseHexBinary(new String(Files.readAllBytes(Paths.get("G:\\Projekty\\SUN\\ose-data\\temp\\input.txt")), "UTF-8"));
+			
+			moveType = new FixedLengthField(data.length, data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		//moveType = new FixedLengthField(2, type);
+		villageMapCode = new FixedLengthField(2, mapCode);
 	}
 	
 	@Override
 	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(moveType, villageMapCode);
+		return ArrayUtils.toArray(villageMapCode);
 	}
 }
