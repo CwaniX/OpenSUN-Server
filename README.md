@@ -8,3 +8,10 @@ OpenSUN Emu is an attempt to create from scratch a fully functional Soul of the 
 
 ## Project state
 Currently, the project is at the stage of modeling architecture. I strive to recognize as many behaviors as possible without any optimization. Therefore, the code may be inefficient and full of unrecognized errors.
+
+## Requirements
+ - PostgreSQL 10
+ - Java Runtime Environment 8
+
+## Files
+ - [Server Suite (31.07.2019)](https://drive.google.com/open?id=18D...r9pEusguJf8rUe)
