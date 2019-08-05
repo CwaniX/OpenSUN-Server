@@ -33,6 +33,7 @@ public class C2SAskAuthPacket implements Packet {
 		this.unknown3 = new FixedLengthField(8, Arrays.copyOfRange(value, 71, value.length));
 	}
 	
+	@Override
 	public void process(ChannelHandlerContext ctx) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
