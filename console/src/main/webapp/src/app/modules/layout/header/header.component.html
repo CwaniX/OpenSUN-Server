@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-pink flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 p-2" routerLink="/">
+    <span class="align-text-bottom px-2 py-1"><span class="fas fa-tools pr-2"></span>OpenSUN Console</span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-top-content"><span class="navbar-toggler-icon"></span></button>
+
+  <div id="navbar-top-content" class="collapse navbar-collapse">
+    <div class="navbar-nav w-100 ml-2">
+      <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active"><span class="fas fa-home mr-2"></span><span>Home</span></a>
+      <a class="nav-item nav-link" routerLink="/servers" routerLinkActive="active"><span class="fas fa-server mr-2"></span><span>Servers</span></a>
+      <a class="nav-item nav-link" routerLink="/database" routerLinkActive="active"><span class="fas fa-database mr-2"></span><span>Database</span></a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" [ngClass]="{'active' : configSublink.isActive}" id="configDropdown" data-toggle="dropdown"><span class="fas fa-cog mr-2"></span><span>Configuration</span></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/config/auth" routerLinkActive="active" #configSublink="routerLinkActive">Authorization server</a>
+          <a class="dropdown-item" routerLink="/config/agent" routerLinkActive="active" #configSublink="routerLinkActive">Agent server</a>
+          <a class="dropdown-item" routerLink="/config/game" routerLinkActive="active" #configSublink="routerLinkActive">Game server</a>
+          <a class="dropdown-item" routerLink="/config/world" routerLinkActive="active" #configSublink="routerLinkActive">World server</a>
+          <a class="dropdown-item" routerLink="/config/dbproxy" routerLinkActive="active" #configSublink="routerLinkActive">Database proxy server</a>
+        </div>
+      </li>
+    </div>
+  </div>
+</nav>

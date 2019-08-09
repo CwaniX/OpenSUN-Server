@@ -1,0 +1,54 @@
+body {
+    font-size: 0.875rem;
+}
+
+[role="main"] {
+    padding-top: 88px;
+}
+
+@media (min-width: 768px) {
+    [role="main"] {
+        padding-top: 48px;
+    }
+}
+
+pre {
+    color: #cc1a62;
+    background-color: #00000063;
+    border: 1px solid #cc1a62;
+    padding: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.navbar {
+    min-height: 2.813rem;
+}
+
+.nav-link {
+    white-space: nowrap;
+}
+
+.btn-link {
+    font-size: inherit;
+    border: none;
+}
+
+.custom-file-label {
+    font-size: 1rem;
+}
+
+.btn-link {
+    text-align: left;
+}
+
+.bg-pink {
+    background-color: #a72867 !important;
+}
+
+.container-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 1rem;
+}

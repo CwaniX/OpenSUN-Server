@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-pink p-1 pl-3 mb-3">
+  <div class="navbar-collapse">
+    <div class="navbar-nav w-100"></div>
+    <div class="navbar-nav">
+      <button class="btn btn-link nav-item nav-link" [swal]="saveSwal"><span
+          class="fas fa-check-square"></span>&nbsp;<span>Save</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <form #serverForm="ngForm">
+    <h5 class="mb-3">Configuration -> Database Proxy Server</h5>
+    <div class="container-row">
+      <div class="alert alert-warning mb-5">
+        <strong>Warning!</strong>&nbsp;
+        <span>All actions performed on the database from the administration console will be performed through configured
+          proxy server.</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="ipAddressInput">IP Address:</label>
+          <input type="text" class="form-control" id="ipAddressInput" placeholder="IP Address" name="ip" [(ngModel)]="currentServer.ip">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="portInput">Port:</label>
+          <input type="text" class="form-control" id="portInput" placeholder="Port" name="port" [(ngModel)]="currentServer.port">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="usernameInput">Username:</label>
+          <input type="text" class="form-control" id="usernameInput" placeholder="Username" name="username" [(ngModel)]="currentServer.username">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="passwordInput">Port:</label>
+          <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="password" [(ngModel)]="currentServer.password">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<pre>{{currentServer | json}}</pre>
+
+<swal #saveSwal title="Are you sure you want to save your changes?" type="question"
+  text="This operation can not be undone." showCancelButton="true" confirmButtonText="Save"
+  cancelButtonText="Cancel" (confirm)="saveServer()"></swal>
