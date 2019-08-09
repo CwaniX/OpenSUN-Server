@@ -7,6 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.packets.s2c.sync.S2CAnsPlayerEnterPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.zone.S2CAnsVillageMovePacket;
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -15,7 +16,7 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 @Slf4j
 @IncomingPacket(category = PacketCategory.ZONE, type = (byte) 0xCC)
-public class C2SAskVillageMovePacket implements Packet {
+public class C2SAskVillageMovePacket implements Packet<AgentServerContext> {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> VILLAGE MOVE");
 	
@@ -32,7 +33,7 @@ public class C2SAskVillageMovePacket implements Packet {
 	}
 
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx, AgentServerContext srv) {
 		short newMapNumber = (short) mapCode.getValue(bytes8);
 		
 		log.info(MARKER, "Moving to map: {} ({})", newMapNumber, mapCode.getValue(bytes8));

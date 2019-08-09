@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
+import pl.cwanix.opensun.authserver.server.context.AuthServerContext;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
@@ -11,7 +12,7 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.AUTH, type = 0x00)
-public class S2CAnsHelloPacket implements Packet {
+public class S2CAnsHelloPacket implements Packet<AuthServerContext> {
 	
 	private FixedLengthField serverInfo;
 	private FixedLengthField encKey;
@@ -22,7 +23,7 @@ public class S2CAnsHelloPacket implements Packet {
 	}
 	
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx, AuthServerContext srv) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 		encKey.setValue(session.getEncKey());
 	}

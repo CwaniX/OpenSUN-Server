@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.client.RestTemplate;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
-import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
@@ -20,7 +17,7 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.CONNECTION, type = (byte) 0x98)
-public class S2CAnsEnterServerPacket implements Packet {
+public class S2CAnsEnterServerPacket implements Packet<AgentServerContext> {
 
 	private FixedLengthField userId;
 	private FixedLengthField charCount;
@@ -35,12 +32,10 @@ public class S2CAnsEnterServerPacket implements Packet {
 	}
 	
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx, AgentServerContext srv) {
 		AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
-		RestTemplate restTemplate = ctx.channel().attr(AgentServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
-		AgentServerProperties properties = ctx.channel().attr(AgentServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
-		List<CharacterEntity> characters = restTemplate.exchange(properties.getDb().getServerUrl() + "/character/findByAccountId?accountId=" + session.getUser().getAccount().getId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>(){}).getBody();
+		List<CharacterEntity> characters = srv.getDbConnector().findCharactersList(session.getUser().getAccount().getId());
 		userId.setValue(session.getUser().getId());
 		charCount.setValue((byte) characters.size());
 		unknown.setValue((byte) characters.size()); //??

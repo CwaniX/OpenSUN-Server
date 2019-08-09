@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
-import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -20,7 +20,7 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Slf4j
 @IncomingPacket(category = PacketCategory.CONNECTION, type = 0x76)
-public class C2SAskEnterServerPacket implements Packet {
+public class C2SAskEnterServerPacket implements Packet<AgentServerContext> {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK AUTH");
 	
@@ -33,15 +33,14 @@ public class C2SAskEnterServerPacket implements Packet {
 	}
 	
 	@Override
-	public void process(ChannelHandlerContext ctx) {		
+	public void process(ChannelHandlerContext ctx, AgentServerContext srv ) {		
 		UserEntity user = new UserEntity();
 		user.setId(userId.toInt());
 		user.setName(userName.toString());
 		
 		log.info(MARKER, "Trying to authorize user with id: {}", user.getId());
 		
-		AgentServerSessionManager sessionManager = ctx.channel().attr(AgentServerChannelHandler.SESSION_MANAGER_ATTRIBUTE).getAndSet(null);
-		AgentServerSession session = sessionManager.getSession(user);
+		AgentServerSession session = srv.getSessionManager().getSession(user);
 		
 		if (session == null) {
 			log.error(MARKER, "Unable to resolve session data for user: {} with id: {}", user.getName(), user.getId());

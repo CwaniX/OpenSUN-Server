@@ -4,13 +4,14 @@ import java.util.Arrays;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsVerifyPacket;
+import pl.cwanix.opensun.authserver.server.context.AuthServerContext;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @IncomingPacket(category = PacketCategory.AUTH, type = 0x01)
-public class C2SAskVerifyPacket implements Packet {
+public class C2SAskVerifyPacket implements Packet<AuthServerContext> {
 	
 	private FixedLengthField clientVersion;
 	private FixedLengthField clientIpAddress;
@@ -21,7 +22,7 @@ public class C2SAskVerifyPacket implements Packet {
 	}
 
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx, AuthServerContext srv) {
 		ctx.writeAndFlush(new S2CAnsVerifyPacket());
 	}
 }

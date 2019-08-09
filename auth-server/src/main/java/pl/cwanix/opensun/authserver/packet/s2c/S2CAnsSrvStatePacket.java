@@ -1,5 +1,6 @@
 package pl.cwanix.opensun.authserver.packet.s2c;
 
+import pl.cwanix.opensun.authserver.server.context.AuthServerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -7,7 +8,7 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
 @OutgoingPacket(category = PacketCategory.AUTH, type = 0x12)
-public class S2CAnsSrvStatePacket implements Packet {
+public class S2CAnsSrvStatePacket implements Packet<AuthServerContext> {
 
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0x33, (byte) 0x12);
 	

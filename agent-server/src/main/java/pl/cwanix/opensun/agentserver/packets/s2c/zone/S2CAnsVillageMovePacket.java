@@ -7,13 +7,14 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.ZONE, type = 0x6C)
-public class S2CAnsVillageMovePacket implements Packet {
+public class S2CAnsVillageMovePacket implements Packet<AgentServerContext> {
 	
 	private FixedLengthField moveType;
 	private FixedLengthField villageMapCode;

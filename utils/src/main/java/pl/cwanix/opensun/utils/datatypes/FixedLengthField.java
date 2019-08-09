@@ -59,6 +59,10 @@ public class FixedLengthField implements SUNDataType {
 	public String toString() {
 		return new String(BytesUtils.cutTail(value));
 	}
+	
+	public byte toByte() {
+		return value[0];
+	}
 
 	@Override
 	public byte[] toByteArray() {
