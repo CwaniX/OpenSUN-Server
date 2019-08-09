@@ -12,6 +12,15 @@ body {
     }
 }
 
+pre {
+    color: #cc1a62;
+    background-color: #00000063;
+    border: 1px solid #cc1a62;
+    padding: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .navbar {
     min-height: 2.813rem;
 }
@@ -34,8 +43,7 @@ body {
 }
 
 .bg-pink {
-    //background-color: #a72867 !important;
-    background-color: #494949 !important;
+    background-color: #a72867 !important;
 }
 
 .container-row {

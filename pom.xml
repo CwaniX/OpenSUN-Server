@@ -22,6 +22,7 @@
 		<module>db-server</module>
 		<module>common-server</module>
 		<module>utils</module>
+		<module>console</module>
 	</modules>
 
 	<dependencies>

@@ -8,8 +8,9 @@ export enum SUNServerCategory {
 
 export class SUNServer {
     public id: number;
-    public name: string;
     public ip: string;
     public port: string;
     public category: SUNServerCategory;
+    public username: string;
+    public password: string;
 }

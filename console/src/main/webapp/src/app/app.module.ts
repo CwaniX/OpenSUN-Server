@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { ConfigurationModule } from 'src/app/modules/configuration/configuration
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from 'src/app/core/interceptors/error.interceptor';
 import { CoreModule } from 'src/app/core/core.module';
+import { DatabaseModule } from './modules/database/database.module';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,10 @@ import { CoreModule } from 'src/app/core/core.module';
     HttpClientModule,
     LayoutModule,
     ServersModule,
+    DatabaseModule,
     ConfigurationModule,
     CoreModule,
+    FormsModule,
     SweetAlert2Module.forRoot({
       buttonsStyling: false,
       customClass: 'modal-content',
