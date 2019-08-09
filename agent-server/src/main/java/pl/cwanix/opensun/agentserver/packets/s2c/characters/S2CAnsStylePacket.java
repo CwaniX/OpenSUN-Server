@@ -1,5 +1,6 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -7,7 +8,7 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
 @OutgoingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0xC1)
-public class S2CAnsStylePacket implements Packet {
+public class S2CAnsStylePacket implements Packet<AgentServerContext> {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xC1);
 	

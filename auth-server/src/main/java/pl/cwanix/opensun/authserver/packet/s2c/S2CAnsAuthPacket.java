@@ -2,13 +2,14 @@ package pl.cwanix.opensun.authserver.packet.s2c;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import pl.cwanix.opensun.authserver.server.context.AuthServerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.AUTH, type = 0x0E)
-public class S2CAnsAuthPacket implements Packet {
+public class S2CAnsAuthPacket implements Packet<AuthServerContext> {
 	
 	private FixedLengthField result;
 	private FixedLengthField info;

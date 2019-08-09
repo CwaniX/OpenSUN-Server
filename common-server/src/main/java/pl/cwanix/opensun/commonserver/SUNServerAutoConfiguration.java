@@ -20,12 +20,14 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketException;
 import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 import pl.cwanix.opensun.commonserver.server.SUNServer;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 import pl.cwanix.opensun.commonserver.server.SUNServerChannelInitializer;
+import pl.cwanix.opensun.commonserver.server.context.SUNServerContext;
 import pl.cwanix.opensun.commonserver.server.messages.PacketDecoder;
 import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
@@ -51,8 +53,8 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public PacketEncoder packetEncoder() {
-		return new PacketEncoder();
+	public PacketEncoder packetEncoder(SUNServerContext srv) {
+		return new PacketEncoder(srv);
 	}
 	
 	@Bean
@@ -75,7 +77,7 @@ public class SUNServerAutoConfiguration {
 	
 	@Bean
 	@SuppressWarnings("unchecked")
-	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws Exception {
+	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws ClassNotFoundException {
 		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
 		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
 		
@@ -99,5 +101,18 @@ public class SUNServerAutoConfiguration {
 		}
 		
 		return definitions;
+	}
+	
+	@Bean
+	@SuppressWarnings("unchecked")
+	public void serverPacketDefinitions() throws ClassNotFoundException {
+		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
+		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(OutgoingPacket.class));
+
+		for (BeanDefinition packetDefinition : classPathScanner.findCandidateComponents("pl.cwanix.opensun")) {
+			Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
+
+			log.debug(MARKER, "Loaded outgoing packet type: {}", packetClass.getSimpleName());
+		}
 	}
 }

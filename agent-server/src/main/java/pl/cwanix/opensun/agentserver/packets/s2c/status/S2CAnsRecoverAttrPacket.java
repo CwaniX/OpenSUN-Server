@@ -2,13 +2,14 @@ package pl.cwanix.opensun.agentserver.packets.s2c.status;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.STATUS, type = 0x10)
-public class S2CAnsRecoverAttrPacket implements Packet {
+public class S2CAnsRecoverAttrPacket implements Packet<AgentServerContext> {
 	
 	private FixedLengthField value;
 	

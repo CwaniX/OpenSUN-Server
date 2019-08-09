@@ -2,13 +2,11 @@ package pl.cwanix.opensun.authserver.packet.c2s;
 
 import java.util.Arrays;
 
-import org.springframework.web.client.RestTemplate;
-
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.packet.s2c.S2CAnsAuthPacket;
-import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
+import pl.cwanix.opensun.authserver.server.context.AuthServerContext;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
@@ -17,7 +15,7 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 import pl.cwanix.opensun.utils.encryption.TEA;
 
 @IncomingPacket(category = PacketCategory.AUTH, type = 0x03)
-public class C2SAskAuthPacket implements Packet {
+public class C2SAskAuthPacket implements Packet<AuthServerContext> {
 	
 	private FixedLengthField unknown1;
 	private FixedLengthField name;
@@ -34,20 +32,18 @@ public class C2SAskAuthPacket implements Packet {
 	}
 	
 	@Override
-	public void process(ChannelHandlerContext ctx) {
+	public void process(ChannelHandlerContext ctx, AuthServerContext srv) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
-		RestTemplate restTemplate = ctx.channel().attr(AuthServerChannelHandler.REST_TEMPLATE_ATTRIBUTE).get();
-		AuthServerProperties properties = ctx.channel().attr(AuthServerChannelHandler.PROPERIES_ATTRIBUTE).get();
 		
 		String decodedPass = new String(TEA.passwordDecode(password.toByteArray(), session.getEncKey()));
-		UserEntity userEntity = restTemplate.getForObject(properties.getDb().getServerUrl() + "/user/findByName?name=" + name.toString(), UserEntity.class);
+		UserEntity userEntity = srv.getDbConnector().findUser(name.toString());
 		S2CAnsAuthPacket ansAuthPacket = new S2CAnsAuthPacket();
 		
 		if (userEntity == null) {
 			ansAuthPacket.setResult((byte) 1);
 		} else if (!decodedPass.equals(userEntity.getPassword())) {
 			ansAuthPacket.setResult((byte) 2);
-		} else if (startAgentServerSession(restTemplate, properties, userEntity.getId()) > 0) {
+		} else if (srv.getDbConnector().startAgentServerSession(userEntity.getId()) > 0) {
 			ansAuthPacket.setResult((byte) 3);
 		} else {
 			session.setUser(userEntity);
@@ -55,9 +51,5 @@ public class C2SAskAuthPacket implements Packet {
 		}
 		
 		ctx.writeAndFlush(ansAuthPacket);
-	}
-	
-	private int startAgentServerSession(RestTemplate restTemplate, AuthServerProperties properties, int userId) {
-		return restTemplate.postForObject(properties.getAgent().getServerUrl() + "/session/new?userId=" + userId, null, Integer.class);
 	}
 }
