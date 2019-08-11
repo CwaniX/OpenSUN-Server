@@ -23,4 +23,7 @@ db-server/bin/
 console/.settings/
 console/target/
 console/bin/
+console/src/main/webapp/dist/
+console/src/main/webapp/node/
+console/src/main/webapp/node-modules/
 utils/target/

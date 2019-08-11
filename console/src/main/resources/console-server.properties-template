@@ -1,0 +1,7 @@
+opensun.server.port=8080
+
+opensun.database.ip=localhost
+opensun.database.port=5432
+opensun.database.name=test
+opensun.database.user=test
+opensun.database.password=test
