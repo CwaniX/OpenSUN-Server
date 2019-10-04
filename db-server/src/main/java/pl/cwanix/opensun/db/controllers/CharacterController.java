@@ -65,4 +65,11 @@ public class CharacterController {
 			@RequestParam("z") float z) {
 		return characterEntityRepository.updatePosition(id, x, y, z);
 	}
+	
+	@PostMapping(path = "/updateStatistics", produces = "application/json")
+	public Integer updateStatistics(
+			@RequestParam("id") int id,
+			@RequestParam("attributeCode") byte attributeCode) {
+		return characterEntityRepository.updateStatistics(id, attributeCode);
+	}
 }
