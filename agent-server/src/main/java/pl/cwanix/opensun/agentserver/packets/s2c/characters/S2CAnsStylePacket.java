@@ -21,4 +21,9 @@ public class S2CAnsStylePacket implements Packet<AgentServerContext> {
 		// TODO Auto-generated method stub
 		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
 	}
+
+	@Override
+	public Object[] getOrderedFields() {
+		return null;
+	}
 }

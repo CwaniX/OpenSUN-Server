@@ -15,4 +15,8 @@ public class S2C486CPacket implements Packet<WorldServerContext> {
 		
 	}
 
+	@Override
+	public Object[] getOrderedFields() {
+		return null;
+	}
 }

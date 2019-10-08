@@ -22,4 +22,9 @@ public class S2CAnsSrvStatePacket implements Packet<AuthServerContext> {
 	public byte[] toByteArray() {
 		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
 	}
+
+	@Override
+	public Object[] getOrderedFields() {
+		return null;
+	}
 }

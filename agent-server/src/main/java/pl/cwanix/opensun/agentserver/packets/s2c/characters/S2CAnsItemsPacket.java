@@ -60,4 +60,9 @@ public class S2CAnsItemsPacket implements Packet<AgentServerContext> {
 		// TODO Auto-generated method stub
 		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
 	}
+
+	@Override
+	public Object[] getOrderedFields() {
+		return null;
+	}
 }

@@ -13,14 +13,14 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 @IncomingPacket(category = PacketCategory.SKILL, type = (byte) 0xC5)
 public class C2SAskAddSkillPointPacket implements Packet<AgentServerContext> {
 
-    private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ADD SKILL POINT");
+	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ADD SKILL POINT");
 
-    public C2SAskAddSkillPointPacket(byte[] value) {
+	public C2SAskAddSkillPointPacket(byte[] value) {
 
-    }
+	}
 
-    @Override
-    public void process(ChannelHandlerContext ctx, AgentServerContext srv) {
+	@Override
+	public void process(ChannelHandlerContext ctx, AgentServerContext srv) {
 
-    }
+	}
 }

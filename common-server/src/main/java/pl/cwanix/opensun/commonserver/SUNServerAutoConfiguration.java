@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.web.client.RestTemplate;
@@ -35,6 +36,7 @@ import pl.cwanix.opensun.utils.functions.ThrowingFunction;
 
 @Slf4j
 @Configuration
+@ComponentScan
 public class SUNServerAutoConfiguration {
 	
 	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
@@ -73,46 +75,5 @@ public class SUNServerAutoConfiguration {
 	@ConditionalOnMissingBean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
-	}
-	
-	@Bean
-	@SuppressWarnings("unchecked")
-	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws ClassNotFoundException {
-		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
-		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
-		
-		Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> definitions = new HashMap<>();
-		
-		for (BeanDefinition packetDefinition : classPathScanner.findCandidateComponents("pl.cwanix.opensun")) {
-			Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
-			
-			ThrowingFunction<byte[], Packet, Exception> packetConstructorFunction = t -> {
-				try {
-					return packetClass.getConstructor(byte[].class).newInstance(t);
-				} catch (Exception e) {
-					throw new PacketException("Unable to parse packet", e);
-				}
-			};
-			
-			log.debug(MARKER, "Loaded incoming packet type: {}", packetClass.getSimpleName());
-			
-			PacketHeader header = new PacketHeader(packetClass.getAnnotation(IncomingPacket.class).category().getCategory(), packetClass.getAnnotation(IncomingPacket.class).type());
-			definitions.put(header, packetConstructorFunction);
-		}
-		
-		return definitions;
-	}
-	
-	@Bean
-	@SuppressWarnings("unchecked")
-	public void serverPacketDefinitions() throws ClassNotFoundException {
-		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
-		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(OutgoingPacket.class));
-
-		for (BeanDefinition packetDefinition : classPathScanner.findCandidateComponents("pl.cwanix.opensun")) {
-			Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
-
-			log.debug(MARKER, "Loaded outgoing packet type: {}", packetClass.getSimpleName());
-		}
 	}
 }

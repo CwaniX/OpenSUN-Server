@@ -39,7 +39,7 @@ public class SUNServer {
 	private final SUNServerProperties properties;
 
 	@PostConstruct
-	public void startServer() throws InterruptedException {
+	public void startServer() {
 		setupLoopGroups();
 
 		log.info(MARKER, "Starting server");
@@ -47,7 +47,7 @@ public class SUNServer {
 		InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE);
 
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
-		serverBootstrap.group(parentGroup, childGroup).channel(setupServerSocketChannel()).handler(setupLoggingHander())
+		serverBootstrap.group(parentGroup, childGroup).channel(setupServerSocketChannel()).handler(setupLoggingHandler())
 				.childHandler(sunServerChannelInitializer)
 				.option(ChannelOption.SO_BACKLOG, properties.getClient().getMaxQueueSize())
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
@@ -79,7 +79,7 @@ public class SUNServer {
 		}
 	}
 
-	private ChannelHandler setupLoggingHander() {
+	private ChannelHandler setupLoggingHandler() {
 		return new LoggingHandler(LogLevel.INFO);
 	}
 
