@@ -10,7 +10,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>common-server</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>common-server</name>
 	<description>Demo project for Spring Boot</description>
 

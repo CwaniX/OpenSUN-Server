@@ -4,7 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
-import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;

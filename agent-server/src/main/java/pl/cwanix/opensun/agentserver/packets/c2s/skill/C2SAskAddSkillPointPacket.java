@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
-import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 

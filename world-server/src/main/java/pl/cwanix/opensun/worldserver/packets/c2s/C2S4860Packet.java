@@ -1,6 +1,6 @@
 package pl.cwanix.opensun.worldserver.packets.c2s;
 
-import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.worldserver.server.context.WorldServerContext;

@@ -10,7 +10,7 @@ import pl.cwanix.opensun.agentserver.packets.s2c.status.S2CErrStatSelectPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
-import pl.cwanix.opensun.commonserver.packets.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;

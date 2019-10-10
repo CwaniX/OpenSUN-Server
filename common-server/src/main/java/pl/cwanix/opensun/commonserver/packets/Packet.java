@@ -3,13 +3,11 @@ package pl.cwanix.opensun.commonserver.packets;
 import java.io.ByteArrayOutputStream;
 
 import io.netty.channel.ChannelHandlerContext;
+import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
-public interface Packet<T> extends PacketStructure {
-	
-	public default void process(ChannelHandlerContext ctx, T srv) {
-		
-	}
+public interface Packet extends PacketStructure {
 	
 	@Override
 	public default byte[] toByteArray() throws Exception {		
