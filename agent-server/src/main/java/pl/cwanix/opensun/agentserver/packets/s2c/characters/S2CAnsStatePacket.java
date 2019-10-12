@@ -1,19 +1,17 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
+import org.apache.commons.lang3.ArrayUtils;
+import pl.cwanix.opensun.agentserver.packets.structures.StateSlotPacketStructure;
+import pl.cwanix.opensun.commonserver.packets.Packet;
+import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
+import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import pl.cwanix.opensun.agentserver.packets.structures.StateSlotPacketStructure;
-import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
-import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
-import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.commonserver.packets.PacketCategory;
-import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
-
-@OutgoingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0xDB)
-public class S2CAnsStatePacket implements Packet<AgentServerContext> {
+@OutgoingPacket(category = PacketCategory.CHARACTER, type = (byte) 0xDB)
+public class S2CAnsStatePacket implements Packet {
 
 	private FixedLengthField count;
 	private List<StateSlotPacketStructure> slot;
