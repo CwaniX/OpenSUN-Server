@@ -13,8 +13,8 @@ public class S2CAnsWorldConnectPacket implements Packet {
 	private FixedLengthField worldServerPort;
 
 	public S2CAnsWorldConnectPacket(String ip, int port) {
-		this.worldServerIp = new FixedLengthField(32);
-		this.worldServerPort = new FixedLengthField(2);
+		this.worldServerIp = new FixedLengthField(32, ip);
+		this.worldServerPort = new FixedLengthField(2, port);
 	}
 	
 	@Override

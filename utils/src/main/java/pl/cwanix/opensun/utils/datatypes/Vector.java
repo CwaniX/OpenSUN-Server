@@ -24,7 +24,7 @@ public class Vector implements SUNDataType {
 	
 	public Vector(byte[] value) {
 		ByteBuffer buffer = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
-		
+
 		x = buffer.getFloat(0);
 		y = buffer.getFloat(4);
 		z = buffer.getFloat(8);

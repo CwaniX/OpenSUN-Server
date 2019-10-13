@@ -1,6 +1,7 @@
 package pl.cwanix.opensun.commonserver.packets.annotations;
 
 import org.springframework.stereotype.Component;
+import pl.cwanix.opensun.commonserver.packets.Packet;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -9,5 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 @Component
 public @interface PacketProcessor {
 
-	Class packetClass();
+	Class<? extends Packet> packetClass();
 }
