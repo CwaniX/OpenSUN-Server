@@ -9,7 +9,6 @@ import org.slf4j.MarkerFactory;
 import pl.cwanix.opensun.agentserver.communication.DatabaseProxyConnector;
 import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.entities.UserEntity;
-import pl.cwanix.opensun.agentserver.packets.c2s.character.C2SAskCreateCharPacket;
 import pl.cwanix.opensun.agentserver.packets.c2s.connection.C2SAskEnterServerPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@PacketProcessor(packetClass = C2SAskCreateCharPacket.class)
+@PacketProcessor(packetClass = C2SAskEnterServerPacket.class)
 public class C2SAskEnterServerProcessor implements SUNPacketProcessor<C2SAskEnterServerPacket> {
 
 	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK ENTER SERVER");
