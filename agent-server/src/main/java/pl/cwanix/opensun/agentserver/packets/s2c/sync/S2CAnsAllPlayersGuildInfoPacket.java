@@ -1,15 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
 import org.apache.commons.lang3.ArrayUtils;
-
-import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
-import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @OutgoingPacket(category = PacketCategory.SYNC, type = (byte) 0xEA)
-public class S2CAnsAllPlayersGuildInfoPacket implements Packet<AgentServerContext> {
+public class S2CAnsAllPlayersGuildInfoPacket implements Packet {
 
 	private FixedLengthField value;
 

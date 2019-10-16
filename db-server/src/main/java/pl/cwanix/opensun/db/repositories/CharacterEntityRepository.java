@@ -27,4 +27,7 @@ public interface CharacterEntityRepository extends JpaRepository<CharacterEntity
 	
 	@Procedure(procedureName = "func_update_character_position")
 	public Integer updatePosition(int id, float x, float y, float z);
+	
+	@Procedure(procedureName = "func_update_character_statistics")
+	public Integer updateStatistics(int id, byte attributeCode);
 }

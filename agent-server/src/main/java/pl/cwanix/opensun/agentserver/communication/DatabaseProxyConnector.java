@@ -54,4 +54,10 @@ public class DatabaseProxyConnector {
 				+ "&y=" + y
 				+ "&z=" + z, null, Integer.class);
 	}
+	
+	public int updateCharacterStatistics(int characterId, byte attributeCode) {
+		return restTemplate.postForObject(properties.getDb().getServerUrl()
+				+ "/character/updateStatistics?id=" + characterId
+				+ "&attributeCode=" + attributeCode, null, Integer.class);
+	}
 }

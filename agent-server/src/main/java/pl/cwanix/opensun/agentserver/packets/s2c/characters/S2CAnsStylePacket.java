@@ -1,14 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
-import pl.cwanix.opensun.agentserver.server.context.AgentServerContext;
-import pl.cwanix.opensun.commonserver.packets.OutgoingPacket;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
+import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
-@OutgoingPacket(category = PacketCategory.CHAR_INFO, type = (byte) 0xC1)
-public class S2CAnsStylePacket implements Packet<AgentServerContext> {
+@OutgoingPacket(category = PacketCategory.CHARACTER, type = (byte) 0xC1)
+public class S2CAnsStylePacket implements Packet {
 	
 	public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0xC1);
 	
@@ -20,5 +19,10 @@ public class S2CAnsStylePacket implements Packet<AgentServerContext> {
 	public byte[] toByteArray() {
 		// TODO Auto-generated method stub
 		return BytesUtils.mergeArrays(PACKET_ID.getValue(), value);
+	}
+
+	@Override
+	public Object[] getOrderedFields() {
+		return null;
 	}
 }

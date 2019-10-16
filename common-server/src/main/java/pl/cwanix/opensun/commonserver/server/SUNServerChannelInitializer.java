@@ -31,7 +31,7 @@ public class SUNServerChannelInitializer extends ChannelInitializer<SocketChanne
 	private final PacketEncoder packetEncoder;
 
 	@Override
-	protected void initChannel(SocketChannel socketChannel) throws Exception {
+	protected void initChannel(SocketChannel socketChannel) {
 		log.info(MARKER, "Initializing channel");
 		
 		socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(ByteOrder.LITTLE_ENDIAN, Integer.MAX_VALUE, 0, 2, 0, 2, true));

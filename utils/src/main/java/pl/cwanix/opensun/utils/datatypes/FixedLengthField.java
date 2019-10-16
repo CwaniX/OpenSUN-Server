@@ -1,5 +1,7 @@
 package pl.cwanix.opensun.utils.datatypes;
 
+import java.util.Arrays;
+
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 public class FixedLengthField implements SUNDataType {
@@ -8,6 +10,16 @@ public class FixedLengthField implements SUNDataType {
 	
 	public FixedLengthField(int length) {
 		this.value = new byte[length];
+	}
+	
+	public FixedLengthField(int length, int begin, byte... bytes) {
+		this.value = new byte[length];
+		setValue(begin, bytes);
+	}
+	
+	public FixedLengthField(int length, int begin, int end, byte... bytes) {
+		this.value = new byte[length];
+		setValue(Arrays.copyOfRange(bytes, begin, end));
 	}
 	
 	public FixedLengthField(int length, byte... bytes) {
@@ -35,7 +47,11 @@ public class FixedLengthField implements SUNDataType {
 	}
 	
 	public void setValue(byte... bytes) {
-		for (int i = 0; i < this.value.length; i++) {
+		setValue(0, bytes);
+	}
+	
+	public void setValue(int begin, byte... bytes) {
+		for (int i = begin; i < this.value.length; i++) {
 			if (i < bytes.length) {
 				this.value[i] = bytes[i];
 			} else {
@@ -54,6 +70,10 @@ public class FixedLengthField implements SUNDataType {
 	
 	public int toInt() {
 		return BytesUtils.byteArrayToInt(value);
+	}
+	
+	public short toShort() {
+		return BytesUtils.byteArrayToShort(value);
 	}
 	
 	public String toString() {
