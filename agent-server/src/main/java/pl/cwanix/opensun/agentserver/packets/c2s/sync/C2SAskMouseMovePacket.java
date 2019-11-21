@@ -22,6 +22,6 @@ public class C2SAskMouseMovePacket implements Packet {
 	public C2SAskMouseMovePacket(byte[] value) {
 		unknown = new FixedLengthField(1, value[0]);
 		currentPosition = new Vector(Arrays.copyOfRange(value, 1, 13));
-		currentPosition = new Vector(Arrays.copyOfRange(value, 13, value.length));
+		destinationPosition = new Vector(Arrays.copyOfRange(value, 13, value.length));
 	}
 }
