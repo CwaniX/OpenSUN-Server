@@ -25,8 +25,8 @@ public class C2SAskMouseMoveProcessor implements SUNPacketProcessor<C2SAskMouseM
     public void process(ChannelHandlerContext ctx, C2SAskMouseMovePacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        log.debug(MARKER, "Updating character position: {} {} {}", packet.getCurrentPosition().getX(), packet.getCurrentPosition().getY(), packet.getCurrentPosition().getZ());
+        log.debug(MARKER, "Updating character position: {} {} {}", packet.getDestinationPosition().getX(), packet.getDestinationPosition().getY(), packet.getDestinationPosition().getZ());
 
-        databaseProxyConnector.updateCharacterPosition(session.getCharacter().getId(), packet.getCurrentPosition().getX(), packet.getCurrentPosition().getY(), packet.getCurrentPosition().getZ());
+        databaseProxyConnector.updateCharacterPosition(session.getCharacter().getId(), packet.getDestinationPosition().getX(), packet.getDestinationPosition().getY(), packet.getDestinationPosition().getZ(), 0);
     }
 }

@@ -62,8 +62,9 @@ public class CharacterController {
 			@RequestParam("id") int id,
 			@RequestParam("x") float x,
 			@RequestParam("y") float y,
-			@RequestParam("z") float z) {
-		return characterEntityRepository.updatePosition(id, x, y, z);
+			@RequestParam("z") float z,
+			@RequestParam("angle") int angle) {
+		return characterEntityRepository.updatePosition(id, x, y, z, angle);
 	}
 	
 	@PostMapping(path = "/updateStatistics", produces = "application/json")

@@ -37,7 +37,7 @@ public class CharacterEntity {
 	private int strength;
 	private int dexterity;
 	private int vitality;
-	private int inteligence;
+	private int intelligence;
 	private int spirit;
 	private int skillStat1;
 	private int skillStat2;
