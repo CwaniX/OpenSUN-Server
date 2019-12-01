@@ -30,4 +30,8 @@ public class DatabaseProxyConnector {
 	public List<ServerEntity> findServers() {
 		return restTemplate.exchange(properties.getDb().getServerUrl() + "/server/findAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<ServerEntity>>(){}).getBody();
 	}
+
+	public ServerEntity findServer(int serverId) {
+		return restTemplate.getForObject(properties.getDb().getServerUrl() + "/server/findById?id=" + serverId, ServerEntity.class);
+	}
 }

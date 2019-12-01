@@ -47,12 +47,13 @@ public class DatabaseProxyConnector {
 		return restTemplate.getForObject(properties.getDb().getServerUrl() + "/character/findFreeSlotByAccountId?accountId=" + userId,Integer.class);
 	}
 	
-	public int updateCharacterPosition(int characterId, float x, float y, float z) {
+	public int updateCharacterPosition(int characterId, float x, float y, float z, int angle) {
 		return restTemplate.postForObject(properties.getDb().getServerUrl()
 				+ "/character/updatePosition?id=" + characterId
 				+ "&x=" + x
 				+ "&y=" + y
-				+ "&z=" + z, null, Integer.class);
+				+ "&z=" + z
+				+ "&angle=" + angle, null, Integer.class);
 	}
 	
 	public int updateCharacterStatistics(int characterId, byte attributeCode) {

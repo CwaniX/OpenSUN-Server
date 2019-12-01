@@ -20,7 +20,7 @@ AS $BODY$
 				WHERE id = in_id;
 			WHEN 2 THEN 
 				UPDATE "character" SET
-					agility = agility + 1,
+					dexterity = dexterity + 1,
 					remain_stat = remain_stat - 1
 				WHERE id = in_id;
 			WHEN 3 THEN 

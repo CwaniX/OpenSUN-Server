@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,10 @@ public class ServerController {
 	@GetMapping(path = "/findAll", produces = "application/json")
 	public List<ServerEntity> findAll() {
 		return serverRepository.findAll();
+	}
+
+	@GetMapping(path = "/findById", produces = "application/json")
+	public ServerEntity findById(@RequestParam("id") int id) {
+		return serverRepository.findById(id).orElse(null);
 	}
 }
