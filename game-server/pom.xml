@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>pl.cwanix.opensun</groupId>
 		<artifactId>opensun-parent</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 	</parent>
 	<artifactId>game-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

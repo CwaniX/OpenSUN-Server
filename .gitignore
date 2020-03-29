@@ -1,5 +1,6 @@
 *.project
 *.classpath
+*.iml
 .idea/
 .settings/
 auth-server/.settings/

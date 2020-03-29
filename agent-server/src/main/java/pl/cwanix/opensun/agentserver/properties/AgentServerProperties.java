@@ -18,4 +18,7 @@ public class AgentServerProperties extends SUNServerProperties {
 	
 	@NestedConfigurationProperty
 	private SUNServerExternalServerProperties world;
+
+
+	private String dataDirectory;
 }
