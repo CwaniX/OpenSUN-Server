@@ -3,7 +3,9 @@ package pl.cwanix.opensun.utils.files;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,7 +37,9 @@ public class SUNFileReader extends Reader {
 		while ((line = in.readLine()) != null) {
 			++currentLineIndex;
 
-			if (StringUtils.isNotBlank(line) || !line.startsWith(COMMENT_PREFIX)) {
+			System.out.println(line.trim().startsWith(COMMENT_PREFIX));
+
+			if (StringUtils.isNotBlank(line) && !line.trim().startsWith(COMMENT_PREFIX)) {
 				currentLine = line.split(DELIMITER);
 				currentElementIndex = 0;
 				changed = true;
@@ -68,8 +72,12 @@ public class SUNFileReader extends Reader {
 	}
 
 	private void loadHeader() throws IOException {
+		header = new HashMap<>();
+
 		readLine();
 
-		header = IntStream.range(0, currentLine.length).boxed().collect(Collectors.toMap(i -> currentLine[i], i -> i));
+		for (int i = 0; i < currentLine.length; i++) {
+			header.put(currentLine[i], i);
+		}
 	}
 }

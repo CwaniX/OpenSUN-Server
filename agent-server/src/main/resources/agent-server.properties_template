@@ -10,5 +10,3 @@ opensun.db.port=7000
 
 opensun.world.ip=127.0.0.1
 opensun.world.port=7000
-
-opensun.data_directory=c:/dev/opensun/data

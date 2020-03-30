@@ -6,7 +6,7 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
-@OutgoingPacket(category = PacketCategory.AUTH, type = 0x0E)
+@OutgoingPacket(category = PacketCategory.AUTH, /*type = 0x0E*/ type=0x06)
 public class S2CAnsAuthPacket implements Packet {
 	
 	private FixedLengthField result;

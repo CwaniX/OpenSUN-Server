@@ -20,9 +20,11 @@ public class C2SAskAuthPacket implements Packet {
 	
 	public C2SAskAuthPacket(byte[] value) {
 		this.unknown1 = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
-		this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 54));
+		/*this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 54));
 		this.unknown2 = new FixedLengthField(1, value[54]);
 		this.password = new FixedLengthField(16, Arrays.copyOfRange(value, 55, 71));
-		this.unknown3 = new FixedLengthField(8, Arrays.copyOfRange(value, 71, value.length));
+		this.unknown3 = new FixedLengthField(8, Arrays.copyOfRange(value, 71, value.length));*/
+
+		this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 20));
 	}
 }
