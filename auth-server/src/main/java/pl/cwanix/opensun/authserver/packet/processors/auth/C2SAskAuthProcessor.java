@@ -22,20 +22,20 @@ public class C2SAskAuthProcessor implements SUNPacketProcessor<C2SAskAuthPacket>
 	public void process(ChannelHandlerContext ctx, C2SAskAuthPacket packet) {
 		AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-		//String decodedPass = new String(TEA.passwordDecode(packet.getPassword().toByteArray(), session.getEncKey()));
+		String decodedPass = new String(TEA.passwordDecode(packet.getPassword().toByteArray(), session.getEncKey()));
 		UserEntity userEntity = databaseProxyConnector.findUser(packet.getName().toString());
 		S2CAnsAuthPacket ansAuthPacket;
 
-		/*if (userEntity == null) {
+		if (userEntity == null) {
 			ansAuthPacket = new S2CAnsAuthPacket(1);
 		} else if (!decodedPass.equals(userEntity.getPassword())) {
 			ansAuthPacket = new S2CAnsAuthPacket(2);
 		} else if (databaseProxyConnector.startAgentServerSession(userEntity.getId()) > 0) {
 			ansAuthPacket = new S2CAnsAuthPacket(3);
-		} else {*/
+		} else {
 			session.setUser(userEntity);
 			ansAuthPacket = new S2CAnsAuthPacket(0);
-		//}
+		}
 
 		ctx.writeAndFlush(ansAuthPacket);
 	}
