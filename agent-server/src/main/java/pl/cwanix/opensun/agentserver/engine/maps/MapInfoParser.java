@@ -44,14 +44,8 @@ public class MapInfoParser implements InitializingBean {
 		log.info(MARKER, "Loaded field data: {}", fieldInfo.size());
 	}
 
-	private void loadMapInfo() {
+	private void loadMapInfo() throws IOException {
 		mapInfo = new HashMap<>();
-	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		loadFieldInfo();
-		loadMapInfo();
 
 		try (SUNFileReader reader = new SUNFileReader(properties.getDataDirectory() + "/" + WORLD_INFO_FILE_NAME)) {
 			while (reader.readLine()) {
@@ -78,5 +72,11 @@ public class MapInfoParser implements InitializingBean {
 		}
 
 		log.info(MARKER, "Loaded map data: {}", mapInfo.size());
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		//loadFieldInfo();
+		//loadMapInfo();
 	}
 }
