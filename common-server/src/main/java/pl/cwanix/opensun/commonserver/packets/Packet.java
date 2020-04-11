@@ -23,7 +23,7 @@ public interface Packet extends PacketStructure {
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		baos.write(currentHeader.getValue());
-		writeFeldValuesToStream(baos);
+		writeFieldValuesToStream(baos);
 		
 		return baos.toByteArray();
 	}

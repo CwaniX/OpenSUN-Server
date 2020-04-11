@@ -12,13 +12,13 @@ public interface PacketStructure extends SUNDataType {
 
 	public default byte[] toByteArray() throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		writeFeldValuesToStream(baos);
+		writeFieldValuesToStream(baos);
 		
 		return baos.toByteArray();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public default void writeFeldValuesToStream(OutputStream os) throws Exception {
+	public default void writeFieldValuesToStream(OutputStream os) throws Exception {
 		for (Object object : getOrderedFields()) {
 			List<Class<?>> interfaces = ClassUtils.getAllInterfaces(object.getClass());
 			
