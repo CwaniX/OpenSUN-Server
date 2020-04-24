@@ -42,7 +42,35 @@ To successfully run the project, please download and install everything from the
 <br><b>LINK:</b> https://www.postgresqltutorial.com/install-postgresql/
   
  #### OpenSUN Server
-1) 
+ 
+ ##### Importing to Eclipse
+1) Open Eclipse IDE.
+2) Click File in the toolbar at the top.
+3) Click Import...
+4) In the pop-up, click the Git folder in the center section.
+5) Click Projects from Git (with smart import).
+6) Click Next at bottom of the current window.
+7) Click Clone URI and click Next
+8) Paste "https://github.com/CwaniX/OpenSUN-Server" into URI section and click Next.
+<br><b>NOTE:</b> The window will fill out some sections automatically.
+9) Click Next
+10) Ensure the directory path is where you want the project to store. Click Next.
+11) Click Finish
+
+##### Configuring OpenSUN Server
+1) Go to the main directory of OpenSUN Server.
+<br><b>NOTE:</b> In Eclipse, right click OpenSUN-Server, scroll over Show In, and click Project Explorer.
+2) Create a folder called config.
+3) In the main directory, search through every server, and find the .properties_template files.
+<br><b>NOTE:</b> Inside agent-server, the file is in agent-server\src\main\resources. The server's properties_template files you need is agent-server, auth-server, db-server, world-server.
+4) Place those .properties_template files inside the config folder in the main directory.
+5) In Eclipse click Run in the toolbar at the top.
+6) Click Debug Configurations... in the Run dropdown bar.
+7) In the pop-up window, right click Spring Boot App, and click New Configuration.
+8) At the top of the window, rename the configuration to ServerConfig, and click the Environment tab.
+9) Click Add at the right of the window.
+10) In the new pop-up window, type config folder for name, and click the Variables... button.
+11) 
 
 ## Files
  - [Server Suite (31.07.2019)](https://drive.google.com/open?id=18D...r9pEusguJf8rUe)
