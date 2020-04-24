@@ -43,6 +43,15 @@ To successfully run the project, please download and install everything from the
   
  #### OpenSUN Server
  
+ ##### Configuring PostgreSQL 10
+ 1) Open pgAdmin4.
+ 2) On the left hand side of the browser, click Servers.
+ <br><b>NOTE:</b> Might be prompted to enter your password for postgres user (password during installation).
+ 3) Click PostgreSQL 10.
+ 4) Right click Databases, scroll over Create, and click Databases...
+ 5) In the pop-up window, write a name for the database you wish to create (e.g SUNOnline) in the Database section in the General tab.
+ 6) Click Save at the bottom of the window. This will close the window.
+ 
  ##### Importing to Eclipse
 1) Open Eclipse IDE.
 2) Click File in the toolbar at the top.
