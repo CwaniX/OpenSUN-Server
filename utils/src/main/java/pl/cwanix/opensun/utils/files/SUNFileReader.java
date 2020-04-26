@@ -2,12 +2,12 @@ package pl.cwanix.opensun.utils.files;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class SUNFileReader extends Reader {
 
@@ -36,11 +36,10 @@ public class SUNFileReader extends Reader {
 
 		while ((line = in.readLine()) != null) {
 			++currentLineIndex;
+			String tempLine;
 
-			System.out.println(line.trim().startsWith(COMMENT_PREFIX));
-
-			if (StringUtils.isNotBlank(line) && !line.trim().startsWith(COMMENT_PREFIX)) {
-				currentLine = line.split(DELIMITER);
+			if (StringUtils.isNotBlank(line) && !(tempLine = line.trim()).startsWith(COMMENT_PREFIX)) {
+				currentLine = tempLine.split(DELIMITER);
 				currentElementIndex = 0;
 				changed = true;
 

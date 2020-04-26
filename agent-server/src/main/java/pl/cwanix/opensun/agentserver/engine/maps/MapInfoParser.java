@@ -53,8 +53,7 @@ public class MapInfoParser implements InitializingBean {
 
 				map.setMapCode(reader.readNextIntValue());
 				map.setMapKind(reader.readNextIntValue());
-				map.setMapKind(reader.readNextIntValue());
-				map.setDebugName(reader.readNextStringValue());
+				map.setMName(reader.readNextStringValue());
 				map.setNCode(reader.readNextIntValue());
 				map.setDCode(reader.readNextIntValue());
 				map.setMKind(reader.readNextIntValue());
@@ -76,7 +75,7 @@ public class MapInfoParser implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		//loadFieldInfo();
-		//loadMapInfo();
+		loadFieldInfo();
+		loadMapInfo();
 	}
 }

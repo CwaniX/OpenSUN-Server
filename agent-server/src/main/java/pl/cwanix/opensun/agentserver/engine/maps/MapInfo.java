@@ -9,7 +9,7 @@ public class MapInfo {
 
     private int mapCode;
     private int mapKind;
-    private String debugName;
+    private String mName;
     private int nCode;
     private int dCode;
     private int mKind;
