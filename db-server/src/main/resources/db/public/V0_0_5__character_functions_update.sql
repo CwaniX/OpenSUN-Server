@@ -87,13 +87,15 @@ AS $BODY$
 			locationx,
 			locationy,
 			locationz,
-			region
+			region,
+			angle
 		) (SELECT
 				nextval('seq_character_position'),
 				locationx,
 				locationy,
 				locationz,
-				region
+				region,
+				angle
 			FROM "character_set"
 			WHERE class_code = in_class
 		) RETURNING id INTO position_id;
@@ -126,7 +128,7 @@ AS $BODY$
 			hair_code,
 			height_code,
 			hp,
-			inteligence,
+			intelligence,
 			invisible_opt,
 			level,
 			max_hp,
@@ -169,7 +171,7 @@ AS $BODY$
 				in_hair,
 				in_height,
 				100,
-				inteligence,
+				intelligence,
 				0,
 				level,
 				max_hp,
