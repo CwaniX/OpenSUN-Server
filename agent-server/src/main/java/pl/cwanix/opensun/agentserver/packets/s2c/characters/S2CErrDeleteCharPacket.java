@@ -6,7 +6,7 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
-@OutgoingPacket(category = PacketCategory.CHARACTER, type = 0x71)
+//@OutgoingPacket(category = PacketCategory.CHARACTER, type = 0x71)
 public class S2CErrDeleteCharPacket implements Packet {
 
 	private FixedLengthField errorCode;

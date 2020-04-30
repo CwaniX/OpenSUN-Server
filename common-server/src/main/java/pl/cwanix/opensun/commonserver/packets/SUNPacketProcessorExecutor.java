@@ -34,4 +34,8 @@ public class SUNPacketProcessorExecutor {
 
 		processor.process(ctx, packet);
 	}
+
+	public SUNPacketProcessor getProcessor(Class packetClass) {
+		return packetProcessorMap.get(packetClass);
+	}
 }
