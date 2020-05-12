@@ -1,11 +1,11 @@
-package pl.cwanix.opensun.agentserver.engine.maps;
+package pl.cwanix.opensun.agentserver.engine.maps.structures;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MapInfo {
+public class MapInfoStructure {
 
     private int mapCode;
     private int mapKind;

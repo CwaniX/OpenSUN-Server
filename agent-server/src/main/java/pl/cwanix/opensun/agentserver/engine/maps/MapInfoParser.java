@@ -6,11 +6,11 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
+import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.utils.files.SUNFileReader;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class MapInfoParser implements InitializingBean {
 	private final AgentServerProperties properties;
 
 	private Map<Integer, String> fieldInfo;
-	private Map<Integer, MapInfo> mapInfo;
+	private Map<Integer, MapInfoStructure> mapInfo;
 
 	private void loadFieldInfo() throws IOException {
 		fieldInfo = new HashMap<>();
@@ -49,7 +49,7 @@ public class MapInfoParser implements InitializingBean {
 
 		try (SUNFileReader reader = new SUNFileReader(properties.getDataDirectory() + "/" + WORLD_INFO_FILE_NAME)) {
 			while (reader.readLine()) {
-				MapInfo map = new MapInfo();
+				MapInfoStructure map = new MapInfoStructure();
 
 				map.setMapCode(reader.readNextIntValue());
 				map.setMapKind(reader.readNextIntValue());
