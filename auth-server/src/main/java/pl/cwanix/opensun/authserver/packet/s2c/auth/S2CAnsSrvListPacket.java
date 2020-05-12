@@ -13,15 +13,15 @@ import java.util.List;
 public class S2CAnsSrvListPacket implements Packet {
 
 	private FixedLengthField serversCount;
-	private List<ServerUnitStructure> serverList;
+	private List<ServerUnitStructure> serversList;
 	
-	public S2CAnsSrvListPacket(int serversCount, List<ServerUnitStructure> serverList) {
-		this.serversCount = new FixedLengthField(1, serversCount);
-		this.serverList = serverList;
+	public S2CAnsSrvListPacket(List<ServerUnitStructure> serversList) {
+		this.serversCount = new FixedLengthField(1, serversList.size());
+		this.serversList = serversList;
 	}
 	
 	@Override
 	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(serversCount, serverList);
+		return ArrayUtils.toArray(serversCount, serversList);
 	}
 }
