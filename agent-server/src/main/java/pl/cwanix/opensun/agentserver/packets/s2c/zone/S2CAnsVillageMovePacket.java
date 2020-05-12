@@ -6,14 +6,17 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
-@OutgoingPacket(category = PacketCategory.ZONE, /*type = 0x6C*/ type=(byte) 0xCD)
+@OutgoingPacket(category = PacketCategory.ZONE, type = 0x6C)
 public class S2CAnsVillageMovePacket implements Packet {
 
+	private FixedLengthField unknown;
 	
-	public S2CAnsVillageMovePacket() { }
+	public S2CAnsVillageMovePacket() {
+		this.unknown = new FixedLengthField(4, 104);
+	}
 	
 	@Override
 	public Object[] getOrderedFields() {
-		return ArrayUtils.EMPTY_OBJECT_ARRAY;
+		return ArrayUtils.toArray(unknown);
 	}
 }
