@@ -58,12 +58,20 @@ public class SUNFileReader extends Reader {
 		return Integer.parseInt(currentLine[currentElementIndex++]);
 	}
 
+	public byte readNextByteValue() {
+		return Byte.parseByte(currentLine[currentElementIndex++]);
+	}
+
 	public String readNextStringValue(String key) {
 		return currentLine[header.get(key)];
 	}
 
 	public int readNextIntValue(String key) {
 		return Integer.parseInt(currentLine[header.get(key)]);
+	}
+
+	public int readNextByteValue(String key) {
+		return Byte.parseByte(currentLine[header.get(key)]);
 	}
 
 	public void close() throws IOException {

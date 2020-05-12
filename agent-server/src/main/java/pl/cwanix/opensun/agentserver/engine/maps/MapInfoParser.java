@@ -6,6 +6,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
+import pl.cwanix.opensun.agentserver.engine.maps.structures.FieldInfoStructure;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.utils.files.SUNFileReader;
@@ -21,12 +22,13 @@ public class MapInfoParser implements InitializingBean {
 
 	private static final Marker MARKER = MarkerFactory.getMarker("MAP INFO PARSER");
 
+	private static final int MAX_FIELD_NUMBER = 6;
 	private static final String FIELD_INFO_FILE_NAME = "field.txt";
 	private static final String WORLD_INFO_FILE_NAME = "world.txt";
 
 	private final AgentServerProperties properties;
 
-	private Map<Integer, String> fieldInfo;
+	private Map<Integer, FieldInfoStructure> fieldInfo;
 	private Map<Integer, MapInfoStructure> mapInfo;
 
 	private void loadFieldInfo() throws IOException {
@@ -34,10 +36,11 @@ public class MapInfoParser implements InitializingBean {
 
 		try (SUNFileReader reader = new SUNFileReader(properties.getDataDirectory() + "/" + FIELD_INFO_FILE_NAME)) {
 			while (reader.readLine()) {
-				int index = reader.readNextIntValue();
-				String value = reader.readNextStringValue();
+				FieldInfoStructure field = new FieldInfoStructure();
+				field.setFieldCode(reader.readNextIntValue());
+				field.setPath(reader.readNextStringValue());
 
-				fieldInfo.put(index, value);
+				fieldInfo.put(field.getFieldCode(), field);
 			}
 		}
 
@@ -67,6 +70,34 @@ public class MapInfoParser implements InitializingBean {
 				map.setText1(reader.readNextIntValue());
 				map.setText2(reader.readNextIntValue());
 				map.setText3(reader.readNextIntValue());
+
+				map.setStartAreaId(reader.readNextIntValue()); //Dodac obsluge wartosci nie bedacej liczba
+
+				map.setMapClass(reader.readNextByteValue());
+
+				map.setFCode(new int[MAX_FIELD_NUMBER]);
+				map.setGCode(new String[MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MAX_FIELD_NUMBER; i++) {
+					map.getFCode()[i] = reader.readNextIntValue();
+					map.getGCode()[i] = reader.readNextStringValue();
+				}
+
+				map.setEnvironmentCode(new int[MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MAX_FIELD_NUMBER; i++) {
+					map.getEnvironmentCode()[i] = reader.readNextIntValue();
+				}
+
+				map.setImageCode(new int[MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MAX_FIELD_NUMBER; i++) {
+					map.getImageCode()[i] = reader.readNextIntValue();
+				}
+
+				mapInfo.put(map.getMapCode(), map);
+
+				//Dodac obsluge Map Group
 			}
 		}
 

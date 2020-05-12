@@ -23,4 +23,10 @@ public class MapInfoStructure {
     private int text1;
     private int text2;
     private int text3;
+    private int startAreaId;
+    private byte mapClass;
+    private int[] fCode;
+    private String[] gCode;
+    private int[]environmentCode;
+    private int[] imageCode;
 }
