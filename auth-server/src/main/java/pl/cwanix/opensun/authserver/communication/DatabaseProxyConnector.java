@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
+import pl.cwanix.opensun.authserver.entities.ChannelEntity;
 import pl.cwanix.opensun.authserver.entities.ServerEntity;
 import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
@@ -29,6 +30,10 @@ public class DatabaseProxyConnector {
 	
 	public List<ServerEntity> findServers() {
 		return restTemplate.exchange(properties.getDb().getServerUrl() + "/server/findAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<ServerEntity>>(){}).getBody();
+	}
+
+	public List<ChannelEntity> findChannels() {
+		return restTemplate.exchange(properties.getDb().getServerUrl() + "/channel/findAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<ChannelEntity>>(){}).getBody();
 	}
 
 	public ServerEntity findServer(int serverId) {

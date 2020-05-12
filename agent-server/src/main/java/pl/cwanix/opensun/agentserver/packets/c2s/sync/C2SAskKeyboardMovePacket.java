@@ -8,8 +8,6 @@ import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 
-import java.util.Arrays;
-
 @Slf4j
 @Getter
 @IncomingPacket(category = PacketCategory.SYNC, type = (byte) 0x2B)

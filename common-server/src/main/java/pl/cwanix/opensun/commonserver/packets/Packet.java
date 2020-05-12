@@ -1,16 +1,15 @@
 package pl.cwanix.opensun.commonserver.packets;
 
-import java.io.ByteArrayOutputStream;
-
-import io.netty.channel.ChannelHandlerContext;
 import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
+import java.io.ByteArrayOutputStream;
+
 public interface Packet extends PacketStructure {
 	
 	@Override
-	public default byte[] toByteArray() throws Exception {		
+	default byte[] toByteArray() throws Exception {
 		PacketHeader currentHeader;
 		
 		if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
