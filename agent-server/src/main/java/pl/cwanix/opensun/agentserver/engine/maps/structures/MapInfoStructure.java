@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class MapInfoStructure {
 
+    public static final int MAX_FIELD_NUMBER = 6;
+
     private int mapCode;
     private int mapKind;
     private String mName;
