@@ -1,6 +1,8 @@
 package pl.cwanix.opensun.agentserver.engine.maps;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -16,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Getter
+@Setter
 @Service
 @RequiredArgsConstructor
 public class MapInfoParser implements InitializingBean {

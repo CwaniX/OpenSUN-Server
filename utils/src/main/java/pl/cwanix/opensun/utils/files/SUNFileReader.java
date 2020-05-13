@@ -14,16 +14,22 @@ public class SUNFileReader extends Reader {
 	private static final String COMMENT_PREFIX = "//";
 	private static final String DELIMITER = "\\t";
 
-	private BufferedReader in;
+	private final BufferedReader in;
 	private Map<String, Integer> header;
 	private String[] currentLine;
 	private int currentLineIndex;
 	private int currentElementIndex;
 
-	public SUNFileReader(String filePath) throws IOException {
+	public SUNFileReader(String filePath, boolean loadHeader) throws IOException {
 		this.in = new BufferedReader(new FileReader(filePath));
 
-		loadHeader();
+		if (loadHeader) {
+			loadHeader();
+		}
+	}
+
+	public SUNFileReader(String filePath) throws IOException {
+		this(filePath, false);
 	}
 
 	public int read(char[] chars, int i, int i1) throws IOException {
