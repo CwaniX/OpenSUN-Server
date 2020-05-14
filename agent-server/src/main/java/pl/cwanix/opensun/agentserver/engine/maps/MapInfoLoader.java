@@ -10,6 +10,7 @@ import pl.cwanix.opensun.agentserver.engine.maps.objects.FieldInfo;
 import pl.cwanix.opensun.agentserver.engine.maps.objects.MapInfo;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,6 +30,9 @@ public class MapInfoLoader implements InitializingBean {
 	private Map<Integer, MapInfo> mapInfoMap;
 
 	private void loadMapInfo() {
+		fieldInfoMap = new HashMap<>();
+		mapInfoMap = new HashMap<>();
+
 		Map<Integer, MapInfoStructure> mapInfoStructureMap = mapInfoParser.getMapInfoStructureMap();
 
 		for (MapInfoStructure structure : mapInfoStructureMap.values()) {
