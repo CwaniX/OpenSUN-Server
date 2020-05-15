@@ -28,7 +28,7 @@ public class FieldInfo {
 	private int shiftMaxY;
 	//private WorldBase worldBase; ??
 	private SectorInfo sectorInfo;
-	//TriggerGroupInfoList triggerGroupInfoList; ??
+	private TriggerGroupInfo triggerGroupInfo;
 	private Map<Integer, MapObjectInfo> mapObjectInfoMap;
 	private List<Integer> startTilesList;
 
@@ -36,5 +36,6 @@ public class FieldInfo {
 		this.fieldInfoStructure = fieldInfoStructure;
 		this.mapObjectInfoMap = new HashMap<>();
 		this.startTilesList = new ArrayList<>();
+		this.triggerGroupInfo = new TriggerGroupInfo();
 	}
 }

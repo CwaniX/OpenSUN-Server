@@ -50,7 +50,8 @@ public class MapInfoLoader implements InitializingBean {
 					FieldInfo fieldInfo = fieldInfoMap.get(structure.getFCode()[i]);
 
 					if (Objects.isNull(fieldInfo)) {
-
+						fieldInfo = new FieldInfo(mapInfoParser.getFieldInfoStructureMap().get(structure.getFCode()[i]));
+						fieldInfoMap.put(structure.getFCode()[i], fieldInfo);
 					}
 
 					mapInfo.getFieldInfoMap().put(0, fieldInfo);
