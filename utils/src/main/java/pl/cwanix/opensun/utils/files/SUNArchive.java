@@ -34,4 +34,15 @@ public class SUNArchive {
 	public SUNArchiveChunkInfo readChunk() {
 		return null;
 	}
+
+	public void skipCurrentChunk() {
+	}
+
+	public String readName() {
+		return null;
+	}
+
+	public int getVersion() {
+		return 0;
+	}
 }
