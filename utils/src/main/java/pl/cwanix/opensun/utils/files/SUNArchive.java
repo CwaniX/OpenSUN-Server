@@ -24,6 +24,14 @@ public class SUNArchive {
 
 		log.debug(MARKER, "Loaded archive file: {}", fileName);
 
-		return false;
+		return true;
+	}
+
+	private void read() {
+
+	}
+
+	public SUNArchiveChunkInfo readChunk() {
+		return null;
 	}
 }
