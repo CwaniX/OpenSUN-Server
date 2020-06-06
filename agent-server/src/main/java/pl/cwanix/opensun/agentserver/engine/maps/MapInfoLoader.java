@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.cwanix.opensun.agentserver.engine.maps.objects.FieldInfo;
 import pl.cwanix.opensun.agentserver.engine.maps.objects.MapInfo;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
+import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class MapInfoLoader implements InitializingBean {
 	private static final int ROOM_SECTOR_SIZE = 0;
 
 	private final MapInfoParser mapInfoParser;
+	private final AgentServerProperties properties;
 
 	private Map<Integer, FieldInfo> fieldInfoMap;
 	private Map<Integer, MapInfo> mapInfoMap;
@@ -37,8 +39,8 @@ public class MapInfoLoader implements InitializingBean {
 
 		for (MapInfoStructure structure : mapInfoStructureMap.values()) {
 			MapInfo mapInfo = new MapInfo(structure);
-			int sectorSize;
-			boolean viewport;
+			int sectorSize = ROOM_SECTOR_SIZE;
+			boolean viewport = false;
 
 			if (ZoneType.VILLAGE.equals(structure.getMKind())) {
 				sectorSize = VILLAGE_SECTOR_SIZE;
@@ -51,6 +53,9 @@ public class MapInfoLoader implements InitializingBean {
 
 					if (Objects.isNull(fieldInfo)) {
 						fieldInfo = new FieldInfo(mapInfoParser.getFieldInfoStructureMap().get(structure.getFCode()[i]));
+						fieldInfo.load(properties.getDataDirectory());
+						fieldInfo.establishSectorInfo(sectorSize, viewport);
+
 						fieldInfoMap.put(structure.getFCode()[i], fieldInfo);
 					}
 

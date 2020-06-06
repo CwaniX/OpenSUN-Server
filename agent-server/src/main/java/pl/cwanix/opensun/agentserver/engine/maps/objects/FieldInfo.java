@@ -46,15 +46,23 @@ public class FieldInfo {
 		this.startTilesList = new ArrayList<>();
 		this.triggerGroupInfo = new TriggerGroupInfo();
 
-		//worldBase.create()?
+		this.worldBase = new WorldBase(); //create?
 	}
 
-	public void load() {
+	public void load(String dataDirectory) {
 		SUNArchive archive = new SUNArchive();
 
-		if (archive.loadFile(fieldInfoStructure.getPath())) {
+		if (!archive.loadFile(dataDirectory + "/" + fieldInfoStructure.getPath())) {
 			log.error(MARKER, "Unable to load field file: {}", fieldInfoStructure.getPath());
 		}
+
+		if (!worldBase.serialize(archive)) {
+			log.error(MARKER, "Unable to serialize world base");
+
+			throw new RuntimeException("");
+		}
+
+		loadMapObjectInfo(archive);
 	}
 
 	private void loadMapObjectInfo(SUNArchive archive) {
@@ -68,7 +76,7 @@ public class FieldInfo {
 				break;
 			}
 
-			archive.skipCurrentChunk();
+			archive.skipCurrentChunk(chunkInfo);
 		}
 
 		int numbers = 0;
@@ -111,5 +119,8 @@ public class FieldInfo {
 
 			mapObjectInfoMap.put(object.getMapObjectInfoId(), object);
 		}
+	}
+
+	public void establishSectorInfo(int sectorSize, boolean viewport) {
 	}
 }
