@@ -8,6 +8,7 @@ import pl.cwanix.opensun.utils.datatypes.SUNAABB;
 import pl.cwanix.opensun.utils.datatypes.SUNColor;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 import pl.cwanix.opensun.utils.files.SUNArchive;
+import pl.cwanix.opensun.utils.files.SUNArchiveChunkInfo;
 
 @Slf4j
 public class WorldBase {
@@ -21,7 +22,11 @@ public class WorldBase {
 
     private Vector sunLightDir;
     private SUNColor mapAmbient;
+    private SUNColor ambientDrawBase;
+    private SUNColor shadowColor;
+    private SUNColor sunLightColor;
     private int state;
+    private int checkSum;
 
     public boolean serialize(SUNArchive archive) {
         String identity = new String(archive.read(4));
@@ -38,7 +43,23 @@ public class WorldBase {
             return false;
         }
 
+        if (version >= 148) {
+            SUNArchiveChunkInfo chunkInfo = archive.readChunk();
+
+            if (chunkInfo.getId() != 0x1770) {
+                throw new RuntimeException("" + chunkInfo.getId());
+            }
+        }
+
+        if (version >= 136) {
+            checkSum = BytesUtils.byteArrayToInt(archive.read(4));
+        }
+
         sunLightDir = new Vector(archive.read(12));
+
+        if (version >= 143) {
+            sunLightColor = new SUNColor(archive.read(3));
+        }
 
         if (version >= 91) {
             mapAmbient = new SUNColor(archive.read(3));
@@ -61,12 +82,17 @@ public class WorldBase {
         DWORD dwFogColor=WzColor_RGB(32,32,32);
         float fFogStart=20.0f,fFogEnd=150.0f,fFogRate=100.0f;*/
 
+        if (version >= 152) {
+            ambientDrawBase = new SUNColor(archive.read(3));
+            shadowColor = new SUNColor(archive.read(3));
+        }
+
         SUNColor fogColor;
         float fogStart;
         float fogEnd;
         float fogRate;
         if (version >= 132) {
-            fogColor = new SUNColor(archive.read(4));
+            fogColor = new SUNColor(archive.read(3));
             fogStart = BytesUtils.byteArrayToFloat(archive.read(4));
             fogEnd = BytesUtils.byteArrayToFloat(archive.read(4));
             fogRate = BytesUtils.byteArrayToFloat(archive.read(4));
@@ -75,6 +101,24 @@ public class WorldBase {
             fogStart = 20.0f;
             fogEnd = 150.0f;
             fogRate = 100.0f;
+        }
+
+        if (version >= 135) {
+            /*int iBlurCount;
+            float fMinLuminance,fSelectHighLight,fFinalColorBlend;
+            WzColor wcSelectColor;
+
+            *pArchive >> iBlurCount >> fMinLuminance >>fSelectHighLight
+                    >>wcSelectColor >>fFinalColorBlend;*/
+
+            archive.read(19);
+        }
+
+        if (version >= 146) {
+            /*float afSkipBuffer[8];
+            pArchive->Read(&afSkipBuffer,sizeof(afSkipBuffer));*/
+
+            archive.read(32);
         }
 
         return true;
