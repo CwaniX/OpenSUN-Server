@@ -3,6 +3,7 @@
 *.iml
 .idea/
 .settings/
+target/
 auth-server/.settings/
 auth-server/target/
 auth-server/bin/
