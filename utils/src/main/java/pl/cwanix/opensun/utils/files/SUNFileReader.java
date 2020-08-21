@@ -14,16 +14,22 @@ public class SUNFileReader extends Reader {
 	private static final String COMMENT_PREFIX = "//";
 	private static final String DELIMITER = "\\t";
 
-	private BufferedReader in;
+	private final BufferedReader in;
 	private Map<String, Integer> header;
 	private String[] currentLine;
 	private int currentLineIndex;
 	private int currentElementIndex;
 
-	public SUNFileReader(String filePath) throws IOException {
+	public SUNFileReader(String filePath, boolean loadHeader) throws IOException {
 		this.in = new BufferedReader(new FileReader(filePath));
 
-		loadHeader();
+		if (loadHeader) {
+			loadHeader();
+		}
+	}
+
+	public SUNFileReader(String filePath) throws IOException {
+		this(filePath, false);
 	}
 
 	public int read(char[] chars, int i, int i1) throws IOException {
@@ -36,11 +42,10 @@ public class SUNFileReader extends Reader {
 
 		while ((line = in.readLine()) != null) {
 			++currentLineIndex;
+			String tempLine;
 
-			System.out.println(line.trim().startsWith(COMMENT_PREFIX));
-
-			if (StringUtils.isNotBlank(line) && !line.trim().startsWith(COMMENT_PREFIX)) {
-				currentLine = line.split(DELIMITER);
+			if (StringUtils.isNotBlank(line) && !(tempLine = line.trim()).startsWith(COMMENT_PREFIX)) {
+				currentLine = tempLine.split(DELIMITER);
 				currentElementIndex = 0;
 				changed = true;
 
@@ -59,12 +64,20 @@ public class SUNFileReader extends Reader {
 		return Integer.parseInt(currentLine[currentElementIndex++]);
 	}
 
+	public byte readNextByteValue() {
+		return Byte.parseByte(currentLine[currentElementIndex++]);
+	}
+
 	public String readNextStringValue(String key) {
 		return currentLine[header.get(key)];
 	}
 
 	public int readNextIntValue(String key) {
 		return Integer.parseInt(currentLine[header.get(key)]);
+	}
+
+	public int readNextByteValue(String key) {
+		return Byte.parseByte(currentLine[header.get(key)]);
 	}
 
 	public void close() throws IOException {

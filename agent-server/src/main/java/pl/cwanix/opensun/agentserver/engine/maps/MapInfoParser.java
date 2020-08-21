@@ -1,20 +1,25 @@
 package pl.cwanix.opensun.agentserver.engine.maps;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
+import pl.cwanix.opensun.agentserver.engine.maps.structures.FieldInfoStructure;
+import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.utils.files.SUNFileReader;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Getter
+@Setter
 @Service
 @RequiredArgsConstructor
 public class MapInfoParser implements InitializingBean {
@@ -26,35 +31,35 @@ public class MapInfoParser implements InitializingBean {
 
 	private final AgentServerProperties properties;
 
-	private Map<Integer, String> fieldInfo;
-	private Map<Integer, MapInfo> mapInfo;
+	private Map<Integer, FieldInfoStructure> fieldInfoStructureMap;
+	private Map<Integer, MapInfoStructure> mapInfoStructureMap;
 
 	private void loadFieldInfo() throws IOException {
-		fieldInfo = new HashMap<>();
+		fieldInfoStructureMap = new HashMap<>();
 
 		try (SUNFileReader reader = new SUNFileReader(properties.getDataDirectory() + "/" + FIELD_INFO_FILE_NAME)) {
 			while (reader.readLine()) {
-				int index = reader.readNextIntValue();
-				String value = reader.readNextStringValue();
+				FieldInfoStructure field = new FieldInfoStructure();
+				field.setFieldCode(reader.readNextIntValue());
+				field.setPath(reader.readNextStringValue());
 
-				fieldInfo.put(index, value);
+				fieldInfoStructureMap.put(field.getFieldCode(), field);
 			}
 		}
 
-		log.info(MARKER, "Loaded field data: {}", fieldInfo.size());
+		log.info(MARKER, "Loaded field data: {}", fieldInfoStructureMap.size());
 	}
 
 	private void loadMapInfo() throws IOException {
-		mapInfo = new HashMap<>();
+		mapInfoStructureMap = new HashMap<>();
 
 		try (SUNFileReader reader = new SUNFileReader(properties.getDataDirectory() + "/" + WORLD_INFO_FILE_NAME)) {
 			while (reader.readLine()) {
-				MapInfo map = new MapInfo();
+				MapInfoStructure map = new MapInfoStructure();
 
 				map.setMapCode(reader.readNextIntValue());
 				map.setMapKind(reader.readNextIntValue());
-				map.setMapKind(reader.readNextIntValue());
-				map.setDebugName(reader.readNextStringValue());
+				map.setMName(reader.readNextStringValue());
 				map.setNCode(reader.readNextIntValue());
 				map.setDCode(reader.readNextIntValue());
 				map.setMKind(reader.readNextIntValue());
@@ -68,15 +73,43 @@ public class MapInfoParser implements InitializingBean {
 				map.setText1(reader.readNextIntValue());
 				map.setText2(reader.readNextIntValue());
 				map.setText3(reader.readNextIntValue());
+
+				map.setStartAreaId(reader.readNextIntValue()); //Dodac obsluge wartosci nie bedacej liczba
+
+				map.setMapClass(reader.readNextByteValue());
+
+				map.setFCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
+				map.setGCode(new String[MapInfoStructure.MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
+					map.getFCode()[i] = reader.readNextIntValue();
+					map.getGCode()[i] = reader.readNextStringValue();
+				}
+
+				map.setEnvironmentCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
+					map.getEnvironmentCode()[i] = reader.readNextIntValue();
+				}
+
+				map.setImageCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
+
+				for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
+					map.getImageCode()[i] = reader.readNextIntValue();
+				}
+
+				mapInfoStructureMap.put(map.getMapCode(), map);
+
+				//Dodac obsluge Map Group
 			}
 		}
 
-		log.info(MARKER, "Loaded map data: {}", mapInfo.size());
+		log.info(MARKER, "Loaded map data: {}", mapInfoStructureMap.size());
 	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		//loadFieldInfo();
-		//loadMapInfo();
+		loadFieldInfo();
+		loadMapInfo();
 	}
 }

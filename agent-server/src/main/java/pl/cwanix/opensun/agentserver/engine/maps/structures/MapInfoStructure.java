@@ -1,15 +1,17 @@
-package pl.cwanix.opensun.agentserver.engine.maps;
+package pl.cwanix.opensun.agentserver.engine.maps.structures;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MapInfo {
+public class MapInfoStructure {
+
+    public static final int MAX_FIELD_NUMBER = 6;
 
     private int mapCode;
     private int mapKind;
-    private String debugName;
+    private String mName;
     private int nCode;
     private int dCode;
     private int mKind;
@@ -23,4 +25,10 @@ public class MapInfo {
     private int text1;
     private int text2;
     private int text3;
+    private int startAreaId;
+    private byte mapClass;
+    private int[] fCode;
+    private String[] gCode;
+    private int[]environmentCode;
+    private int[] imageCode;
 }
