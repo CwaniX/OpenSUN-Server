@@ -6,8 +6,8 @@ public class BitField {
     private final long shift;
 
     public BitField(final long mask) {
-    	this.mask = mask;
-    	this.shift = mask == 0 ? 0 : Long.numberOfTrailingZeros(mask);
+        this.mask = mask;
+        this.shift = mask == 0 ? 0 : Long.numberOfTrailingZeros(mask);
     }
 
     public long getValue(final long data) {
