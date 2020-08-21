@@ -96,6 +96,8 @@
   <!--   <property name="fileExtensions" value="java"/> -->
   <!-- </module> -->
 
+  <module name="SuppressWarningsFilter" />
+
   <module name="TreeWalker">
 
     <!-- Checks for Javadoc comments.                     -->
@@ -163,7 +165,7 @@
     <!-- See https://checkstyle.org/config_coding.html -->
     <module name="EmptyStatement"/>
     <module name="EqualsHashCode"/>
-    <module name="HiddenField"/>
+    <!-- <module name="HiddenField"/> -->
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
     <module name="MagicNumber"/>
@@ -194,6 +196,7 @@
       <property name="optional" value="true"/>
     </module>
 
+    <module name="SuppressWarningsHolder" />
   </module>
 
 </module>

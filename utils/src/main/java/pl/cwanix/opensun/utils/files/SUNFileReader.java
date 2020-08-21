@@ -11,86 +11,73 @@ import java.util.Map;
 
 public class SUNFileReader extends Reader {
 
-	private static final String COMMENT_PREFIX = "//";
-	private static final String DELIMITER = "\\t";
+    private static final String COMMENT_PREFIX = "//";
+    private static final String DELIMITER = "\\t";
 
-	private final BufferedReader in;
-	private Map<String, Integer> header;
-	private String[] currentLine;
-	private int currentLineIndex;
-	private int currentElementIndex;
+    private BufferedReader in;
+    private Map<String, Integer> header;
+    private String[] currentLine;
+    private int currentLineIndex;
+    private int currentElementIndex;
 
-	public SUNFileReader(String filePath, boolean loadHeader) throws IOException {
-		this.in = new BufferedReader(new FileReader(filePath));
+    public SUNFileReader(final String filePath) throws IOException {
+        this.in = new BufferedReader(new FileReader(filePath));
 
-		if (loadHeader) {
-			loadHeader();
-		}
-	}
+        loadHeader();
+    }
 
-	public SUNFileReader(String filePath) throws IOException {
-		this(filePath, false);
-	}
+    public int read(final char[] chars, final int i, final int i1) throws IOException {
+        return in.read(chars, i, i1);
+    }
 
-	public int read(char[] chars, int i, int i1) throws IOException {
-		return in.read(chars, i, i1);
-	}
+    public boolean readLine() throws IOException {
+        String line;
+        boolean changed = false;
 
-	public boolean readLine() throws IOException {
-		String line;
-		boolean changed = false;
+        while ((line = in.readLine()) != null) {
+            ++currentLineIndex;
 
-		while ((line = in.readLine()) != null) {
-			++currentLineIndex;
-			String tempLine;
+            System.out.println(line.trim().startsWith(COMMENT_PREFIX));
 
-			if (StringUtils.isNotBlank(line) && !(tempLine = line.trim()).startsWith(COMMENT_PREFIX)) {
-				currentLine = tempLine.split(DELIMITER);
-				currentElementIndex = 0;
-				changed = true;
+            if (StringUtils.isNotBlank(line) && !line.trim().startsWith(COMMENT_PREFIX)) {
+                currentLine = line.split(DELIMITER);
+                currentElementIndex = 0;
+                changed = true;
 
-				break;
-			}
-		}
+                break;
+            }
+        }
 
-		return changed;
-	}
+        return changed;
+    }
 
-	public String readNextStringValue() {
-		return currentLine[currentElementIndex++];
-	}
+    public String readNextStringValue() {
+        return currentLine[currentElementIndex++];
+    }
 
-	public int readNextIntValue() {
-		return Integer.parseInt(currentLine[currentElementIndex++]);
-	}
+    public int readNextIntValue() {
+        return Integer.parseInt(currentLine[currentElementIndex++]);
+    }
 
-	public byte readNextByteValue() {
-		return Byte.parseByte(currentLine[currentElementIndex++]);
-	}
+    public String readNextStringValue(final String key) {
+        return currentLine[header.get(key)];
+    }
 
-	public String readNextStringValue(String key) {
-		return currentLine[header.get(key)];
-	}
+    public int readNextIntValue(final String key) {
+        return Integer.parseInt(currentLine[header.get(key)]);
+    }
 
-	public int readNextIntValue(String key) {
-		return Integer.parseInt(currentLine[header.get(key)]);
-	}
+    public void close() throws IOException {
+        in.close();
+    }
 
-	public int readNextByteValue(String key) {
-		return Byte.parseByte(currentLine[header.get(key)]);
-	}
+    private void loadHeader() throws IOException {
+        header = new HashMap<>();
 
-	public void close() throws IOException {
-		in.close();
-	}
+        readLine();
 
-	private void loadHeader() throws IOException {
-		header = new HashMap<>();
-
-		readLine();
-
-		for (int i = 0; i < currentLine.length; i++) {
-			header.put(currentLine[i], i);
-		}
-	}
+        for (int i = 0; i < currentLine.length; i++) {
+            header.put(currentLine[i], i);
+        }
+    }
 }

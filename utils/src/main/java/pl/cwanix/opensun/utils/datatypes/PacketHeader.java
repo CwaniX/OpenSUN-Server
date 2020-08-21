@@ -9,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PacketHeader {
 
-	private final byte idA;
-	private final byte idB;
-	
-	public byte[] getValue() {
-		return new byte[] { idA, idB };
-	}
+    private final byte idA;
+    private final byte idB;
+
+    public byte[] getValue() {
+        return new byte[] {idA, idB};
+    }
 }

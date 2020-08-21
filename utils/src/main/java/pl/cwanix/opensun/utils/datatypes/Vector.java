@@ -12,26 +12,32 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Vector implements SUNDataType {
 
-	private float x;
-	private float y;
-	private float z;
-	
-	public Vector() {
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-	
-	public Vector(byte[] value) {
-		ByteBuffer buffer = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
+    private static final int X_VALUE_POSITION = 0;
+    private static final int Y_VALUE_POSITION = 4;
+    private static final int Z_VALUE_POSITION = 8;
+    private static final int DATA_ARRAY_SIZE = 12;
 
-		x = buffer.getFloat(0);
-		y = buffer.getFloat(4);
-		z = buffer.getFloat(8);
-	}
-	
-	@Override
-	public byte[] toByteArray() {
-		return ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN).putFloat(x).putFloat(y).putFloat(z).array();
-	}
+
+    private float x;
+    private float y;
+    private float z;
+
+    public Vector() {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+
+    public Vector(final byte[] value) {
+        ByteBuffer buffer = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
+
+        x = buffer.getFloat(X_VALUE_POSITION);
+        y = buffer.getFloat(Y_VALUE_POSITION);
+        z = buffer.getFloat(Z_VALUE_POSITION);
+    }
+
+    @Override
+    public byte[] toByteArray() {
+        return ByteBuffer.allocate(DATA_ARRAY_SIZE).order(ByteOrder.LITTLE_ENDIAN).putFloat(x).putFloat(y).putFloat(z).array();
+    }
 }
