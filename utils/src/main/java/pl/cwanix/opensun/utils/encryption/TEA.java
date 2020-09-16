@@ -7,42 +7,62 @@ import pl.cwanix.opensun.utils.bytes.BytesUtils;
 public class TEA {
 	
 	public static byte[] passwordEncode(String passInput, byte[] keyInput) {
-		int keyValue = BytesUtils.byteArrayToInt(keyInput);
-		byte[] passMask = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-		byte[] key = new byte[4];
-		key[0] = (byte) keyValue;
-		key[1] = (byte) (keyValue + 1);
-		key[2] = (byte) (keyValue + 2);
-		key[3] = (byte) (keyValue + 3);
-		
-		BytesUtils.strncpy(passInput.getBytes(), passMask, 0);
-		byte[] enc1 = encode(passMask, key);
-		byte[] enc2 = encode(Arrays.copyOfRange(passMask, 8, 16), key);
-		byte[] result = new byte[16];
-		
-		BytesUtils.strncpy(enc1, result, 0);
-		BytesUtils.strncpy(enc2, result, 8);
-		
-		return result;
-	}
+        byte[] passMask = new byte[24];
+        byte[] key = new byte[4];
+        byte[] result = new byte[24];
+
+        try {
+            // The max number is 23 because there is one separator byte between password and filler.
+            byte[] filler = new byte[23 - passInput.getBytes().length];
+            // Securely randomize the bytes to create a unique salt.
+            SecureRandom.getInstance("SHA1PRNG").nextBytes(filler);
+
+            // Copy the passInput to passMask.
+            System.arraycopy(passInput.getBytes(), 0, passMask, 0, passInput.getBytes().length);
+            // Copy the filler to the end of passMask.
+            System.arraycopy(filler, 0, passMask, passInput.getBytes().length + 1, filler.length);
+        }  catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        int keyValue = BytesUtils.byteArrayToInt(keyInput);
+
+        key[0] = (byte) keyValue;
+        key[1] = (byte) (keyValue + 1);
+        key[2] = (byte) (keyValue + 2);
+        key[3] = (byte) (keyValue + 3);
+
+        byte[] enc1 = encode(Arrays.copyOfRange(passMask, 0, 8), key);
+        byte[] enc2 = encode(Arrays.copyOfRange(passMask, 8, 16), key);
+        byte[] enc3 = encode(Arrays.copyOfRange(passMask, 16, 23), key);
+
+        BytesUtils.strncpy(enc1, result, 0);
+        BytesUtils.strncpy(enc2, result, 8);
+        BytesUtils.strncpy(enc3, result, 16);
+
+        return result;
+    }
 	
 	public static byte[] passwordDecode(byte[] passInput, byte[] keyInput) {
-		int keyValue = BytesUtils.byteArrayToInt(keyInput);
-		byte[] key = new byte[4];
-		key[0] = (byte) keyValue;
-		key[1] = (byte) (keyValue + 1);
-		key[2] = (byte) (keyValue + 2);
-		key[3] = (byte) (keyValue + 3);
-		
-		byte[] dec1 = decode(passInput, key);
-		byte[] dec2 = decode(Arrays.copyOfRange(passInput, 8, 16), key);
-		byte[] result = new byte[16];
-		
-		BytesUtils.strncpy(dec1, result, 0);
-		BytesUtils.strncpy(dec2, result, 8);
-		
-		return BytesUtils.cutTail(result);
-	}
+        byte[] result = new byte[24];
+	int keyValue = BytesUtils.byteArrayToInt(keyInput);
+
+        byte[] key = new byte[4];
+        key[0] = (byte) keyValue;
+        key[1] = (byte) (keyValue + 1);
+        key[2] = (byte) (keyValue + 2);
+        key[3] = (byte) (keyValue + 3);
+
+        byte[] dec1 = decode(passInput, key);
+        byte[] dec2 = decode(Arrays.copyOfRange(passInput, 8, 16), key);
+        byte[] dec3 = decode(Arrays.copyOfRange(passInput, 16, 23), key);
+
+        BytesUtils.strncpy(dec1, result, 0);
+        BytesUtils.strncpy(dec2, result, 8);
+        BytesUtils.strncpy(dec3, result, 16);
+
+        return BytesUtils.cutTail(result);
+    }
 	
 	public static byte[] encode(byte[] src, byte[] key) {
 		int v0 = BytesUtils.byteArrayToInt(Arrays.copyOfRange(src, 0, 4));
