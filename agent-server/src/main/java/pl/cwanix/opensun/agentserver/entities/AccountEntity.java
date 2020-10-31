@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class AccountEntity {
 
-	private int id;
-	private List<CharacterEntity> characters;
+    private int id;
+    private List<CharacterEntity> characters;
 }

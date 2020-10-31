@@ -16,16 +16,16 @@ import java.util.List;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class PacketEncoder extends MessageToMessageEncoder<Packet> {
-	
-	private static final Marker MARKER = MarkerFactory.getMarker("PACKET ENCODER");
 
-	@Override
-	protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
-		byte[] result = msg.toByteArray();
-		
-		log.debug(MARKER, "Outgoing data: {}", BytesUtils.byteArrayToHexString(result));
-		
-	    out.add(result);
-	}
+    private static final Marker MARKER = MarkerFactory.getMarker("PACKET ENCODER");
+
+    @Override
+    protected void encode(final ChannelHandlerContext ctx, final Packet msg, final List<Object> out) throws Exception {
+        byte[] result = msg.toByteArray();
+
+        log.debug(MARKER, "Outgoing data: {}", BytesUtils.byteArrayToHexString(result));
+
+        out.add(result);
+    }
 
 }

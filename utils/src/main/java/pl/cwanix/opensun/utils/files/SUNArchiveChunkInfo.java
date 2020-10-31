@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class SUNArchiveChunkInfo {
 
-	public static final int CHUNK_INFO_SIZE = 6;
+    public static final int CHUNK_INFO_SIZE = 6;
 
-	private int id;
-	private int size;
+    private int id;
+    private int size;
 }

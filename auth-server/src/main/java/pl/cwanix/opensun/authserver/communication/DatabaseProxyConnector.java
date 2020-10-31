@@ -17,26 +17,34 @@ import pl.cwanix.opensun.authserver.properties.AuthServerProperties;
 @RequiredArgsConstructor
 public class DatabaseProxyConnector {
 
-	private final RestTemplate restTemplate;
-	private final AuthServerProperties properties;
-	
-	public UserEntity findUser(String userName) {
-		return restTemplate.getForObject(properties.getDb().getServerUrl() + "/user/findByName?name=" + userName, UserEntity.class);
-	}
-	
-	public int startAgentServerSession(int userId) {
-		return restTemplate.postForObject(properties.getAgent().getServerUrl() + "/session/new?userId=" + userId, null, Integer.class);
-	}
-	
-	public List<ServerEntity> findServers() {
-		return restTemplate.exchange(properties.getDb().getServerUrl() + "/server/findAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<ServerEntity>>(){}).getBody();
-	}
+    private final RestTemplate restTemplate;
+    private final AuthServerProperties properties;
 
-	public List<ChannelEntity> findChannels() {
-		return restTemplate.exchange(properties.getDb().getServerUrl() + "/channel/findAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<ChannelEntity>>(){}).getBody();
-	}
+    public UserEntity findUser(final String userName) {
+        return restTemplate.getForObject(properties.getDb().getServerUrl() + "/user/findByName?name=" + userName, UserEntity.class);
+    }
 
-	public ServerEntity findServer(int serverId) {
-		return restTemplate.getForObject(properties.getDb().getServerUrl() + "/server/findById?id=" + serverId, ServerEntity.class);
-	}
+    public int startAgentServerSession(final int userId) {
+        return restTemplate.postForObject(properties.getAgent().getServerUrl() + "/session/new?userId=" + userId, null, Integer.class);
+    }
+
+    public List<ServerEntity> findServers() {
+        return restTemplate.exchange(
+                properties.getDb().getServerUrl() + "/server/findAll",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<ServerEntity>>() { }).getBody();
+    }
+
+    public List<ChannelEntity> findChannels() {
+        return restTemplate.exchange(properties.getDb().getServerUrl() + "/channel/findAll",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<ChannelEntity>>() { }).getBody();
+    }
+
+    public ServerEntity findServer(final int serverId) {
+        return restTemplate.getForObject(properties.getDb().getServerUrl() + "/server/findById?id=" + serverId,
+                ServerEntity.class);
+    }
 }

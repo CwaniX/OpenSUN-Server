@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ChannelEntity {
 
-	private int id;
-	private ServerEntity server;
-	private String name;
+    private int id;
+    private ServerEntity server;
+    private String name;
 }

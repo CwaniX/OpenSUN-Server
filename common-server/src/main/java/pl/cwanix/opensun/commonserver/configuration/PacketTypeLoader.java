@@ -20,7 +20,14 @@ import pl.cwanix.opensun.utils.datatypes.SUNDataType;
 import pl.cwanix.opensun.utils.functions.ThrowingFunction;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,117 +36,125 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class PacketTypeLoader {
 
-	private static final Marker MARKER = MarkerFactory.getMarker("PACKET TYPE LOADER");
+    private static final Marker MARKER = MarkerFactory.getMarker("PACKET TYPE LOADER");
 
-	private final SUNPacketProcessorExecutor processorExecutor;
+    private final SUNPacketProcessorExecutor processorExecutor;
 
-	@Bean
-	@SuppressWarnings("unchecked")
-	public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws ClassNotFoundException {
-		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
-		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
+    @Bean
+    @SuppressWarnings("unchecked")
+    public Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions() throws ClassNotFoundException {
+        ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
+        classPathScanner.addIncludeFilter(new AnnotationTypeFilter(IncomingPacket.class));
 
-		Map<PacketHeader, List<Class<? extends Packet>>> classes = new HashMap<>();
-		Set<BeanDefinition> packetDefinitions = classPathScanner.findCandidateComponents("pl.cwanix.opensun");
+        Map<PacketHeader, List<Class<? extends Packet>>> classes = new HashMap<>();
+        Set<BeanDefinition> packetDefinitions = classPathScanner.findCandidateComponents("pl.cwanix.opensun");
 
-		for (BeanDefinition packetDefinition : packetDefinitions) {
-			Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
-			PacketHeader header = new PacketHeader(packetClass.getAnnotation(IncomingPacket.class).category().getCategory(), packetClass.getAnnotation(IncomingPacket.class).type());
+        for (BeanDefinition packetDefinition : packetDefinitions) {
+            Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
+            PacketHeader header = new PacketHeader(
+                    packetClass.getAnnotation(IncomingPacket.class).category().getCategory(),
+                    packetClass.getAnnotation(IncomingPacket.class).type()
+            );
 
-			checkIncomingPacketContract(packetClass);
+            checkIncomingPacketContract(packetClass);
 
-			classes.merge(header, Collections.singletonList(packetClass), (l1, l2) ->
-				Stream.of(l1, l2)
-						.flatMap(Collection::stream)
-						.collect(Collectors.toList())
-			);
-		}
+            classes.merge(header, Collections.singletonList(packetClass), (l1, l2) ->
+                    Stream.of(l1, l2)
+                            .flatMap(Collection::stream)
+                            .collect(Collectors.toList())
+            );
+        }
 
-		checkPacketDuplicates(classes);
-		classes.forEach((key, value) -> log.debug(MARKER, "Loaded incoming packet type: {}", value.get(0).getSimpleName()));
+        checkPacketDuplicates(classes);
+        classes.forEach((key, value) -> log.debug(MARKER, "Loaded incoming packet type: {}", value.get(0).getSimpleName()));
 
-		return classes.entrySet()
-				.stream()
-				.map(this::mapClassEntryToConstructorFunctionEntry)
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-	}
+        return classes.entrySet()
+                .stream()
+                .map(this::mapClassEntryToConstructorFunctionEntry)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
-	@Bean
-	@SuppressWarnings("unchecked")
-	public void serverPacketDefinitions() throws ClassNotFoundException {
-		ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
-		classPathScanner.addIncludeFilter(new AnnotationTypeFilter(OutgoingPacket.class));
+    @Bean
+    @SuppressWarnings("unchecked")
+    public void serverPacketDefinitions() throws ClassNotFoundException {
+        ClassPathScanningCandidateComponentProvider classPathScanner = new ClassPathScanningCandidateComponentProvider(false);
+        classPathScanner.addIncludeFilter(new AnnotationTypeFilter(OutgoingPacket.class));
 
-		Map<PacketHeader, List<Class<? extends Packet>>> classes = new HashMap<>();
-		Set<BeanDefinition> packetDefinitions = classPathScanner.findCandidateComponents("pl.cwanix.opensun");
+        Map<PacketHeader, List<Class<? extends Packet>>> classes = new HashMap<>();
+        Set<BeanDefinition> packetDefinitions = classPathScanner.findCandidateComponents("pl.cwanix.opensun");
 
-		for (BeanDefinition packetDefinition : packetDefinitions) {
-			Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
-			PacketHeader header = new PacketHeader(packetClass.getAnnotation(OutgoingPacket.class).category().getCategory(), packetClass.getAnnotation(OutgoingPacket.class).type());
+        for (BeanDefinition packetDefinition : packetDefinitions) {
+            Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
+            PacketHeader header = new PacketHeader(
+                    packetClass.getAnnotation(OutgoingPacket.class).category().getCategory(),
+                    packetClass.getAnnotation(OutgoingPacket.class).type()
+            );
 
-			checkOutgoingPacketContract(packetClass);
+            checkOutgoingPacketContract(packetClass);
 
-			classes.merge(header, Collections.singletonList(packetClass), (l1, l2) ->
-					Stream.of(l1, l2)
-							.flatMap(Collection::stream)
-							.collect(Collectors.toList())
-			);
-		}
+            classes.merge(header, Collections.singletonList(packetClass), (l1, l2) ->
+                    Stream.of(l1, l2)
+                            .flatMap(Collection::stream)
+                            .collect(Collectors.toList())
+            );
+        }
 
-		checkPacketDuplicates(classes);
+        checkPacketDuplicates(classes);
 
-		classes.forEach((key, value) -> log.debug(MARKER, "Loaded outgoing packet type: {}", value.get(0).getSimpleName()));
-	}
+        classes.forEach((key, value) -> log.debug(MARKER, "Loaded outgoing packet type: {}", value.get(0).getSimpleName()));
+    }
 
-	private Map.Entry<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> mapClassEntryToConstructorFunctionEntry(Map.Entry<PacketHeader, List<Class<? extends Packet>>> entry) {
-		Constructor<? extends Packet> packetConstructor = getIncomingPacketConstructor(entry.getValue().get(0));
-		ThrowingFunction<byte[], Packet, Exception> packetConstructorFunction = packetConstructor::newInstance;
+    private Map.Entry<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> mapClassEntryToConstructorFunctionEntry(
+            final Map.Entry<PacketHeader, List<Class<? extends Packet>>> entry
+    ) {
+        Constructor<? extends Packet> packetConstructor = getIncomingPacketConstructor(entry.getValue().get(0));
+        ThrowingFunction<byte[], Packet, Exception> packetConstructorFunction = packetConstructor::newInstance;
 
-		return new AbstractMap.SimpleEntry<>(entry.getKey(), packetConstructorFunction);
-	}
+        return new AbstractMap.SimpleEntry<>(entry.getKey(), packetConstructorFunction);
+    }
 
-	private Constructor<? extends Packet> getIncomingPacketConstructor(Class<? extends Packet> packetClass) {
-		try {
-			return packetClass.getConstructor(byte[].class);
-		} catch (NoSuchMethodException e) {
-			throw new PacketException("IncomingPacket should implement constructor with one byte[] argument", e);
-		}
-	}
+    private Constructor<? extends Packet> getIncomingPacketConstructor(final Class<? extends Packet> packetClass) {
+        try {
+            return packetClass.getConstructor(byte[].class);
+        } catch (NoSuchMethodException e) {
+            throw new PacketException("IncomingPacket should implement constructor with one byte[] argument", e);
+        }
+    }
 
-	private void checkIncomingPacketContract(Class<? extends Packet> packetClass) {
-		SUNPacketProcessor processor = processorExecutor.getProcessor(packetClass);
+    private void checkIncomingPacketContract(final Class<? extends Packet> packetClass) {
+        SUNPacketProcessor processor = processorExecutor.getProcessor(packetClass);
 
-		if (Objects.isNull(processor)) {
-			throw new PacketException("No matching processor for the packet type: " + packetClass.getSimpleName());
-		}
-	}
+        if (Objects.isNull(processor)) {
+            throw new PacketException("No matching processor for the packet type: " + packetClass.getSimpleName());
+        }
+    }
 
-	private void checkOutgoingPacketContract(Class<? extends Packet> packetClass) {
-		Class implementingClass;
+    private void checkOutgoingPacketContract(final Class<? extends Packet> packetClass) {
+        Class implementingClass;
 
-		try {
-			implementingClass = packetClass.getMethod("getOrderedFields").getDeclaringClass();
-		} catch (NoSuchMethodException e) {
-			throw new PacketException("Wrong OutgoingPacket definition", e);
-		}
+        try {
+            implementingClass = packetClass.getMethod("getOrderedFields").getDeclaringClass();
+        } catch (NoSuchMethodException e) {
+            throw new PacketException("Wrong OutgoingPacket definition", e);
+        }
 
-		if (implementingClass.equals(SUNDataType.class)) {
-			throw new PacketException("OutgoingPacket (" + packetClass.getSimpleName() + ") should implement own getOrderedFields() method");
-		}
-	}
+        if (implementingClass.equals(SUNDataType.class)) {
+            throw new PacketException("OutgoingPacket (" + packetClass.getSimpleName() + ") should implement own getOrderedFields() method");
+        }
+    }
 
-	private void checkPacketDuplicates(Map<PacketHeader, List<Class<? extends Packet>>> classes) {
-		boolean dup = false;
+    private void checkPacketDuplicates(final Map<PacketHeader, List<Class<? extends Packet>>> classes) {
+        boolean dup = false;
 
-		for (Map.Entry<PacketHeader, List<Class<? extends Packet>>> entry : classes.entrySet()) {
-			if (entry.getValue().size() > 1) {
-				dup = true;
-				log.error(MARKER, "Duplicate packet definitions: {}", entry.getValue().stream().map(Class::getSimpleName).collect(Collectors.joining(", ")));
-			}
-		}
+        for (Map.Entry<PacketHeader, List<Class<? extends Packet>>> entry : classes.entrySet()) {
+            if (entry.getValue().size() > 1) {
+                dup = true;
+                log.error(MARKER, "Duplicate packet definitions: {}", entry.getValue().stream().map(Class::getSimpleName).collect(Collectors.joining(", ")));
+            }
+        }
 
-		if (dup) {
-			throw new PacketException("Duplicate packet definitions");
-		}
-	}
+        if (dup) {
+            throw new PacketException("Duplicate packet definitions");
+        }
+    }
 }

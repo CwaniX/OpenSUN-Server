@@ -7,14 +7,15 @@ import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @Getter
+@SuppressWarnings("checkstyle:MagicNumber")
 @IncomingPacket(category = PacketCategory.AUTH, type = 0x13)
 public class C2SAskSrvSelectPacket implements Packet {
-	
-	private FixedLengthField serverIndex;
-	private FixedLengthField channelIndex;
-	
-	public C2SAskSrvSelectPacket(byte[] value) {
-		this.serverIndex = new FixedLengthField(1, value[0]);
-		this.channelIndex = new FixedLengthField(1, value[1]);
-	}
+
+    private final FixedLengthField serverIndex;
+    private final FixedLengthField channelIndex;
+
+    public C2SAskSrvSelectPacket(final byte[] value) {
+        this.serverIndex = new FixedLengthField(1, value[0]);
+        this.channelIndex = new FixedLengthField(1, value[1]);
+    }
 }

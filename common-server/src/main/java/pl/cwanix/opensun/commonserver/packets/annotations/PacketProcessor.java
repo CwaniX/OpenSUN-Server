@@ -10,5 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 @Component
 public @interface PacketProcessor {
 
-	Class<? extends Packet> packetClass();
+    Class<? extends Packet> packetClass();
 }

@@ -9,12 +9,12 @@ import pl.cwanix.opensun.utils.datatypes.Vector;
 @Setter
 public class MapObjectInfo {
 
-	private int mapObjectInfoId;
-	private SUNId id;
-	private int attribute;
-	private Vector pos;
-	private Vector rot;
-	private Vector scale;
-	//private BoundingVolume boundingVolume;
+    private int mapObjectInfoId;
+    private SUNId id;
+    private int attribute;
+    private Vector pos;
+    private Vector rot;
+    private Vector scale;
+    //private BoundingVolume boundingVolume;
 
 }

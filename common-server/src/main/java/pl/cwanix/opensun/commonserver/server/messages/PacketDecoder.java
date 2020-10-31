@@ -21,24 +21,24 @@ import pl.cwanix.opensun.utils.functions.ThrowingFunction;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
-	
-	private static final Marker MARKER = MarkerFactory.getMarker("PACKET DECODER");
-	
-	private final Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions;
 
-	@Override
-	protected void decode(ChannelHandlerContext ctx, byte[] msg, List<Object> out) throws Exception {
-		log.debug(MARKER, "Incoming data: {}", BytesUtils.byteArrayToHexString(msg));
+    private static final Marker MARKER = MarkerFactory.getMarker("PACKET DECODER");
 
-		PacketHeader id = new PacketHeader(msg[0], msg[1]);
-		byte[] value = Arrays.copyOfRange(msg, 2, msg.length);
-		
-		ThrowingFunction<byte[], Packet, Exception> packetCreationFunction = clientPacketDefinitions.get(id);
-		
-		if (packetCreationFunction == null) {
-			log.error(MARKER, "Unknown packet: {}", BytesUtils.byteArrayToHexString(id.getValue()));
-		} else {
-			out.add(packetCreationFunction.apply(value));
-		}
-	}
+    private final Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions;
+
+    @Override
+    protected void decode(final ChannelHandlerContext ctx, final byte[] msg, final List<Object> out) throws Exception {
+        log.debug(MARKER, "Incoming data: {}", BytesUtils.byteArrayToHexString(msg));
+
+        PacketHeader id = new PacketHeader(msg[0], msg[1]);
+        byte[] value = Arrays.copyOfRange(msg, 2, msg.length);
+
+        ThrowingFunction<byte[], Packet, Exception> packetCreationFunction = clientPacketDefinitions.get(id);
+
+        if (packetCreationFunction == null) {
+            log.error(MARKER, "Unknown packet: {}", BytesUtils.byteArrayToHexString(id.getValue()));
+        } else {
+            out.add(packetCreationFunction.apply(value));
+        }
+    }
 }

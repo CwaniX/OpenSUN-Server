@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class ServerEntity {
 
-	private int id;
-	private int port;
-	private String ip;
-	private String name;
+    private int id;
+    private int port;
+    private String ip;
+    private String name;
 }

@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class InventoryEntity {
 
-	private int id;
-	private int money;
-	private int inventoryLock;
-	private byte[] inventoryItem;
-	private byte[] tmpInventoryItem;
-	private byte[] equipItem;
+    private int id;
+    private int money;
+    private int inventoryLock;
+    private byte[] inventoryItem;
+    private byte[] tmpInventoryItem;
+    private byte[] equipItem;
 }

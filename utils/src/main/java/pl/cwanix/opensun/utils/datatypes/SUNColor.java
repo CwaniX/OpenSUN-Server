@@ -19,7 +19,7 @@ public class SUNColor implements SUNDataType {
         this.b = 0;
     }
 
-    public SUNColor(byte[] value) {
+    public SUNColor(final byte[] value) {
         this.r = value[0];
         this.g = value[1];
         this.b = value[2];

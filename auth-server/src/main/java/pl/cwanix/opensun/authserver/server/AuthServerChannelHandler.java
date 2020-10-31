@@ -12,26 +12,26 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 
 @RequiredArgsConstructor
 public class AuthServerChannelHandler extends SUNServerChannelHandler {
-	
-	public static final AttributeKey<AuthServerSession> SESSION_ATTRIBUTE = AttributeKey.valueOf("session");
 
-	private final SUNPacketProcessorExecutor processorExecutor;
-	private final AuthServerSessionManager sessionManager;
-	
-	@Override
-	public void channelActive(ChannelHandlerContext ctx) {
-		AuthServerSession session = sessionManager.startNewSession(null);
-		ctx.channel().attr(SESSION_ATTRIBUTE).set(session);
-		
-		S2CAnsHelloPacket packet = new S2CAnsHelloPacket(session.getEncKey());
+    public static final AttributeKey<AuthServerSession> SESSION_ATTRIBUTE = AttributeKey.valueOf("session");
 
-		ctx.writeAndFlush(packet);
-	}
+    private final SUNPacketProcessorExecutor processorExecutor;
+    private final AuthServerSessionManager sessionManager;
 
-	@Override
-	@SuppressWarnings("unchecked")
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    	Packet packet = (Packet) msg;
-    	processorExecutor.process(ctx, packet);
+    @Override
+    public void channelActive(final ChannelHandlerContext ctx) {
+        AuthServerSession session = sessionManager.startNewSession(null);
+        ctx.channel().attr(SESSION_ATTRIBUTE).set(session);
+
+        S2CAnsHelloPacket packet = new S2CAnsHelloPacket(session.getEncKey());
+
+        ctx.writeAndFlush(packet);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
+        Packet packet = (Packet) msg;
+        processorExecutor.process(ctx, packet);
     }
 }

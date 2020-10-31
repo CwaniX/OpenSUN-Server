@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class CharacterPositionEntity {
 
-	private int id;
-	private int region;
-	private int angle;
-	private float locationX;
-	private float locationY;
-	private float locationZ;
+    private int id;
+    private int region;
+    private int angle;
+    private float locationX;
+    private float locationY;
+    private float locationZ;
 }

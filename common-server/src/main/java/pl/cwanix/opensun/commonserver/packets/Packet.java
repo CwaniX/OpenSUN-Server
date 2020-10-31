@@ -7,23 +7,29 @@ import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 import java.io.ByteArrayOutputStream;
 
 public interface Packet extends PacketStructure {
-	
-	@Override
-	default byte[] toByteArray() throws Exception {
-		PacketHeader currentHeader;
-		
-		if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
-			currentHeader = new PacketHeader(this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(), this.getClass().getAnnotation(IncomingPacket.class).type());
-		} else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
-			currentHeader = new PacketHeader(this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(), this.getClass().getAnnotation(OutgoingPacket.class).type());
-		} else {
-			throw new PacketException("Wrong packet definition!");
-		}
-		
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		baos.write(currentHeader.getValue());
-		writeFieldValuesToStream(baos);
-		
-		return baos.toByteArray();
-	}
+
+    @Override
+    default byte[] toByteArray() throws Exception {
+        PacketHeader currentHeader;
+
+        if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
+            currentHeader = new PacketHeader(
+                    this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(),
+                    this.getClass().getAnnotation(IncomingPacket.class).type()
+            );
+        } else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
+            currentHeader = new PacketHeader(
+                    this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(),
+                    this.getClass().getAnnotation(OutgoingPacket.class).type()
+            );
+        } else {
+            throw new PacketException("Wrong packet definition!");
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(currentHeader.getValue());
+        writeFieldValuesToStream(baos);
+
+        return baos.toByteArray();
+    }
 }

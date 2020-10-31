@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 public class StateSlotPacketStructure implements PacketStructure {
 	
 	private FixedLengthField slotCode;

@@ -17,23 +17,23 @@ import pl.cwanix.opensun.commonserver.session.SUNSessionManager;
 @Component
 public class AuthServerSessionManager implements SUNSessionManager<UserEntity> {
 
-	private Map<UserEntity, AuthServerSession> sessions;
-	
-	public AuthServerSessionManager() {
-		sessions = new HashMap<>();
-	}
-	
-	@Override
-	public AuthServerSession startNewSession(UserEntity user) {
-		AuthServerSession newSession = new AuthServerSession();
-		sessions.put(user, newSession);
-		
-		return newSession;
-	}
+    private Map<UserEntity, AuthServerSession> sessions;
 
-	@Override
-	public AuthServerSession getSession(UserEntity user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public AuthServerSessionManager() {
+        sessions = new HashMap<>();
+    }
+
+    @Override
+    public AuthServerSession startNewSession(final UserEntity user) {
+        AuthServerSession newSession = new AuthServerSession();
+        sessions.put(user, newSession);
+
+        return newSession;
+    }
+
+    @Override
+    public AuthServerSession getSession(final UserEntity user) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

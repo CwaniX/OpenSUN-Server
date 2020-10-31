@@ -9,8 +9,8 @@ import java.util.List;
 @Setter
 public class SectorInfo {
 
-	private static final int MAX_NEIGHBOR_SECTOR_NUM = 8;
+    private static final int MAX_NEIGHBOR_SECTOR_NUM = 8;
 
-	private int sectorIndex;
-	private List<SectorInfo> neighborSectorInfoList;
+    private int sectorIndex;
+    private List<SectorInfo> neighborSectorInfoList;
 }
