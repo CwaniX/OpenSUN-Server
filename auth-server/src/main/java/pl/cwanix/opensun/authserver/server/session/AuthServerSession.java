@@ -2,14 +2,14 @@ package pl.cwanix.opensun.authserver.server.session;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.commonserver.session.SUNSession;
+import pl.cwanix.opensun.domain.UserDTO;
 
 @Getter
 @Setter
 public class AuthServerSession implements SUNSession {
 
-    private UserEntity user;
+    private UserDTO user;
     private byte[] encKey;
 
     public AuthServerSession() {

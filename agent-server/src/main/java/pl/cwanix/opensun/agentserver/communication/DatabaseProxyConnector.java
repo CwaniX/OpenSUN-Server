@@ -1,16 +1,15 @@
 package pl.cwanix.opensun.agentserver.communication;
 
-import java.util.List;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import lombok.RequiredArgsConstructor;
-import pl.cwanix.opensun.agentserver.entities.CharacterEntity;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
+import pl.cwanix.opensun.domain.CharacterDTO;
 import pl.cwanix.opensun.domain.DataSourceConnector;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,16 +41,16 @@ public class DatabaseProxyConnector implements DataSourceConnector {
         restTemplate.delete(properties.getDb().getServerUrl() + "/character/delete?accountId=" + userId + "&slot=" + slot);
     }
 
-    public CharacterEntity findCharacter(final int accountId, final int slot) {
+    public CharacterDTO findCharacter(final int accountId, final int slot) {
         return restTemplate.getForObject(properties.getDb().getServerUrl()
                 + "/character/findByAccountIdAndSlot?accountId=" + accountId
-                + "&slot=" + slot, CharacterEntity.class);
+                + "&slot=" + slot, CharacterDTO.class);
     }
 
-    public List<CharacterEntity> findCharactersList(final int accountId) {
+    public List<CharacterDTO> findCharactersList(final int accountId) {
         return restTemplate.exchange(properties.getDb().getServerUrl()
                 + "/character/findByAccountId?accountId="
-                + accountId, HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterEntity>>() { }).getBody();
+                + accountId, HttpMethod.GET, null, new ParameterizedTypeReference<List<CharacterDTO>>() { }).getBody();
     }
 
     public int findFreeSlot(final int userId) {

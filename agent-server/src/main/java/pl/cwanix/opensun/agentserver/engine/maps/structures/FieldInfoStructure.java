@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FieldInfoStructure {
-	int fieldCode;
-	String path;
+    private int fieldCode;
+    private String path;
 }

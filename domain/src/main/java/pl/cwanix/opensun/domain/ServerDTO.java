@@ -3,12 +3,12 @@ package pl.cwanix.opensun.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class AccountEntity {
+public class ServerDTO {
 
     private int id;
-    private List<CharacterEntity> characters;
+    private int port;
+    private String ip;
+    private String name;
 }

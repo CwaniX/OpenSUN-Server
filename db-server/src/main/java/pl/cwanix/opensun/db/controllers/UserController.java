@@ -16,26 +16,26 @@ import pl.cwanix.opensun.db.repositories.UserEntityRepository;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-	
-	private final UserEntityRepository userEntityRepository;
-	
-	@PostMapping(path = "/create", produces = "application/json")
-	public Integer create(@RequestParam("name") String name, @RequestParam("password") String password) {
-		return userEntityRepository.create("test", "test");
-	}
-	
-	@GetMapping(path = "/findAll", produces = "application/json")
-	public List<UserEntity> findAll() {
-		return userEntityRepository.findAll();
-	}
 
-	@GetMapping(path = "/findById", produces = "application/json")
-	public UserEntity findById(@RequestParam("id") int id) {
-		return userEntityRepository.findById(id).orElse(null);
-	}
-	
-	@GetMapping(path = "/findByName", produces = "application/json")
-	public UserEntity findByName(@RequestParam("name") String name) {
-		return userEntityRepository.findByName(name);
-	}
+    private final UserEntityRepository userEntityRepository;
+
+    @PostMapping(path = "/create", produces = "application/json")
+    public Integer create(@RequestParam("name") final String name, @RequestParam("password") final String password) {
+        return userEntityRepository.create("test", "test");
+    }
+
+    @GetMapping(path = "/findAll", produces = "application/json")
+    public List<UserEntity> findAll() {
+        return userEntityRepository.findAll();
+    }
+
+    @GetMapping(path = "/findById", produces = "application/json")
+    public UserEntity findById(@RequestParam("id") final int id) {
+        return userEntityRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping(path = "/findByName", produces = "application/json")
+    public UserEntity findByName(@RequestParam("name") final String name) {
+        return userEntityRepository.findByName(name);
+    }
 }

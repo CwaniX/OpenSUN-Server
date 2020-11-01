@@ -6,17 +6,18 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @OutgoingPacket(category = PacketCategory.CHARACTER, type = (byte) 0xBE)
 public class S2CAnsQuickPacket implements Packet {
-	
-	private FixedLengthField value;
-	
-	public S2CAnsQuickPacket() {
-		value = new FixedLengthField(1);
-	}
 
-	@Override
-	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(value);
-	}
+    private final FixedLengthField value;
+
+    public S2CAnsQuickPacket() {
+        value = new FixedLengthField(1);
+    }
+
+    @Override
+    public Object[] getOrderedFields() {
+        return ArrayUtils.toArray(value);
+    }
 }

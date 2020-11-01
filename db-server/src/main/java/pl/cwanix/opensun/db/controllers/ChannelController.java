@@ -14,10 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChannelController {
 
-	private final ChannelEntityRepository channelRepository;
+    private final ChannelEntityRepository channelRepository;
 
-	@GetMapping(path = "/findAll", produces = "application/json")
-	public List<ChannelEntity> findAll() {
-		return channelRepository.findAll();
-	}
+    @GetMapping(path = "/findAll", produces = "application/json")
+    public List<ChannelEntity> findAll() {
+        return channelRepository.findAll();
+    }
 }

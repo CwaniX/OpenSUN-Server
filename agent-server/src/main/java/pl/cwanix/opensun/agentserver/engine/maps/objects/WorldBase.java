@@ -29,7 +29,7 @@ public class WorldBase {
     private int state;
     private int checkSum;
 
-    public boolean serialize(SUNArchive archive) {
+    public boolean serialize(final SUNArchive archive) {
         String identity = new String(archive.read(4));
         if (!IDSTR_SUN_MAP.equals(identity)) {
             log.error(MARKER, "Wrong map identity");

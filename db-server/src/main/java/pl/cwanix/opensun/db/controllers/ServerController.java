@@ -15,16 +15,16 @@ import pl.cwanix.opensun.db.repositories.ServerEntityRepository;
 @RequestMapping("/server")
 @RequiredArgsConstructor
 public class ServerController {
-	
-	private final ServerEntityRepository serverRepository;
 
-	@GetMapping(path = "/findAll", produces = "application/json")
-	public List<ServerEntity> findAll() {
-		return serverRepository.findAll();
-	}
+    private final ServerEntityRepository serverRepository;
 
-	@GetMapping(path = "/findById", produces = "application/json")
-	public ServerEntity findById(@RequestParam("id") int id) {
-		return serverRepository.findById(id).orElse(null);
-	}
+    @GetMapping(path = "/findAll", produces = "application/json")
+    public List<ServerEntity> findAll() {
+        return serverRepository.findAll();
+    }
+
+    @GetMapping(path = "/findById", produces = "application/json")
+    public ServerEntity findById(@RequestParam("id") final int id) {
+        return serverRepository.findById(id).orElse(null);
+    }
 }

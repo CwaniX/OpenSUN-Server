@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CharacterEntity {
+public class CharacterDTO {
 
     private int id;
-    private AccountEntity account;
+    private AccountDTO account;
     private int classCode;
     private int heightCode;
     private int faceCode;
@@ -36,10 +36,10 @@ public class CharacterEntity {
     private int charState;
     private int stateTime;
     private int slot;
-    private CharacterPositionEntity position;
+    private CharacterPositionDTO position;
     private int titleId;
     private int invisibleOpt;
-    private InventoryEntity inventory;
+    private InventoryDTO inventory;
     private byte[] skill;
     private byte[] quick;
     private byte[] style;

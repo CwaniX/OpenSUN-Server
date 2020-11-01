@@ -41,7 +41,7 @@ public class FieldInfo {
     private Map<Integer, MapObjectInfo> mapObjectInfoMap;
     private List<Integer> startTilesList;
 
-    public FieldInfo(FieldInfoStructure fieldInfoStructure) {
+    public FieldInfo(final FieldInfoStructure fieldInfoStructure) {
         this.fieldInfoStructure = fieldInfoStructure;
         this.mapObjectInfoMap = new HashMap<>();
         this.startTilesList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class FieldInfo {
         this.worldBase = new WorldBase(); //create?
     }
 
-    public void load(String dataDirectory) {
+    public void load(final String dataDirectory) {
         SUNArchive archive = new SUNArchive();
 
         if (!archive.loadFile(dataDirectory + "/" + fieldInfoStructure.getPath())) {
@@ -66,7 +66,7 @@ public class FieldInfo {
         loadMapObjectInfo(archive);
     }
 
-    private void loadMapObjectInfo(SUNArchive archive) {
+    private void loadMapObjectInfo(final SUNArchive archive) {
         boolean areaChunk = false;
 
         while (true) {
@@ -107,7 +107,7 @@ public class FieldInfo {
             //object.setScale( archive read int );
             //object.setBoundingVolume( archive read ? );
 
-            if (archive.getVersion() >= 138) {
+            /*if (archive.getVersion() >= 138) {
                 //dummy = archive read int bytes
             }
 
@@ -116,7 +116,7 @@ public class FieldInfo {
                 //custom[1] = archive read int bytes
                 //custom[2] = archive read int bytes
                 //custom[3] = archive read int bytes
-            }
+            }*/
 
             mapObjectInfoMap.put(object.getMapObjectInfoId(), object);
         }

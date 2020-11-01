@@ -22,11 +22,19 @@ public class C2SAskMouseMoveProcessor implements SUNPacketProcessor<C2SAskMouseM
     private final DatabaseProxyConnector databaseProxyConnector;
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskMouseMovePacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskMouseMovePacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        log.debug(MARKER, "Updating character position: {} {} {}", packet.getDestinationPosition().getX(), packet.getDestinationPosition().getY(), packet.getDestinationPosition().getZ());
+        log.debug(MARKER, "Updating character position: {} {} {}",
+                packet.getDestinationPosition().getX(),
+                packet.getDestinationPosition().getY(),
+                packet.getDestinationPosition().getZ());
 
-        databaseProxyConnector.updateCharacterPosition(session.getCharacter().getId(), packet.getDestinationPosition().getX(), packet.getDestinationPosition().getY(), packet.getDestinationPosition().getZ(), 0);
+        databaseProxyConnector.updateCharacterPosition(
+                session.getCharacter().getId(),
+                packet.getDestinationPosition().getX(),
+                packet.getDestinationPosition().getY(),
+                packet.getDestinationPosition().getZ(),
+                0);
     }
 }

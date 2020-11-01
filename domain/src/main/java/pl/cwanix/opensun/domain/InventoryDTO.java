@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InventoryEntity {
+public class InventoryDTO {
 
     private int id;
     private int money;

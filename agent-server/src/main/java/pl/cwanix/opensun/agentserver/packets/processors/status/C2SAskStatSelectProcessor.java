@@ -14,6 +14,7 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 @RequiredArgsConstructor
 @PacketProcessor(packetClass = C2SAskStatSelectPacket.class)
@@ -24,7 +25,7 @@ public class C2SAskStatSelectProcessor implements SUNPacketProcessor<C2SAskStatS
     private final DatabaseProxyConnector databaseProxyConnector;
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskStatSelectPacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskStatSelectPacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
         log.debug(MARKER, "Updating character statistics: {}", packet.getAttributeCode());

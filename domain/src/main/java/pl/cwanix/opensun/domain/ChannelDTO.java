@@ -1,13 +1,13 @@
-package pl.cwanix.opensun.authserver.entities;
+package pl.cwanix.opensun.domain;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ChannelEntity {
+public class ChannelDTO {
 
     private int id;
-    private ServerEntity server;
+    private ServerDTO server;
     private String name;
 }

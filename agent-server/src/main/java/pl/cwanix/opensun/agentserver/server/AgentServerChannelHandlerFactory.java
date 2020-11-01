@@ -10,10 +10,10 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 @RequiredArgsConstructor
 public class AgentServerChannelHandlerFactory implements SUNServerChannelHandlerFactory {
 
-	private final SUNPacketProcessorExecutor processorExecutor;
+    private final SUNPacketProcessorExecutor processorExecutor;
 
-	@Override
-	public SUNServerChannelHandler getChannelHandler() {
-		return new AgentServerChannelHandler(processorExecutor);
-	}
+    @Override
+    public SUNServerChannelHandler getChannelHandler() {
+        return new AgentServerChannelHandler(processorExecutor);
+    }
 }

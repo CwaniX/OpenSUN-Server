@@ -8,20 +8,21 @@ import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 @Getter
 @IncomingPacket(category = PacketCategory.SYNC, type = (byte) 0x2B)
 public class C2SAskKeyboardMovePacket implements Packet {
 
-	private Vector currentPosition;
-	private FixedLengthField angle;
-	private FixedLengthField tileIndex;
-	private FixedLengthField moveState;
-	
-	public C2SAskKeyboardMovePacket(byte[] value) {
-		currentPosition = new Vector(value);
-		angle = new FixedLengthField(2, value[12], value[13]);
-		tileIndex = new FixedLengthField(2, value[14], value[15]);
-		moveState = new FixedLengthField(1, value[16]);
-	}
+    private final Vector currentPosition;
+    private final FixedLengthField angle;
+    private final FixedLengthField tileIndex;
+    private final FixedLengthField moveState;
+
+    public C2SAskKeyboardMovePacket(final byte[] value) {
+        currentPosition = new Vector(value);
+        angle = new FixedLengthField(2, value[12], value[13]);
+        tileIndex = new FixedLengthField(2, value[14], value[15]);
+        moveState = new FixedLengthField(1, value[16]);
+    }
 }

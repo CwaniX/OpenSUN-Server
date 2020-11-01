@@ -6,19 +6,20 @@ import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @OutgoingPacket(category = PacketCategory.ITEM, type = (byte) 0xF7)
 public class S2CAnsQuickLinkSkillPacket implements Packet {
-	
-	private FixedLengthField slotCode;
-	private FixedLengthField position;
-	
-	public S2CAnsQuickLinkSkillPacket(int slotCode, byte position) {
-		this.slotCode = new FixedLengthField(2, slotCode);
-		this.position = new FixedLengthField(1, position);
-	}
-	
-	@Override
-	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(slotCode, position);
-	}
+
+    private final FixedLengthField slotCode;
+    private final FixedLengthField position;
+
+    public S2CAnsQuickLinkSkillPacket(final int slotCode, final byte position) {
+        this.slotCode = new FixedLengthField(2, slotCode);
+        this.position = new FixedLengthField(1, position);
+    }
+
+    @Override
+    public Object[] getOrderedFields() {
+        return ArrayUtils.toArray(slotCode, position);
+    }
 }

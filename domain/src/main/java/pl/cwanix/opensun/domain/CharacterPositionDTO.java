@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CharacterPositionEntity {
+public class CharacterPositionDTO {
 
     private int id;
     private int region;

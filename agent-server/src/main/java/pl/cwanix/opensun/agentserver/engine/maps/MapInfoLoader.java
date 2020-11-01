@@ -22,53 +22,53 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class MapInfoLoader implements InitializingBean {
 
-	private static final int VILLAGE_SECTOR_SIZE = 0;
-	private static final int ROOM_SECTOR_SIZE = 0;
+    private static final int VILLAGE_SECTOR_SIZE = 0;
+    private static final int ROOM_SECTOR_SIZE = 0;
 
-	private final MapInfoParser mapInfoParser;
-	private final AgentServerProperties properties;
+    private final MapInfoParser mapInfoParser;
+    private final AgentServerProperties properties;
 
-	private Map<Integer, FieldInfo> fieldInfoMap;
-	private Map<Integer, MapInfo> mapInfoMap;
+    private Map<Integer, FieldInfo> fieldInfoMap;
+    private Map<Integer, MapInfo> mapInfoMap;
 
-	private void loadMapInfo() {
-		fieldInfoMap = new HashMap<>();
-		mapInfoMap = new HashMap<>();
+    private void loadMapInfo() {
+        fieldInfoMap = new HashMap<>();
+        mapInfoMap = new HashMap<>();
 
-		Map<Integer, MapInfoStructure> mapInfoStructureMap = mapInfoParser.getMapInfoStructureMap();
+        Map<Integer, MapInfoStructure> mapInfoStructureMap = mapInfoParser.getMapInfoStructureMap();
 
-		for (MapInfoStructure structure : mapInfoStructureMap.values()) {
-			MapInfo mapInfo = new MapInfo(structure);
-			int sectorSize = ROOM_SECTOR_SIZE;
-			boolean viewport = false;
+        for (MapInfoStructure structure : mapInfoStructureMap.values()) {
+            MapInfo mapInfo = new MapInfo(structure);
+            int sectorSize = ROOM_SECTOR_SIZE;
+            boolean viewport = false;
 
-			if (ZoneType.VILLAGE.equals(structure.getMKind())) {
-				sectorSize = VILLAGE_SECTOR_SIZE;
-				viewport = true;
-			}
+            if (ZoneType.VILLAGE.equals(structure.getMKind())) {
+                sectorSize = VILLAGE_SECTOR_SIZE;
+                viewport = true;
+            }
 
-			for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
-				if (structure.getFCode()[i] != 0) {
-					FieldInfo fieldInfo = fieldInfoMap.get(structure.getFCode()[i]);
+            for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
+                if (structure.getFCode()[i] != 0) {
+                    FieldInfo fieldInfo = fieldInfoMap.get(structure.getFCode()[i]);
 
-					if (Objects.isNull(fieldInfo)) {
-						fieldInfo = new FieldInfo(mapInfoParser.getFieldInfoStructureMap().get(structure.getFCode()[i]));
-						fieldInfo.load(properties.getDataDirectory());
-						fieldInfo.establishSectorInfo(sectorSize, viewport);
+                    if (Objects.isNull(fieldInfo)) {
+                        fieldInfo = new FieldInfo(mapInfoParser.getFieldInfoStructureMap().get(structure.getFCode()[i]));
+                        fieldInfo.load(properties.getDataDirectory());
+                        fieldInfo.establishSectorInfo(sectorSize, viewport);
 
-						fieldInfoMap.put(structure.getFCode()[i], fieldInfo);
-					}
+                        fieldInfoMap.put(structure.getFCode()[i], fieldInfo);
+                    }
 
-					mapInfo.getFieldInfoMap().put(0, fieldInfo);
-				}
-			}
+                    mapInfo.getFieldInfoMap().put(0, fieldInfo);
+                }
+            }
 
-			mapInfoMap.put(mapInfo.getMapInfoStructure().getMapCode(), mapInfo);
-		}
-	}
+            mapInfoMap.put(mapInfo.getMapInfoStructure().getMapCode(), mapInfo);
+        }
+    }
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		loadMapInfo();
-	}
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        loadMapInfo();
+    }
 }

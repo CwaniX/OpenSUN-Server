@@ -27,6 +27,10 @@ public final class BytesUtils {
         return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getLong();
     }
 
+    public static float byteArrayToFloat(final byte... input) {
+        return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+    }
+
     public static int byteArrayToInt(final byte... input) {
         return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }

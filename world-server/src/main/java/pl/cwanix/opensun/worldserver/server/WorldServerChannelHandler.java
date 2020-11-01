@@ -9,12 +9,12 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 @RequiredArgsConstructor
 public class WorldServerChannelHandler extends SUNServerChannelHandler {
 
-	private final SUNPacketProcessorExecutor packetProcessorExecutor;
+    private final SUNPacketProcessorExecutor packetProcessorExecutor;
 
-	@Override
-	@SuppressWarnings("unchecked")
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    	Packet packet = (Packet) msg;
-		packetProcessorExecutor.process(ctx, packet);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
+        Packet packet = (Packet) msg;
+        packetProcessorExecutor.process(ctx, packet);
     }
 }

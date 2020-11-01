@@ -10,18 +10,19 @@ import pl.cwanix.opensun.utils.datatypes.Vector;
 
 import java.util.Arrays;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 @Getter
 @IncomingPacket(category = PacketCategory.SYNC, type = (byte) 0xCA)
 public class C2SAskMouseMovePacket implements Packet {
 
-	private FixedLengthField unknown;
-	private Vector currentPosition;
-	private Vector destinationPosition;
-	
-	public C2SAskMouseMovePacket(byte[] value) {
-		unknown = new FixedLengthField(2, value[0], value[1]);
-		currentPosition = new Vector(Arrays.copyOfRange(value, 2, 14));
-		destinationPosition = new Vector(Arrays.copyOfRange(value, 14, value.length));
-	}
+    private final FixedLengthField unknown;
+    private final Vector currentPosition;
+    private final Vector destinationPosition;
+
+    public C2SAskMouseMovePacket(final byte[] value) {
+        unknown = new FixedLengthField(2, value[0], value[1]);
+        currentPosition = new Vector(Arrays.copyOfRange(value, 2, 14));
+        destinationPosition = new Vector(Arrays.copyOfRange(value, 14, value.length));
+    }
 }

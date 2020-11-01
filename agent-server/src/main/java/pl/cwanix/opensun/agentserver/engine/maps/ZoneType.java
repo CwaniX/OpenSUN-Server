@@ -6,17 +6,17 @@ import lombok.AllArgsConstructor;
 public enum ZoneType {
     VILLAGE(1);
 
-    private int type;
+    private final int type;
 
     public byte getType() {
         return (byte) this.type;
     }
 
-    public boolean equals(int value) {
+    public boolean equals(final int value) {
         return type == value;
     }
 
-    public boolean equals(ZoneType value) {
+    public boolean equals(final ZoneType value) {
         return type == value.getType();
     }
 }

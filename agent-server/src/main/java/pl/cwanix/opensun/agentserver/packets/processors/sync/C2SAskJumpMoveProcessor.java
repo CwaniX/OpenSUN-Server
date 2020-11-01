@@ -13,7 +13,7 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 public class C2SAskJumpMoveProcessor implements SUNPacketProcessor<C2SAskJumpMovePacket> {
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskJumpMovePacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskJumpMovePacket packet) {
 
     }
 }

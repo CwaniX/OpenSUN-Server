@@ -9,17 +9,17 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 public class StateSlotPacketStructure implements PacketStructure {
-	
-	private FixedLengthField slotCode;
-	private FixedLengthField time;
 
-	public StateSlotPacketStructure(byte[] value) {
-		this.slotCode = new FixedLengthField(2, Arrays.copyOfRange(value, 0, 2));
-		this.slotCode = new FixedLengthField(4, Arrays.copyOfRange(value, 2, 6));
-	}
-	
-	@Override
-	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(slotCode, time);
-	}
+    private final FixedLengthField slotCode;
+    private final FixedLengthField time;
+
+    public StateSlotPacketStructure(final byte[] value) {
+        this.slotCode = new FixedLengthField(2, Arrays.copyOfRange(value, 0, 2));
+        this.time = new FixedLengthField(4, Arrays.copyOfRange(value, 2, 6));
+    }
+
+    @Override
+    public Object[] getOrderedFields() {
+        return ArrayUtils.toArray(slotCode, time);
+    }
 }

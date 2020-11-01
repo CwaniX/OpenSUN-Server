@@ -8,23 +8,23 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.authserver.entities.UserEntity;
 import pl.cwanix.opensun.commonserver.session.SUNSessionManager;
+import pl.cwanix.opensun.domain.UserDTO;
 
 @Slf4j
 @Getter
 @Setter
 @Component
-public class AuthServerSessionManager implements SUNSessionManager<UserEntity> {
+public class AuthServerSessionManager implements SUNSessionManager<UserDTO> {
 
-    private Map<UserEntity, AuthServerSession> sessions;
+    private Map<UserDTO, AuthServerSession> sessions;
 
     public AuthServerSessionManager() {
         sessions = new HashMap<>();
     }
 
     @Override
-    public AuthServerSession startNewSession(final UserEntity user) {
+    public AuthServerSession startNewSession(final UserDTO user) {
         AuthServerSession newSession = new AuthServerSession();
         sessions.put(user, newSession);
 
@@ -32,7 +32,7 @@ public class AuthServerSessionManager implements SUNSessionManager<UserEntity> {
     }
 
     @Override
-    public AuthServerSession getSession(final UserEntity user) {
+    public AuthServerSession getSession(final UserDTO user) {
         // TODO Auto-generated method stub
         return null;
     }

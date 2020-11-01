@@ -17,7 +17,7 @@ public class C2SAskAddSkillPointProcessor implements SUNPacketProcessor<C2SAskAd
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ADD SKILL POINT");
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskAddSkillPointPacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskAddSkillPointPacket packet) {
 
     }
 }

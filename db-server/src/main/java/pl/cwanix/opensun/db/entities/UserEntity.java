@@ -16,18 +16,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "user", schema="public")
+@Table(name = "user", schema = "public")
 public class UserEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_generator")
-	@SequenceGenerator(name = "seq_user_generator", sequenceName = "seq_user")
-	private int id;
-	@OneToOne
-	private AccountEntity account;
-	private String name;
-	private String password;
-	private LocalDateTime creationDate;
-	private LocalDateTime modificationDate;
-	private LocalDateTime lastLoginDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user_generator")
+    @SequenceGenerator(name = "seq_user_generator", sequenceName = "seq_user")
+    private int id;
+    @OneToOne
+    private AccountEntity account;
+    private String name;
+    private String password;
+    private LocalDateTime creationDate;
+    private LocalDateTime modificationDate;
+    private LocalDateTime lastLoginDate;
 }

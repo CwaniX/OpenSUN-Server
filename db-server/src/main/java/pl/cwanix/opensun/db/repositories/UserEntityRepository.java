@@ -9,9 +9,9 @@ import pl.cwanix.opensun.db.entities.UserEntity;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Integer> {
 
-	UserEntity findByName(String name);
-	
-	@Transactional
-	@Procedure(procedureName = "func_create_user_and_account")
-	Integer create(String name, String password);
+    UserEntity findByName(String name);
+
+    @Transactional
+    @Procedure(procedureName = "func_create_user_and_account")
+    Integer create(String name, String password);
 }
