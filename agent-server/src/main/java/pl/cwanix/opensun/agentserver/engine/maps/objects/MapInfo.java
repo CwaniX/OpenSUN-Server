@@ -12,10 +12,9 @@ import java.util.Map;
 public class MapInfo {
 
     private final MapInfoStructure mapInfoStructure;
+    private final Map<Integer, FieldInfo> fieldInfoMap;
 
-    private Map<Integer, FieldInfo> fieldInfoMap;
-
-    public MapInfo(MapInfoStructure mapInfoStructure) {
+    public MapInfo(final MapInfoStructure mapInfoStructure) {
         this.mapInfoStructure = mapInfoStructure;
         this.fieldInfoMap = new HashMap<>();
     }

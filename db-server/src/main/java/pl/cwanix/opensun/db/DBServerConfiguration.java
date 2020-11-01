@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @PropertySource("file:${application.location}/config/db-server.properties")
 public class DBServerConfiguration {
-	
-	private final DataSource dataSource;
 
-	@PostConstruct
-	public void initializeDatabase() {
-		Flyway.configure().dataSource(dataSource).schemas("public").locations("classpath:db/public").table("schema_history").load().migrate();
-		Flyway.configure().dataSource(dataSource).schemas("config").locations("classpath:db/config").table("schema_history").load().migrate();
-	}
+    private final DataSource dataSource;
+
+    @PostConstruct
+    public void initializeDatabase() {
+        Flyway.configure().dataSource(dataSource).schemas("public").locations("classpath:db/public").table("schema_history").load().migrate();
+        Flyway.configure().dataSource(dataSource).schemas("config").locations("classpath:db/config").table("schema_history").load().migrate();
+    }
 }

@@ -18,21 +18,21 @@ import java.util.stream.Collectors;
 @PacketProcessor(packetClass = C2SAskSrvListPacket.class)
 public class C2SAskSrvListProcessor implements SUNPacketProcessor<C2SAskSrvListPacket> {
 
-	private final DatabaseProxyConnector databaseProxyConnector;
+    private final DatabaseProxyConnector databaseProxyConnector;
 
-	@Override
-	public void process(ChannelHandlerContext ctx, C2SAskSrvListPacket packet) {
-		List<ServerUnitStructure> serversList = databaseProxyConnector.findServers()
-				.stream()
-				.map(ServerUnitStructure::new)
-				.collect(Collectors.toList());
+    @Override
+    public void process(final ChannelHandlerContext ctx, final C2SAskSrvListPacket packet) {
+        List<ServerUnitStructure> serversList = databaseProxyConnector.findServers()
+                .stream()
+                .map(ServerUnitStructure::new)
+                .collect(Collectors.toList());
 
-		List<ChannelUnitStructure> channelsList = databaseProxyConnector.findChannels()
-				.stream()
-				.map(ChannelUnitStructure::new)
-				.collect(Collectors.toList());
+        List<ChannelUnitStructure> channelsList = databaseProxyConnector.findChannels()
+                .stream()
+                .map(ChannelUnitStructure::new)
+                .collect(Collectors.toList());
 
-		ctx.writeAndFlush(new S2CAnsSrvListPacket(serversList));
-		ctx.writeAndFlush(new S2CAnsSrvStatePacket(channelsList));
-	}
+        ctx.writeAndFlush(new S2CAnsSrvListPacket(serversList));
+        ctx.writeAndFlush(new S2CAnsSrvStatePacket(channelsList));
+    }
 }

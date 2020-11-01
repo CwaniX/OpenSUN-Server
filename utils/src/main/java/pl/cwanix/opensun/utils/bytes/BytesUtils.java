@@ -23,15 +23,19 @@ public final class BytesUtils {
         }
     }
 
-    public static long byteArrayToLong(final byte[] input) {
+    public static long byteArrayToLong(final byte... input) {
         return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getLong();
     }
 
-    public static int byteArrayToInt(final byte[] input) {
+    public static float byteArrayToFloat(final byte... input) {
+        return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+    }
+
+    public static int byteArrayToInt(final byte... input) {
         return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }
 
-    public static short byteArrayToShort(final byte[] input) {
+    public static short byteArrayToShort(final byte... input) {
         return ByteBuffer.wrap(input).order(ByteOrder.LITTLE_ENDIAN).getShort();
     }
 
@@ -75,7 +79,7 @@ public final class BytesUtils {
         return buffer.array();
     }
 
-    public static String byteArrayToHexString(final byte[] input) {
+    public static String byteArrayToHexString(final byte... input) {
         StringBuilder sb = new StringBuilder();
 
         for (byte b : input) {
@@ -107,7 +111,7 @@ public final class BytesUtils {
         return dest;
     }
 
-    public static byte[] cutTail(final byte[] input) {
+    public static byte[] cutTail(final byte... input) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         int counter = 0;

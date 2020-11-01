@@ -29,42 +29,46 @@ import java.util.Map;
 @Configuration
 @ComponentScan
 public class SUNServerAutoConfiguration {
-	
-	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public EventExecutorGroup eventExecutorGroup(SUNServerProperties properties) {
-		return new DefaultEventExecutorGroup(properties.getClient().getMaxThreadCount());
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public PacketDecoder packetDecoder(Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions, RestTemplate restTemplate) {
-		return new PacketDecoder(clientPacketDefinitions);
-	}
 
-	@Bean
-	@ConditionalOnMissingBean
-	public PacketEncoder packetEncoder() {
-		return new PacketEncoder();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public ChannelInitializer<SocketChannel> sunServerChannelInitializer(EventExecutorGroup eventExecutorGroup, SUNServerChannelHandlerFactory sunServerChannelHandlerFactory, PacketDecoder packetDecoder, PacketEncoder packetEncoder) {
-		return new SUNServerChannelInitializer(eventExecutorGroup, sunServerChannelHandlerFactory, packetDecoder, packetEncoder);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public SUNServer sunServer(ChannelInitializer<SocketChannel> sunServerChannelHandler, SUNServerProperties properties) {		
-		return new SUNServer(sunServerChannelHandler, properties);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
+    private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
+
+    @Bean
+    @ConditionalOnMissingBean
+    public EventExecutorGroup eventExecutorGroup(final SUNServerProperties properties) {
+        return new DefaultEventExecutorGroup(properties.getClient().getMaxThreadCount());
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PacketDecoder packetDecoder(final Map<PacketHeader, ThrowingFunction<byte[], Packet, Exception>> clientPacketDefinitions, final RestTemplate restTemplate) {
+        return new PacketDecoder(clientPacketDefinitions);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public PacketEncoder packetEncoder() {
+        return new PacketEncoder();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ChannelInitializer<SocketChannel> sunServerChannelInitializer(
+            final EventExecutorGroup eventExecutorGroup,
+            final SUNServerChannelHandlerFactory sunServerChannelHandlerFactory,
+            final PacketDecoder packetDecoder,
+            final PacketEncoder packetEncoder) {
+        return new SUNServerChannelInitializer(eventExecutorGroup, sunServerChannelHandlerFactory, packetDecoder, packetEncoder);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SUNServer sunServer(final ChannelInitializer<SocketChannel> sunServerChannelHandler, final SUNServerProperties properties) {
+        return new SUNServer(sunServerChannelHandler, properties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate(final RestTemplateBuilder builder) {
+        return builder.build();
+    }
 }

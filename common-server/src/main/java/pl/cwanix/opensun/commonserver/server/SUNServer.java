@@ -29,64 +29,64 @@ import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 @Slf4j
 @RequiredArgsConstructor
 public class SUNServer {
-	
-	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 
-	private EventLoopGroup parentGroup = new NioEventLoopGroup();
-	private EventLoopGroup childGroup = new NioEventLoopGroup();
+    private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 
-	private final ChannelInitializer<SocketChannel> sunServerChannelInitializer;
-	private final SUNServerProperties properties;
+    private EventLoopGroup parentGroup = new NioEventLoopGroup();
+    private EventLoopGroup childGroup = new NioEventLoopGroup();
 
-	@PostConstruct
-	public void startServer() {
-		setupLoopGroups();
+    private final ChannelInitializer<SocketChannel> sunServerChannelInitializer;
+    private final SUNServerProperties properties;
 
-		log.info(MARKER, "Starting server");
+    @PostConstruct
+    public void startServer() {
+        setupLoopGroups();
 
-		InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE);
+        log.info(MARKER, "Starting server");
 
-		ServerBootstrap serverBootstrap = new ServerBootstrap();
-		serverBootstrap.group(parentGroup, childGroup).channel(setupServerSocketChannel()).handler(setupLoggingHandler())
-				.childHandler(sunServerChannelInitializer)
-				.option(ChannelOption.SO_BACKLOG, properties.getClient().getMaxQueueSize())
-				.childOption(ChannelOption.SO_KEEPALIVE, true)
-				.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+        InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.INSTANCE);
 
-		try {
-			serverBootstrap.bind(properties.getClient().getPort()).sync();
-		} catch (Exception e) {
+        ServerBootstrap serverBootstrap = new ServerBootstrap();
+        serverBootstrap.group(parentGroup, childGroup).channel(setupServerSocketChannel()).handler(setupLoggingHandler())
+                .childHandler(sunServerChannelInitializer)
+                .option(ChannelOption.SO_BACKLOG, properties.getClient().getMaxQueueSize())
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
-		}
+        try {
+            serverBootstrap.bind(properties.getClient().getPort()).sync();
+        } catch (Exception e) {
 
-	}
+        }
 
-	private void setupLoopGroups() {
-		if (properties.getClient().isEpollMode()) {
-			parentGroup = new EpollEventLoopGroup();
-			childGroup = new EpollEventLoopGroup(properties.getClient().getMaxThreadCount());
-		} else {
-			parentGroup = new NioEventLoopGroup();
-			childGroup = new NioEventLoopGroup(properties.getClient().getMaxThreadCount());
-		}
-	}
+    }
 
-	private Class<? extends ServerChannel> setupServerSocketChannel() {
-		if (properties.getClient().isEpollMode()) {
-			return EpollServerSocketChannel.class;
-		} else {
-			return NioServerSocketChannel.class;
-		}
-	}
+    private void setupLoopGroups() {
+        if (properties.getClient().isEpollMode()) {
+            parentGroup = new EpollEventLoopGroup();
+            childGroup = new EpollEventLoopGroup(properties.getClient().getMaxThreadCount());
+        } else {
+            parentGroup = new NioEventLoopGroup();
+            childGroup = new NioEventLoopGroup(properties.getClient().getMaxThreadCount());
+        }
+    }
 
-	private ChannelHandler setupLoggingHandler() {
-		return new LoggingHandler(LogLevel.INFO);
-	}
+    private Class<? extends ServerChannel> setupServerSocketChannel() {
+        if (properties.getClient().isEpollMode()) {
+            return EpollServerSocketChannel.class;
+        } else {
+            return NioServerSocketChannel.class;
+        }
+    }
 
-	@PreDestroy
-	public void stopServer() {
-		log.info(MARKER, "Stopping server");
-		childGroup.shutdownGracefully();
-		parentGroup.shutdownGracefully();
-	}
+    private ChannelHandler setupLoggingHandler() {
+        return new LoggingHandler(LogLevel.INFO);
+    }
+
+    @PreDestroy
+    public void stopServer() {
+        log.info(MARKER, "Stopping server");
+        childGroup.shutdownGracefully();
+        parentGroup.shutdownGracefully();
+    }
 }

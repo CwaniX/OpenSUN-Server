@@ -59,6 +59,10 @@ public class SUNFileReader extends Reader {
         return Integer.parseInt(currentLine[currentElementIndex++]);
     }
 
+    public byte readNextByteValue() {
+        return Byte.parseByte(currentLine[currentElementIndex++]);
+    }
+
     public String readNextStringValue(final String key) {
         return currentLine[header.get(key)];
     }

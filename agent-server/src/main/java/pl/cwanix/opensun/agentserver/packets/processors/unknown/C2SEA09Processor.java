@@ -13,7 +13,7 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 public class C2SEA09Processor implements SUNPacketProcessor<C2SEA09Packet> {
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SEA09Packet packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SEA09Packet packet) {
 
     }
 }

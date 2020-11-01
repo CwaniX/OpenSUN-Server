@@ -12,11 +12,11 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandlerFactory;
 @RequiredArgsConstructor
 public class AuthServerChannelHandlerFactory implements SUNServerChannelHandlerFactory {
 
-	private final SUNPacketProcessorExecutor packetProcessorExecutor;
-	private final AuthServerSessionManager sessionManager;
+    private final SUNPacketProcessorExecutor packetProcessorExecutor;
+    private final AuthServerSessionManager sessionManager;
 
-	@Override
-	public SUNServerChannelHandler getChannelHandler() {
-		return new AuthServerChannelHandler(packetProcessorExecutor, sessionManager);
-	}
+    @Override
+    public SUNServerChannelHandler getChannelHandler() {
+        return new AuthServerChannelHandler(packetProcessorExecutor, sessionManager);
+    }
 }

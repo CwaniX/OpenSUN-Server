@@ -19,26 +19,26 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 @PacketProcessor(packetClass = C2SAskDeleteCharPacket.class)
 public class C2SAskDeleteCharProcessor implements SUNPacketProcessor<C2SAskDeleteCharPacket> {
 
-	private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
-	private static final String DELETE_WORD = "delete";
+    private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
+    private static final String DELETE_WORD = "delete";
 
-	private final DatabaseProxyConnector databaseProxyConnector;
+    private final DatabaseProxyConnector databaseProxyConnector;
 
-	@Override
-	public void process(ChannelHandlerContext ctx, C2SAskDeleteCharPacket packet) {
-		AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
+    @Override
+    public void process(final ChannelHandlerContext ctx, final C2SAskDeleteCharPacket packet) {
+        AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-		if (DELETE_WORD.equals(packet.getDeleteWord().toString())) {
-			log.info(MARKER, "Deleting character");
-			databaseProxyConnector.deleteCharacter(session.getUser().getAccount().getId(), packet.getSlotNumber().toByteArray()[0]);
+        if (DELETE_WORD.equals(packet.getDeleteWord().toString())) {
+            log.info(MARKER, "Deleting character");
+            databaseProxyConnector.deleteCharacter(session.getUser().getAccount().getId(), packet.getSlotNumber().toByteArray()[0]);
 
-			ctx.writeAndFlush(new S2CAnsDeleteCharPacket());
-		} else {
-			log.info(MARKER, "Unable to delete character");
+            ctx.writeAndFlush(new S2CAnsDeleteCharPacket());
+        } else {
+            log.info(MARKER, "Unable to delete character");
 
-			//TODO: Error codes
-			ctx.writeAndFlush(new S2CErrDeleteCharPacket(0));
-		}
+            //TODO: Error codes
+            ctx.writeAndFlush(new S2CErrDeleteCharPacket(0));
+        }
 
-	}
+    }
 }

@@ -4,14 +4,15 @@ import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @OutgoingPacket(category = PacketCategory.ZONE, type = 0x6D) //TODO: ?
 public class S2CErrVillageMovePacket implements Packet {
 
-	public S2CErrVillageMovePacket() {
-	}
+    public S2CErrVillageMovePacket() {
+    }
 
-	@Override
-	public Object[] getOrderedFields() {
-		return null;
-	}
+    @Override
+    public Object[] getOrderedFields() {
+        return null;
+    }
 }

@@ -18,14 +18,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "account", schema="public")
+@Table(name = "account", schema = "public")
 public class AccountEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_account_generator")
-	@SequenceGenerator(name = "seq_account_generator", sequenceName = "seq_account")
-	private int id;
-	@JsonBackReference
-	@OneToMany(mappedBy = "account")
-	private List<CharacterEntity> characters;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_account_generator")
+    @SequenceGenerator(name = "seq_account_generator", sequenceName = "seq_account")
+    private int id;
+    @JsonBackReference
+    @OneToMany(mappedBy = "account")
+    private List<CharacterEntity> characters;
 }

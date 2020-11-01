@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class SUNServerExternalServerProperties {
 
-	private String ip;
-	private int port;
-	
-	public String getServerUrl() {
-		return "http://" + ip + ":" + port;
-	}
+    private String ip;
+    private int port;
+
+    public String getServerUrl() {
+        return "http://" + ip + ":" + port;
+    }
 }

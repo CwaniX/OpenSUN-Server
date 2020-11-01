@@ -12,8 +12,8 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 @PacketProcessor(packetClass = C2SAskFreeCharNamePacket.class)
 public class C2SAskFreeCharNameProcessor implements SUNPacketProcessor<C2SAskFreeCharNamePacket> {
 
-	@Override
-	public void process(ChannelHandlerContext ctx, C2SAskFreeCharNamePacket packet) {
-		//TODO:
-	}
+    @Override
+    public void process(final ChannelHandlerContext ctx, final C2SAskFreeCharNamePacket packet) {
+        //TODO:
+    }
 }

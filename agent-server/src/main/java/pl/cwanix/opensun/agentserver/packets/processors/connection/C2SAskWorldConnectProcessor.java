@@ -14,10 +14,10 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 @PacketProcessor(packetClass = C2SAskWordConnectPacket.class)
 public class C2SAskWorldConnectProcessor implements SUNPacketProcessor<C2SAskWordConnectPacket> {
 
-	private final AgentServerProperties properties;
+    private final AgentServerProperties properties;
 
-	@Override
-	public void process(ChannelHandlerContext ctx, C2SAskWordConnectPacket packet) {
-		ctx.writeAndFlush(new S2CAnsWorldConnectPacket(properties.getWorld().getIp(), properties.getWorld().getPort()));
-	}
+    @Override
+    public void process(final ChannelHandlerContext ctx, final C2SAskWordConnectPacket packet) {
+        ctx.writeAndFlush(new S2CAnsWorldConnectPacket(properties.getWorld().getIp(), properties.getWorld().getPort()));
+    }
 }

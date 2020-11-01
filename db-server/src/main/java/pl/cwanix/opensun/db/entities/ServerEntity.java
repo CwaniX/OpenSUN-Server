@@ -13,14 +13,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "server_instance", schema="config")
+@Table(name = "server_instance", schema = "config")
 public class ServerEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_server_instance_generator")
-	@SequenceGenerator(name = "seq_server_instance_generator", sequenceName = "seq_server_instance")
-	private int id;
-	private int port;
-	private String ip;
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_server_instance_generator")
+    @SequenceGenerator(name = "seq_server_instance_generator", sequenceName = "seq_server_instance")
+    private int id;
+    private int port;
+    private String ip;
+    private String name;
 }

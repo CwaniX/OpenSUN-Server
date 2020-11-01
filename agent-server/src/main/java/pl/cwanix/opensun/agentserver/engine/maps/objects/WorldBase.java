@@ -10,6 +10,7 @@ import pl.cwanix.opensun.utils.datatypes.Vector;
 import pl.cwanix.opensun.utils.files.SUNArchive;
 import pl.cwanix.opensun.utils.files.SUNArchiveChunkInfo;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 public class WorldBase {
 
@@ -18,7 +19,7 @@ public class WorldBase {
     private static final String IDSTR_SUN_MAP = "WMAP";
     private static final int VERSION_SUN_MAP = 179;
 
-	//create path finder?
+    //create path finder?
 
     private Vector sunLightDir;
     private SUNColor mapAmbient;
@@ -28,7 +29,7 @@ public class WorldBase {
     private int state;
     private int checkSum;
 
-    public boolean serialize(SUNArchive archive) {
+    public boolean serialize(final SUNArchive archive) {
         String identity = new String(archive.read(4));
         if (!IDSTR_SUN_MAP.equals(identity)) {
             log.error(MARKER, "Wrong map identity");

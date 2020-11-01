@@ -13,16 +13,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "inventory", schema="public")
+@Table(name = "inventory", schema = "public")
 public class InventoryEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inventory_generator")
-	@SequenceGenerator(name = "seq_inventory_generator", sequenceName = "seq_inventory")
-	private int id;
-	private int money;
-	private int inventoryLock;
-	private byte[] inventoryItem;
-	private byte[] tmpInventoryItem;
-	private byte[] equipItem;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_inventory_generator")
+    @SequenceGenerator(name = "seq_inventory_generator", sequenceName = "seq_inventory")
+    private int id;
+    private int money;
+    private int inventoryLock;
+    private byte[] inventoryItem;
+    private byte[] tmpInventoryItem;
+    private byte[] equipItem;
 }

@@ -22,11 +22,20 @@ public class C2SAskKeyboardMoveProcessor implements SUNPacketProcessor<C2SAskKey
     private final DatabaseProxyConnector databaseProxyConnector;
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskKeyboardMovePacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskKeyboardMovePacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        log.debug(MARKER, "Updating character position: {} {} {} {}", packet.getCurrentPosition().getX(), packet.getCurrentPosition().getY(), packet.getCurrentPosition().getZ(), packet.getAngle());
+        log.debug(MARKER, "Updating character position: {} {} {} {}",
+                packet.getCurrentPosition().getX(),
+                packet.getCurrentPosition().getY(),
+                packet.getCurrentPosition().getZ(),
+                packet.getAngle());
 
-        databaseProxyConnector.updateCharacterPosition(session.getCharacter().getId(), packet.getCurrentPosition().getX(), packet.getCurrentPosition().getY(), packet.getCurrentPosition().getZ(), packet.getAngle().toShort());
+        databaseProxyConnector.updateCharacterPosition(
+                session.getCharacter().getId(),
+                packet.getCurrentPosition().getX(),
+                packet.getCurrentPosition().getY(),
+                packet.getCurrentPosition().getZ(),
+                packet.getAngle().toShort());
     }
 }

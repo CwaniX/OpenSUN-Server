@@ -11,6 +11,6 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "opensun")
 public class SUNServerProperties {
 
-	@NestedConfigurationProperty
-	private SUNServerClientProperties client;
+    @NestedConfigurationProperty
+    private SUNServerClientProperties client;
 }

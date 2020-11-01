@@ -38,6 +38,10 @@
 			<groupId>pl.cwanix.opensun</groupId>
 			<artifactId>common-server</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>pl.cwanix.opensun</groupId>
+			<artifactId>domain</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>

@@ -10,15 +10,15 @@ import pl.cwanix.opensun.commonserver.server.SUNServerChannelHandler;
 
 @RequiredArgsConstructor
 public class AgentServerChannelHandler extends SUNServerChannelHandler {
-	
-	public static final AttributeKey<AgentServerSession> SESSION_ATTRIBUTE = AttributeKey.valueOf("session");
 
-	private final SUNPacketProcessorExecutor processorExecutor;
+    public static final AttributeKey<AgentServerSession> SESSION_ATTRIBUTE = AttributeKey.valueOf("session");
 
-	@Override
-	@SuppressWarnings("unchecked")
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-    	Packet packet = ( Packet)msg;
-		processorExecutor.process(ctx, packet);
+    private final SUNPacketProcessorExecutor processorExecutor;
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
+        Packet packet = (Packet) msg;
+        processorExecutor.process(ctx, packet);
     }
 }

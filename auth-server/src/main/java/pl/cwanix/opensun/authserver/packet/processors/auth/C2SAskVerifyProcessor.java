@@ -11,8 +11,8 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 @PacketProcessor(packetClass = C2SAskVerifyPacket.class)
 public class C2SAskVerifyProcessor implements SUNPacketProcessor<C2SAskVerifyPacket> {
 
-	@Override
-	public void process(ChannelHandlerContext ctx, C2SAskVerifyPacket packet) {
-		ctx.writeAndFlush(new S2CAnsVerifyPacket());
-	}
+    @Override
+    public void process(final ChannelHandlerContext ctx, final C2SAskVerifyPacket packet) {
+        ctx.writeAndFlush(new S2CAnsVerifyPacket());
+    }
 }

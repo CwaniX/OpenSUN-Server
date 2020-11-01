@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OutgoingPacket {
 
-	PacketCategory category();
-	byte type();
+    PacketCategory category();
+    byte type();
 }

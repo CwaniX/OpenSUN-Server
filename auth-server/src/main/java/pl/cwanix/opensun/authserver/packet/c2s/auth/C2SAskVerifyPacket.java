@@ -7,14 +7,15 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 import java.util.Arrays;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @IncomingPacket(category = PacketCategory.AUTH, type = 0x01)
 public class C2SAskVerifyPacket implements Packet {
-	
-	private FixedLengthField clientVersion;
-	private FixedLengthField clientIpAddress;
-	
-	public C2SAskVerifyPacket(byte[] value) {
-		this.clientVersion = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
-		this.clientIpAddress = new FixedLengthField(16, Arrays.copyOfRange(value, 4, value.length));
-	}
+
+    private final FixedLengthField clientVersion;
+    private final FixedLengthField clientIpAddress;
+
+    public C2SAskVerifyPacket(final byte[] value) {
+        this.clientVersion = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
+        this.clientIpAddress = new FixedLengthField(16, Arrays.copyOfRange(value, 4, value.length));
+    }
 }

@@ -22,26 +22,26 @@ import pl.cwanix.opensun.commonserver.server.messages.PacketEncoder;
 @Component
 @RequiredArgsConstructor
 public class SUNServerChannelInitializer extends ChannelInitializer<SocketChannel> {
-	
-	private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 
-	private final EventExecutorGroup eventExecutorGroup;
-	private final SUNServerChannelHandlerFactory channelFactory;
-	private final PacketDecoder packetDecoder;
-	private final PacketEncoder packetEncoder;
+    private static final Marker MARKER = MarkerFactory.getMarker("SUN SERVER");
 
-	@Override
-	protected void initChannel(SocketChannel socketChannel) {
-		log.info(MARKER, "Initializing channel");
-		
-		socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(ByteOrder.LITTLE_ENDIAN, Integer.MAX_VALUE, 0, 2, 0, 2, true));
-		socketChannel.pipeline().addLast(new ByteArrayDecoder());
-		socketChannel.pipeline().addLast(packetDecoder);
-		
-		socketChannel.pipeline().addLast(new LengthFieldPrepender(ByteOrder.LITTLE_ENDIAN, 2, 0, false));
-		socketChannel.pipeline().addLast(new ByteArrayEncoder());
-		socketChannel.pipeline().addLast(packetEncoder);
-		
-		socketChannel.pipeline().addLast(eventExecutorGroup, channelFactory.getChannelHandler());
-	}
+    private final EventExecutorGroup eventExecutorGroup;
+    private final SUNServerChannelHandlerFactory channelFactory;
+    private final PacketDecoder packetDecoder;
+    private final PacketEncoder packetEncoder;
+
+    @Override
+    protected void initChannel(final SocketChannel socketChannel) {
+        log.info(MARKER, "Initializing channel");
+
+        socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(ByteOrder.LITTLE_ENDIAN, Integer.MAX_VALUE, 0, 2, 0, 2, true));
+        socketChannel.pipeline().addLast(new ByteArrayDecoder());
+        socketChannel.pipeline().addLast(packetDecoder);
+
+        socketChannel.pipeline().addLast(new LengthFieldPrepender(ByteOrder.LITTLE_ENDIAN, 2, 0, false));
+        socketChannel.pipeline().addLast(new ByteArrayEncoder());
+        socketChannel.pipeline().addLast(packetEncoder);
+
+        socketChannel.pipeline().addLast(eventExecutorGroup, channelFactory.getChannelHandler());
+    }
 }

@@ -9,12 +9,12 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class RenderEquipInfoPacketStructure implements PacketStructure {
 
-	private FixedLengthField count;
-	private FixedLengthField objectKey;
-	private List<RenderItemSlotPacketStructure> slot;
-	
-	@Override
-	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(count, objectKey, slot);
-	}
+    private FixedLengthField count;
+    private FixedLengthField objectKey;
+    private List<RenderItemSlotPacketStructure> slot;
+
+    @Override
+    public Object[] getOrderedFields() {
+        return ArrayUtils.toArray(count, objectKey, slot);
+    }
 }

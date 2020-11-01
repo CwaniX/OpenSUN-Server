@@ -9,16 +9,16 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 public class RenderItemSlotPacketStructure implements PacketStructure {
 
-	private FixedLengthField position;
-	private RenderItemPartPacketStructure itemPart;
-	
-	public RenderItemSlotPacketStructure(byte[] value) {
-		position = new FixedLengthField(1, value[0]);
-		itemPart = new RenderItemPartPacketStructure(Arrays.copyOfRange(value, 1, value.length));
-	}
-	
-	@Override
-	public Object[] getOrderedFields() {
-		return ArrayUtils.toArray(position, itemPart);
-	}
+    private final FixedLengthField position;
+    private final RenderItemPartPacketStructure itemPart;
+
+    public RenderItemSlotPacketStructure(final byte[] value) {
+        position = new FixedLengthField(1, value[0]);
+        itemPart = new RenderItemPartPacketStructure(Arrays.copyOfRange(value, 1, value.length));
+    }
+
+    @Override
+    public Object[] getOrderedFields() {
+        return ArrayUtils.toArray(position, itemPart);
+    }
 }

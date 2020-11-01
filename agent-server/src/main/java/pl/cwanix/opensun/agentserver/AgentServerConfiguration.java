@@ -10,5 +10,5 @@ import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 @PropertySource("file:${application.location}/config/agent-server.properties")
 @EnableConfigurationProperties(AgentServerProperties.class)
 public class AgentServerConfiguration {
-	
+
 }

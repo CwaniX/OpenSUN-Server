@@ -13,11 +13,11 @@ import pl.cwanix.opensun.commonserver.properties.SUNServerProperties;
 @ConfigurationProperties(prefix = "opensun")
 public class AgentServerProperties extends SUNServerProperties {
 
-	@NestedConfigurationProperty
-	private SUNServerExternalServerProperties db;
-	
-	@NestedConfigurationProperty
-	private SUNServerExternalServerProperties world;
+    @NestedConfigurationProperty
+    private SUNServerExternalServerProperties db;
 
-	private String dataDirectory;
+    @NestedConfigurationProperty
+    private SUNServerExternalServerProperties world;
+
+    private String dataDirectory;
 }

@@ -14,7 +14,7 @@ import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
 public class C2SAskQuickLinkSkillProcessor implements SUNPacketProcessor<C2SAskQuickLinkSkillPacket> {
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2SAskQuickLinkSkillPacket packet) {
+    public void process(final ChannelHandlerContext ctx, final C2SAskQuickLinkSkillPacket packet) {
         ctx.writeAndFlush(new S2CAnsQuickLinkSkillPacket(packet.getSlotCode().toShort(), packet.getPosition().toByte()));
     }
 }

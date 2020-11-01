@@ -9,10 +9,10 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class SUNId implements SUNDataType {
 
-	private final int id;
+    private final int id;
 
-	@Override
-	public byte[] toByteArray() throws Exception {
-		return new byte[0];
-	}
+    @Override
+    public byte[] toByteArray() throws Exception {
+        return new byte[0];
+    }
 }

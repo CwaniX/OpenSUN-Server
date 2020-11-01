@@ -11,7 +11,7 @@ import pl.cwanix.opensun.worldserver.packets.c2s.sync.C2S4860Packet;
 public class C2S4860Processor implements SUNPacketProcessor<C2S4860Packet> {
 
     @Override
-    public void process(ChannelHandlerContext ctx, C2S4860Packet packet) {
+    public void process(final ChannelHandlerContext ctx, final C2S4860Packet packet) {
 
     }
 }
