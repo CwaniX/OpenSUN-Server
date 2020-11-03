@@ -1,7 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -13,8 +13,8 @@ public class S2CAnsCreateCharPacket implements Packet {
 
     private final ClientCharacterPartPacketStructure character;
 
-    public S2CAnsCreateCharPacket(final CharacterDTO characterDTO) {
-        this.character = new ClientCharacterPartPacketStructure(characterDTO);
+    public S2CAnsCreateCharPacket(final CharacterModel characterModel) {
+        this.character = new ClientCharacterPartPacketStructure(characterModel);
     }
 
     @Override

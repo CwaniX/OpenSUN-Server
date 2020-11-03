@@ -9,22 +9,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.session.SUNSessionManager;
-import pl.cwanix.opensun.domain.UserDTO;
+import pl.cwanix.opensun.model.account.UserModel;
 
 @Slf4j
 @Getter
 @Setter
 @Component
-public class AuthServerSessionManager implements SUNSessionManager<UserDTO> {
+public class AuthServerSessionManager implements SUNSessionManager<UserModel> {
 
-    private Map<UserDTO, AuthServerSession> sessions;
+    private Map<UserModel, AuthServerSession> sessions;
 
     public AuthServerSessionManager() {
         sessions = new HashMap<>();
     }
 
     @Override
-    public AuthServerSession startNewSession(final UserDTO user) {
+    public AuthServerSession startNewSession(final UserModel user) {
         AuthServerSession newSession = new AuthServerSession();
         sessions.put(user, newSession);
 
@@ -32,7 +32,7 @@ public class AuthServerSessionManager implements SUNSessionManager<UserDTO> {
     }
 
     @Override
-    public AuthServerSession getSession(final UserDTO user) {
+    public AuthServerSession getSession(final UserModel user) {
         // TODO Auto-generated method stub
         return null;
     }

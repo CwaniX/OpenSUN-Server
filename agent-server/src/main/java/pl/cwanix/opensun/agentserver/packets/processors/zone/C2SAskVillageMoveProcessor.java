@@ -9,7 +9,7 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
@@ -21,7 +21,7 @@ public class C2SAskVillageMoveProcessor implements SUNPacketProcessor<C2SAskVill
     public void process(final ChannelHandlerContext ctx, final C2SAskVillageMovePacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        CharacterDTO character = session.getCharacter();
+        CharacterModel character = session.getCharacter();
         character.getPosition().setRegion(20004);
         character.getPosition().setLocationX(169.90472F);
         character.getPosition().setLocationY(267.42834F);

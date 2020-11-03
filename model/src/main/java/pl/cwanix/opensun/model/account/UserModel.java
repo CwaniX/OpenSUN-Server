@@ -1,18 +1,19 @@
-package pl.cwanix.opensun.domain;
+package pl.cwanix.opensun.model.account;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import pl.cwanix.opensun.model.account.AccountModel;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = { "id", "name" })
-public class UserDTO {
+public class UserModel {
 
     private int id;
-    private AccountDTO account;
+    private AccountModel account;
     private String name;
     private String password;
     private LocalDateTime creationDate;

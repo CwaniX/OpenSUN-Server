@@ -9,7 +9,7 @@ import pl.cwanix.opensun.authserver.server.AuthServerChannelHandler;
 import pl.cwanix.opensun.authserver.server.session.AuthServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
-import pl.cwanix.opensun.domain.UserDTO;
+import pl.cwanix.opensun.model.account.UserModel;
 import pl.cwanix.opensun.utils.encryption.TEA;
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -24,17 +24,17 @@ public class C2SAskAuthProcessor implements SUNPacketProcessor<C2SAskAuthPacket>
         AuthServerSession session = ctx.channel().attr(AuthServerChannelHandler.SESSION_ATTRIBUTE).get();
 
         String decodedPass = new String(TEA.passwordDecode(packet.getPassword().toByteArray(), session.getEncKey()));
-        UserDTO userDTO = databaseProxyConnector.findUser(packet.getName().toString());
+        UserModel userModel = databaseProxyConnector.findUser(packet.getName().toString());
         S2CAnsAuthPacket ansAuthPacket;
 
-        if (userDTO == null) {
+        if (userModel == null) {
             ansAuthPacket = new S2CAnsAuthPacket(1);
-        } else if (!decodedPass.equals(userDTO.getPassword())) {
+        } else if (!decodedPass.equals(userModel.getPassword())) {
             ansAuthPacket = new S2CAnsAuthPacket(2);
-        } else if (databaseProxyConnector.startAgentServerSession(userDTO.getId()) > 0) {
+        } else if (databaseProxyConnector.startAgentServerSession(userModel.getId()) > 0) {
             ansAuthPacket = new S2CAnsAuthPacket(3);
         } else {
-            session.setUser(userDTO);
+            session.setUser(userModel);
             ansAuthPacket = new S2CAnsAuthPacket(0);
         }
 

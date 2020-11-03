@@ -3,7 +3,7 @@ package pl.cwanix.opensun.authserver.packet.structures;
 import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
-import pl.cwanix.opensun.domain.ChannelDTO;
+import pl.cwanix.opensun.model.server.ChannelModel;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -17,7 +17,7 @@ public class ChannelUnitStructure implements PacketStructure {
     private final FixedLengthField unknown2;
     private final FixedLengthField unknown3;
 
-    public ChannelUnitStructure(final ChannelDTO channel) {
+    public ChannelUnitStructure(final ChannelModel channel) {
         this.channelName = new FixedLengthField(32, channel.getName());
         this.unknown1 = new FixedLengthField(1);
         this.serverId = new FixedLengthField(1, channel.getServer().getId());

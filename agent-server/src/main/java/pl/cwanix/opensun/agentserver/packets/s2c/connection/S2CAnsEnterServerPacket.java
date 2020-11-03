@@ -1,7 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -20,15 +20,15 @@ public class S2CAnsEnterServerPacket implements Packet {
     private final FixedLengthField unknown;
     private final List<ClientCharacterPartPacketStructure> charactersList;
 
-    public S2CAnsEnterServerPacket(final int userId, final List<CharacterDTO> characterDTOList) {
+    public S2CAnsEnterServerPacket(final int userId, final List<CharacterModel> characterModelList) {
         this.userId = new FixedLengthField(4, userId);
-        this.charCount = new FixedLengthField(1, characterDTOList.size());
-        this.unknown = new FixedLengthField(1, characterDTOList.size()); //TODO: ???
-        this.charactersList = convertCharacterEntityListToClientCharacterPartPacketStructureList(characterDTOList);
+        this.charCount = new FixedLengthField(1, characterModelList.size());
+        this.unknown = new FixedLengthField(1, characterModelList.size()); //TODO: ???
+        this.charactersList = convertCharacterEntityListToClientCharacterPartPacketStructureList(characterModelList);
     }
 
-    private List<ClientCharacterPartPacketStructure> convertCharacterEntityListToClientCharacterPartPacketStructureList(final List<CharacterDTO> characterDTOList) {
-        return characterDTOList
+    private List<ClientCharacterPartPacketStructure> convertCharacterEntityListToClientCharacterPartPacketStructureList(final List<CharacterModel> characterModelList) {
+        return characterModelList
                 .stream()
                 .map(ClientCharacterPartPacketStructure::new)
                 .collect(Collectors.toList());

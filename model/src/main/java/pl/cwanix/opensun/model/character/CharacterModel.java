@@ -1,16 +1,17 @@
-package pl.cwanix.opensun.domain;
+package pl.cwanix.opensun.model.character;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.cwanix.opensun.model.account.AccountModel;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CharacterDTO {
+public class CharacterModel {
 
     private int id;
-    private AccountDTO account;
+    private AccountModel account;
     private int classCode;
     private int heightCode;
     private int faceCode;
@@ -36,10 +37,10 @@ public class CharacterDTO {
     private int charState;
     private int stateTime;
     private int slot;
-    private CharacterPositionDTO position;
+    private CharacterPositionModel position;
     private int titleId;
     private int invisibleOpt;
-    private InventoryDTO inventory;
+    private InventoryModel inventory;
     private byte[] skill;
     private byte[] quick;
     private byte[] style;

@@ -10,7 +10,7 @@
 		<artifactId>opensun-parent</artifactId>
 		<version>0.0.2</version>
 	</parent>
-	<artifactId>domain</artifactId>
+	<artifactId>model</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>domain</name>
 

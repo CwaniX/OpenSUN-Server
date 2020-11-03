@@ -1,7 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
@@ -15,7 +15,7 @@ public class S2CAnsPlayerEnterPacket implements Packet {
     private final Vector currentPosition;
     private final FixedLengthField unknown;
 
-    public S2CAnsPlayerEnterPacket(final CharacterDTO character) {
+    public S2CAnsPlayerEnterPacket(final CharacterModel character) {
         currentPosition = new Vector(character.getPosition().getLocationX(), character.getPosition().getLocationY(), character.getPosition().getLocationZ());
         unknown = new FixedLengthField(2);
     }

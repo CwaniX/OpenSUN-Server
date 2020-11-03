@@ -25,7 +25,7 @@
 		<module>db-server</module>
 		<module>common-server</module>
 		<module>utils</module>
-		<module>domain</module>
+		<module>model</module>
 	</modules>
 
 	<dependencies>
@@ -74,7 +74,7 @@
 			</dependency>
 			<dependency>
 				<groupId>pl.cwanix.opensun</groupId>
-				<artifactId>domain</artifactId>
+				<artifactId>model</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
