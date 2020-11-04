@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.domain.UserDTO;
+import pl.cwanix.opensun.model.account.UserModel;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 
@@ -30,7 +30,7 @@ public class AuthController {
     public Integer create(@RequestParam("userId") final int userId) {
         log.info(MARKER, "Starting new session for user with id: {}", userId);
 
-        UserDTO user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserDTO.class);
+        UserModel user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserModel.class);
 
         if (user == null) {
             log.error(MARKER, "Unable to start session for user with id: {}", userId);

@@ -1,13 +1,13 @@
-package pl.cwanix.opensun.domain;
+package pl.cwanix.opensun.model.server;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ChannelDTO {
+public class ChannelModel {
 
     private int id;
-    private ServerDTO server;
+    private ServerModel server;
     private String name;
 }

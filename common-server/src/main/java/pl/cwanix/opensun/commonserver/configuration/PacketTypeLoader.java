@@ -53,7 +53,7 @@ public class PacketTypeLoader {
             Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
             PacketHeader header = new PacketHeader(
                     packetClass.getAnnotation(IncomingPacket.class).category().getCategory(),
-                    packetClass.getAnnotation(IncomingPacket.class).type()
+                    packetClass.getAnnotation(IncomingPacket.class).operation().getCode()
             );
 
             checkIncomingPacketContract(packetClass);
@@ -87,7 +87,7 @@ public class PacketTypeLoader {
             Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
             PacketHeader header = new PacketHeader(
                     packetClass.getAnnotation(OutgoingPacket.class).category().getCategory(),
-                    packetClass.getAnnotation(OutgoingPacket.class).type()
+                    packetClass.getAnnotation(OutgoingPacket.class).operation().getCode()
             );
 
             checkOutgoingPacketContract(packetClass);

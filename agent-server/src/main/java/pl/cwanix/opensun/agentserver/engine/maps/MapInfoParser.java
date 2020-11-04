@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.FieldInfoStructure;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
@@ -21,6 +22,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Service
+@Profile("experimental")
 @RequiredArgsConstructor
 public class MapInfoParser implements InitializingBean {
 

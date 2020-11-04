@@ -9,5 +9,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface OutgoingPacket {
 
     PacketCategory category();
-    byte type();
+    PacketOPCode operation();
 }

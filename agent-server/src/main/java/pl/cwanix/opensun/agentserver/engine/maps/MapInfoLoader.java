@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import pl.cwanix.opensun.agentserver.engine.maps.objects.FieldInfo;
 import pl.cwanix.opensun.agentserver.engine.maps.objects.MapInfo;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Service
+@Profile("experimental")
 @RequiredArgsConstructor
 public class MapInfoLoader implements InitializingBean {
 

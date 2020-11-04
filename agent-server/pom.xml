@@ -36,7 +36,7 @@
 		</dependency>
 		<dependency>
 			<groupId>pl.cwanix.opensun</groupId>
-			<artifactId>domain</artifactId>
+			<artifactId>model</artifactId>
 		</dependency>
 
 		<dependency>

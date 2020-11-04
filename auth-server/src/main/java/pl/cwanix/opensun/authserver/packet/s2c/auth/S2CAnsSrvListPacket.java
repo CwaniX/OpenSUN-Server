@@ -5,12 +5,13 @@ import pl.cwanix.opensun.authserver.packet.structures.ServerUnitStructure;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 import java.util.List;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.AUTH, type = 0x11)
+@OutgoingPacket(category = PacketCategory.AUTH, operation = PacketOPCode.AUTH_ANS_SRV_LIST)
 public class S2CAnsSrvListPacket implements Packet {
 
     private final FixedLengthField serversCount;

@@ -1,11 +1,11 @@
-package pl.cwanix.opensun.domain;
+package pl.cwanix.opensun.model.character;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class InventoryDTO {
+public class InventoryModel {
 
     private int id;
     private int money;

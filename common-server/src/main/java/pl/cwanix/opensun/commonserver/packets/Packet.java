@@ -15,12 +15,12 @@ public interface Packet extends PacketStructure {
         if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
             currentHeader = new PacketHeader(
                     this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(),
-                    this.getClass().getAnnotation(IncomingPacket.class).type()
+                    this.getClass().getAnnotation(IncomingPacket.class).operation().getCode()
             );
         } else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
             currentHeader = new PacketHeader(
                     this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(),
-                    this.getClass().getAnnotation(OutgoingPacket.class).type()
+                    this.getClass().getAnnotation(OutgoingPacket.class).operation().getCode()
             );
         } else {
             throw new PacketException("Wrong packet definition!");

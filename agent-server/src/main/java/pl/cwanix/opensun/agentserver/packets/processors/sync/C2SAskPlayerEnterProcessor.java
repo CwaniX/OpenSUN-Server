@@ -3,7 +3,7 @@ package pl.cwanix.opensun.agentserver.packets.processors.sync;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.c2s.sync.C2SAskPlayerEnterPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.sync.S2CAnsAllPlayersEquipInfoPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.sync.S2CAnsAllPlayersGuildInfoPacket;
@@ -22,7 +22,7 @@ public class C2SAskPlayerEnterProcessor implements SUNPacketProcessor<C2SAskPlay
     public void process(final ChannelHandlerContext ctx, final C2SAskPlayerEnterPacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        CharacterDTO character = session.getCharacter();
+        CharacterModel character = session.getCharacter();
 
         ctx.writeAndFlush(new S2CAnsPlayerEnterPacket(character));
         ctx.writeAndFlush(new S2CAnsAllPlayersGuildInfoPacket());

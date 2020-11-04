@@ -4,14 +4,19 @@ import lombok.Getter;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
+import pl.cwanix.opensun.utils.bytes.ByteRange;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
-import java.util.Arrays;
-
 @Getter
-@SuppressWarnings("checkstyle:MagicNumber")
-@IncomingPacket(category = PacketCategory.AUTH, type = 0x03)
+@IncomingPacket(category = PacketCategory.AUTH, operation = PacketOPCode.AUTH_ASK_AUTH)
 public class C2SAskAuthPacket implements Packet {
+
+    public static final ByteRange UNKNOWN_1_RANGE = ByteRange.of(0, 4);
+    public static final ByteRange NAME_RANGE = ByteRange.of(4, 54);
+    public static final ByteRange UNKNOWN_2_RANGE = ByteRange.of(54);
+    public static final ByteRange PASSWORD_RANGE = ByteRange.of(55, 71);
+    public static final ByteRange UNKNOWN_3_RANGE = ByteRange.of(71, 79);
 
     private final FixedLengthField unknown1;
     private final FixedLengthField name;
@@ -20,10 +25,10 @@ public class C2SAskAuthPacket implements Packet {
     private final FixedLengthField unknown3;
 
     public C2SAskAuthPacket(final byte[] value) {
-        this.unknown1 = new FixedLengthField(4, Arrays.copyOfRange(value, 0, 4));
-        this.name = new FixedLengthField(50, Arrays.copyOfRange(value, 4, 54));
-        this.unknown2 = new FixedLengthField(1, value[54]);
-        this.password = new FixedLengthField(16, Arrays.copyOfRange(value, 55, 71));
-        this.unknown3 = new FixedLengthField(8, Arrays.copyOfRange(value, 71, value.length));
+        this.unknown1 = new FixedLengthField(UNKNOWN_1_RANGE, value);
+        this.name = new FixedLengthField(NAME_RANGE, value);
+        this.unknown2 = new FixedLengthField(UNKNOWN_2_RANGE, value);
+        this.password = new FixedLengthField(PASSWORD_RANGE, value);
+        this.unknown3 = new FixedLengthField(UNKNOWN_3_RANGE, value);
     }
 }

@@ -3,11 +3,12 @@ package pl.cwanix.opensun.agentserver.packets.s2c.characters;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.CHARACTER, type = 0x2A)
+@OutgoingPacket(category = PacketCategory.CHARACTER, operation = PacketOPCode.CHARACTER_ANS_ITEMS)
 public class S2CAnsItemsPacket implements Packet {
 
     public static final PacketHeader PACKET_ID = new PacketHeader((byte) 0xA5, (byte) 0x2A);

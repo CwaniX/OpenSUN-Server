@@ -2,7 +2,7 @@ package pl.cwanix.opensun.agentserver.packets.structures;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.commonserver.packets.PacketStructure;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
@@ -28,7 +28,7 @@ public class ClientCharacterPartPacketStructure implements PacketStructure {
     private final FixedLengthField unknown3;
     private final FixedLengthField unknown4;
 
-    public ClientCharacterPartPacketStructure(final CharacterDTO character) {
+    public ClientCharacterPartPacketStructure(final CharacterModel character) {
         slot = new FixedLengthField(1, character.getSlot());
         size = new FixedLengthField(1, 0x10);
         charName = new FixedLengthField(16, character.getName());

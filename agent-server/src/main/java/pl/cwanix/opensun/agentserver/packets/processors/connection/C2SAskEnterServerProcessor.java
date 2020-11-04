@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyConnector;
-import pl.cwanix.opensun.domain.CharacterDTO;
+import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
+import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.c2s.connection.C2SAskEnterServerPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
@@ -15,7 +15,7 @@ import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
-import pl.cwanix.opensun.domain.UserDTO;
+import pl.cwanix.opensun.model.account.UserModel;
 
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class C2SAskEnterServerProcessor implements SUNPacketProcessor<C2SAskEnte
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK ENTER SERVER");
 
     private final AgentServerSessionManager sessionManager;
-    private final DatabaseProxyConnector databaseProxyConnector;
+    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskEnterServerPacket packet) {
-        UserDTO user = new UserDTO();
+        UserModel user = new UserModel();
         user.setId(packet.getUserId().toInt());
         user.setName(packet.getUserName().toString());
 
@@ -49,10 +49,10 @@ public class C2SAskEnterServerProcessor implements SUNPacketProcessor<C2SAskEnte
 
             ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
 
-            List<CharacterDTO> characterDTOList = databaseProxyConnector.findCharactersList(session.getUser().getAccount().getId());
+            List<CharacterModel> characterModelList = databaseProxyCharacterDataSourceImpl.findCharactersList(session.getUser().getAccount().getId());
             int userId = session.getUser().getId();
 
-            ctx.writeAndFlush(new S2CAnsEnterServerPacket(userId, characterDTOList));
+            ctx.writeAndFlush(new S2CAnsEnterServerPacket(userId, characterModelList));
         }
     }
 }

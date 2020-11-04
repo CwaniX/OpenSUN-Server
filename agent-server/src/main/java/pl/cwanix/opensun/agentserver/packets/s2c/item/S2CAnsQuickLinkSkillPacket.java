@@ -4,10 +4,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.ITEM, type = (byte) 0xF7)
+@OutgoingPacket(category = PacketCategory.ITEM, operation = PacketOPCode.ITEM_ANS_QUICK_LINK_SKILL)
 public class S2CAnsQuickLinkSkillPacket implements Packet {
 
     private final FixedLengthField slotCode;

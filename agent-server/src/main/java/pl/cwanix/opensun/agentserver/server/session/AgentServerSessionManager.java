@@ -8,23 +8,23 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import pl.cwanix.opensun.domain.UserDTO;
+import pl.cwanix.opensun.model.account.UserModel;
 import pl.cwanix.opensun.commonserver.session.SUNSessionManager;
 
 @Slf4j
 @Getter
 @Setter
 @Component
-public class AgentServerSessionManager implements SUNSessionManager<UserDTO> {
+public class AgentServerSessionManager implements SUNSessionManager<UserModel> {
 
-    private Map<UserDTO, AgentServerSession> sessions;
+    private Map<UserModel, AgentServerSession> sessions;
 
     public AgentServerSessionManager() {
         sessions = new HashMap<>();
     }
 
     @Override
-    public AgentServerSession startNewSession(final UserDTO user) {
+    public AgentServerSession startNewSession(final UserModel user) {
         AgentServerSession newSession = new AgentServerSession(user);
         sessions.put(user, newSession);
 
@@ -32,7 +32,7 @@ public class AgentServerSessionManager implements SUNSessionManager<UserDTO> {
     }
 
     @Override
-    public AgentServerSession getSession(final UserDTO user) {
+    public AgentServerSession getSession(final UserModel user) {
         return sessions.get(user);
     }
 
