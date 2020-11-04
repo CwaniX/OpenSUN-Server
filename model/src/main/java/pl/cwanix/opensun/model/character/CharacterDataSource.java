@@ -4,25 +4,11 @@ import java.util.List;
 
 public interface CharacterDataSource {
 
-    int createCharacter(
-            final int accountId,
-            final String charName,
-            final int classCode,
-            final int heightCode,
-            final int faceCode,
-            final int hairCode,
-            final int slot
-    );
-    void deleteCharacter(final int userId, final int slot);
-    CharacterModel findCharacter(final int accountId, final int slot);
-    List<CharacterModel> findCharactersList(final int accountId);
-    int findFreeSlot(final int userId);
-    int updateCharacterPosition(
-            final int characterId,
-            final float x,
-            final float y,
-            final float z,
-            final int angle
-    );
-    int updateCharacterStatistics(final int characterId, final byte attributeCode);
+    int createCharacter(int accountId, String charName, int classCode, int heightCode, int faceCode, int hairCode, int slot);
+    void deleteCharacter(int userId, int slot);
+    CharacterModel findCharacter(int accountId, int slot);
+    List<CharacterModel> findCharactersList(int accountId);
+    int findFreeSlot(int userId);
+    int updateCharacterPosition(int characterId, float x, float y, float z, int angle);
+    int updateCharacterStatistics(int characterId, byte attributeCode);
 }

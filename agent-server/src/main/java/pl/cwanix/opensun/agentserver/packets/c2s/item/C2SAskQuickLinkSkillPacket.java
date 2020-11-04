@@ -4,11 +4,12 @@ import lombok.Getter;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 @Getter
-@IncomingPacket(category = PacketCategory.ITEM, type = (byte) 0xC0)
+@IncomingPacket(category = PacketCategory.ITEM, operation = PacketOPCode.ITEM_ASK_QUICK_LINK_SKILL)
 public class C2SAskQuickLinkSkillPacket implements Packet {
 
     private final FixedLengthField slotCode;

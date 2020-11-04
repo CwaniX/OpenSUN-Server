@@ -1,6 +1,7 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
 import org.apache.commons.lang3.ArrayUtils;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
@@ -9,7 +10,7 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.SYNC, type = (byte) 0x1F)
+@OutgoingPacket(category = PacketCategory.SYNC, operation = PacketOPCode.SYNC_ANS_PLAYER_ENTER)
 public class S2CAnsPlayerEnterPacket implements Packet {
 
     private final Vector currentPosition;

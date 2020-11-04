@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 @SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 @Getter
-@IncomingPacket(category = PacketCategory.CHARACTER, type = 0x6F)
+@IncomingPacket(category = PacketCategory.CHARACTER, operation = PacketOPCode.CHARACTER_ASK_CREATE_CHAR)
 public class C2SAskCreateCharPacket implements Packet {
 
     private final FixedLengthField classCode;

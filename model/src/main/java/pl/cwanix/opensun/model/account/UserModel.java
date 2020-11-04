@@ -3,7 +3,6 @@ package pl.cwanix.opensun.model.account;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import pl.cwanix.opensun.model.account.AccountModel;
 
 import java.time.LocalDateTime;
 

@@ -2,6 +2,7 @@ package pl.cwanix.opensun.utils.datatypes;
 
 import java.util.Arrays;
 
+import pl.cwanix.opensun.utils.bytes.ByteRange;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
 public class FixedLengthField implements SUNDataType {
@@ -10,6 +11,11 @@ public class FixedLengthField implements SUNDataType {
 
     public FixedLengthField(final int length) {
         this.value = new byte[length];
+    }
+
+    public FixedLengthField(final ByteRange range, final byte... bytes) {
+        this.value = new byte[range.getLength()];
+        setValue(range.getFromArray(bytes));
     }
 
     public FixedLengthField(final int length, final int begin, final byte... bytes) {

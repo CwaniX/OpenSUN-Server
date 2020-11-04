@@ -6,5 +6,5 @@ public interface ServerDataSource {
 
     List<ServerModel> findServers();
     List<ChannelModel> findChannels();
-    ServerModel findServer(final int serverId);
+    ServerModel findServer(int serverId);
 }

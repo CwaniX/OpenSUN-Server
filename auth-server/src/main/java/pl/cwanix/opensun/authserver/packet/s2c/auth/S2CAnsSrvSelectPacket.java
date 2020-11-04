@@ -4,10 +4,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings({"checkstyle:MagicNumber", "checkstyle:LineLength"})
-@OutgoingPacket(category = PacketCategory.AUTH, type = 0x1A)
+@OutgoingPacket(category = PacketCategory.AUTH, operation = PacketOPCode.AUTH_ANS_SRV_SELECT)
 public class S2CAnsSrvSelectPacket implements Packet {
 
     private final FixedLengthField userId;

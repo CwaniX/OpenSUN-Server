@@ -7,12 +7,13 @@ import org.slf4j.MarkerFactory;
 import pl.cwanix.opensun.commonserver.packets.Packet;
 import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.IncomingPacket;
+import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
 @Getter
-@IncomingPacket(category = PacketCategory.ZONE, type = (byte) 0xCC)
+@IncomingPacket(category = PacketCategory.ZONE, operation = PacketOPCode.ZONE_ASK_VILLAGE_MOVE)
 public class C2SAskVillageMovePacket implements Packet {
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> VILLAGE MOVE");
