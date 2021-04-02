@@ -1,11 +1,10 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.connection;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
+import pl.cwanix.opensun.agentserver.packets.AgentServerPacketOPCode;
 import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.structures.ClientCharacterPartPacketStructure;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.CONNECTION, operation = PacketOPCode.CONNECTION_ANS_ENTER_SERVER)
+@OutgoingPacket(category = AgentServerPacketOPCode.Connection.CATEGORY, operation = AgentServerPacketOPCode.Connection.Ans.ENTER_SERVER)
 public class S2CAnsEnterServerPacket implements Packet {
 
     private final FixedLengthField userId;

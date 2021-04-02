@@ -1,14 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.sync;
 
 import org.apache.commons.lang3.ArrayUtils;
+import pl.cwanix.opensun.agentserver.packets.AgentServerPacketOPCode;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
-import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.SYNC, operation = PacketOPCode.SYNC_ANS_ALL_PLAYERS_EQUIP_INFO)
+@OutgoingPacket(category = AgentServerPacketOPCode.Sync.CATEGORY, operation = AgentServerPacketOPCode.Sync.Ans.ALL_PLAYERS_EQUIP_INFO)
 public class S2CAnsAllPlayersEquipInfoPacket implements Packet {
 
     //private FixedLengthField count;

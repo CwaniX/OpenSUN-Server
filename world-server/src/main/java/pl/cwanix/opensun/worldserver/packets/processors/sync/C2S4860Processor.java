@@ -4,7 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.RequiredArgsConstructor;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
-import pl.cwanix.opensun.worldserver.packets.c2s.sync.C2S4860Packet;
+import pl.cwanix.opensun.worldserver.packets.c2s.connection.C2S4860Packet;
 
 @RequiredArgsConstructor
 @PacketProcessor(packetClass = C2S4860Packet.class)

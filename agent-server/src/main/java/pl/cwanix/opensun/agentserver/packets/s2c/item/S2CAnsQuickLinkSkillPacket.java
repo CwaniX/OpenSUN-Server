@@ -1,14 +1,13 @@
 package pl.cwanix.opensun.agentserver.packets.s2c.item;
 
 import org.apache.commons.lang3.ArrayUtils;
+import pl.cwanix.opensun.agentserver.packets.AgentServerPacketOPCode;
 import pl.cwanix.opensun.commonserver.packets.Packet;
-import pl.cwanix.opensun.commonserver.packets.PacketCategory;
 import pl.cwanix.opensun.commonserver.packets.annotations.OutgoingPacket;
-import pl.cwanix.opensun.commonserver.packets.annotations.PacketOPCode;
 import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-@OutgoingPacket(category = PacketCategory.ITEM, operation = PacketOPCode.ITEM_ANS_QUICK_LINK_SKILL)
+@OutgoingPacket(category = AgentServerPacketOPCode.Item.CATEGORY, operation = AgentServerPacketOPCode.Item.Ans.QUICK_LINK_SKILL)
 public class S2CAnsQuickLinkSkillPacket implements Packet {
 
     private final FixedLengthField slotCode;
