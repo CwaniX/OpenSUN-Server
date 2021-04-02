@@ -52,8 +52,8 @@ public class PacketTypeLoader {
         for (BeanDefinition packetDefinition : packetDefinitions) {
             Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
             PacketHeader header = new PacketHeader(
-                    packetClass.getAnnotation(IncomingPacket.class).category().getCategory(),
-                    packetClass.getAnnotation(IncomingPacket.class).operation().getCode()
+                    packetClass.getAnnotation(IncomingPacket.class).category(),
+                    packetClass.getAnnotation(IncomingPacket.class).operation()
             );
 
             checkIncomingPacketContract(packetClass);
@@ -86,8 +86,8 @@ public class PacketTypeLoader {
         for (BeanDefinition packetDefinition : packetDefinitions) {
             Class<? extends Packet> packetClass = (Class<? extends Packet>) Class.forName(packetDefinition.getBeanClassName());
             PacketHeader header = new PacketHeader(
-                    packetClass.getAnnotation(OutgoingPacket.class).category().getCategory(),
-                    packetClass.getAnnotation(OutgoingPacket.class).operation().getCode()
+                    packetClass.getAnnotation(OutgoingPacket.class).category(),
+                    packetClass.getAnnotation(OutgoingPacket.class).operation()
             );
 
             checkOutgoingPacketContract(packetClass);

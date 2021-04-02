@@ -7,7 +7,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.character.C2SAskCreateCharPacket;
-import pl.cwanix.opensun.agentserver.packets.s2c.characters.S2CAnsCreateCharPacket;
+import pl.cwanix.opensun.agentserver.packets.s2c.character.S2CAnsCreateCharPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
