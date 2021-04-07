@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.character.C2SAskDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.character.S2CAnsDeleteCharPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.character.S2CErrDeleteCharPacket;
@@ -13,6 +12,7 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +22,7 @@ public class C2SAskDeleteCharProcessor implements SUNPacketProcessor<C2SAskDelet
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> DELETE CHAR");
     private static final String DELETE_WORD = "delete";
 
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskDeleteCharPacket packet) {
@@ -30,7 +30,7 @@ public class C2SAskDeleteCharProcessor implements SUNPacketProcessor<C2SAskDelet
 
         if (DELETE_WORD.equals(packet.getDeleteWord().toString())) {
             log.info(MARKER, "Deleting character");
-            databaseProxyCharacterDataSourceImpl.deleteCharacter(session.getUser().getAccount().getId(), packet.getSlotNumber().toByteArray()[0]);
+            characterDataSource.delete(session.getUser().getAccount().getId(), packet.getSlotNumber().toByteArray()[0]);
 
             ctx.writeAndFlush(new S2CAnsDeleteCharPacket());
         } else {

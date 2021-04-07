@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.engine.maps.objects;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps.objects;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;

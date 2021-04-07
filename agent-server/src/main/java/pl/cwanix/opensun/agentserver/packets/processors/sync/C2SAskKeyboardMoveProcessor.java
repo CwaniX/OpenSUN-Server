@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.sync.C2SAskKeyboardMovePacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class C2SAskKeyboardMoveProcessor implements SUNPacketProcessor<C2SAskKey
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> KEYBOARD MOVE");
 
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskKeyboardMovePacket packet) {
@@ -31,7 +31,7 @@ public class C2SAskKeyboardMoveProcessor implements SUNPacketProcessor<C2SAskKey
                 packet.getCurrentPosition().getZ(),
                 packet.getAngle());
 
-        databaseProxyCharacterDataSourceImpl.updateCharacterPosition(
+        characterDataSource.updateCharacterPosition(
                 session.getCharacter().getId(),
                 packet.getCurrentPosition().getX(),
                 packet.getCurrentPosition().getY(),

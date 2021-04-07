@@ -14,13 +14,13 @@ public interface Packet extends PacketStructure {
 
         if (this.getClass().isAnnotationPresent(IncomingPacket.class)) {
             currentHeader = new PacketHeader(
-                    this.getClass().getAnnotation(IncomingPacket.class).category().getCategory(),
-                    this.getClass().getAnnotation(IncomingPacket.class).operation().getCode()
+                    this.getClass().getAnnotation(IncomingPacket.class).category(),
+                    this.getClass().getAnnotation(IncomingPacket.class).operation()
             );
         } else if (this.getClass().isAnnotationPresent(OutgoingPacket.class)) {
             currentHeader = new PacketHeader(
-                    this.getClass().getAnnotation(OutgoingPacket.class).category().getCategory(),
-                    this.getClass().getAnnotation(OutgoingPacket.class).operation().getCode()
+                    this.getClass().getAnnotation(OutgoingPacket.class).category(),
+                    this.getClass().getAnnotation(OutgoingPacket.class).operation()
             );
         } else {
             throw new PacketException("Wrong packet definition!");

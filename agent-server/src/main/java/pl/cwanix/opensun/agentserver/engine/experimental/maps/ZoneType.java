@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.engine.maps;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps;
 
 import lombok.AllArgsConstructor;
 

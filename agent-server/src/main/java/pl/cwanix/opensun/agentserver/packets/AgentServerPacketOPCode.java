@@ -108,7 +108,7 @@ public class AgentServerPacketOPCode {
         public static final byte CATEGORY = (byte) 0xEA;
 
         public static class Unk {
-            public static final byte _EA09 = 0x09;
+            public static final byte UNK_EA09 = 0x09;
         }
     }
 

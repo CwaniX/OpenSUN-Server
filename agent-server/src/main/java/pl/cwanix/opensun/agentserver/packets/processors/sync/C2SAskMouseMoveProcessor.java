@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.sync.C2SAskMouseMovePacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class C2SAskMouseMoveProcessor implements SUNPacketProcessor<C2SAskMouseM
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> MOUSE MOVE");
 
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskMouseMovePacket packet) {
@@ -30,7 +30,7 @@ public class C2SAskMouseMoveProcessor implements SUNPacketProcessor<C2SAskMouseM
                 packet.getDestinationPosition().getY(),
                 packet.getDestinationPosition().getZ());
 
-        databaseProxyCharacterDataSourceImpl.updateCharacterPosition(
+        characterDataSource.updateCharacterPosition(
                 session.getCharacter().getId(),
                 packet.getDestinationPosition().getX(),
                 packet.getDestinationPosition().getY(),

@@ -1,8 +1,8 @@
-package pl.cwanix.opensun.agentserver.engine.maps.objects;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
+import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.MapInfoStructure;
 
 import java.util.HashMap;
 import java.util.Map;

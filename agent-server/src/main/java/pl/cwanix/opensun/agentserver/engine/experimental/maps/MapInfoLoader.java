@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.engine.maps;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import pl.cwanix.opensun.agentserver.engine.maps.objects.FieldInfo;
-import pl.cwanix.opensun.agentserver.engine.maps.objects.MapInfo;
-import pl.cwanix.opensun.agentserver.engine.maps.structures.MapInfoStructure;
+import pl.cwanix.opensun.agentserver.engine.experimental.maps.objects.FieldInfo;
+import pl.cwanix.opensun.agentserver.engine.experimental.maps.objects.MapInfo;
+import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.MapInfoStructure;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 
 import java.util.HashMap;
