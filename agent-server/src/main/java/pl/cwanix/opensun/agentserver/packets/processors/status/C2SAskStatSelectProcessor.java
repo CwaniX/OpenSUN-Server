@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.status.C2SAskStatSelectPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.status.S2CAnsStatSelectPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.status.S2CErrStatSelectPacket;
@@ -13,6 +12,7 @@ import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 @Slf4j
@@ -22,7 +22,7 @@ public class C2SAskStatSelectProcessor implements SUNPacketProcessor<C2SAskStatS
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> STAT SELECT");
 
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskStatSelectPacket packet) {
@@ -30,7 +30,7 @@ public class C2SAskStatSelectProcessor implements SUNPacketProcessor<C2SAskStatS
 
         log.debug(MARKER, "Updating character statistics: {}", packet.getAttributeCode());
 
-        int responseCode = databaseProxyCharacterDataSourceImpl.updateCharacterStatistics(session.getCharacter().getId(), packet.getAttributeCode().toByte());
+        int responseCode = characterDataSource.updateCharacterStatistics(session.getCharacter().getId(), packet.getAttributeCode().toByte());
 
         if (responseCode == 0) {
             ctx.writeAndFlush(new S2CAnsStatSelectPacket(packet.getAttributeCode().toByte(), 99));

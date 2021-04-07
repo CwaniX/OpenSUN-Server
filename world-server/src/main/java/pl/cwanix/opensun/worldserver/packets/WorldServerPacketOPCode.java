@@ -9,9 +9,9 @@ public class WorldServerPacketOPCode {
         public static final byte CATEGORY = 0x48;
 
         public static class Unk {
-            public static final byte _483C = 0X3C;
-            public static final byte _4860 = 0x60;
-            public static final byte _486C = 0x6C;
+            public static final byte UNK_483C = 0X3C;
+            public static final byte UNK_4860 = 0x60;
+            public static final byte UNK_486C = 0x6C;
         }
     }
 
@@ -19,7 +19,7 @@ public class WorldServerPacketOPCode {
         public static final byte CATEGORY = (byte) 0xFD;
 
         public static class Unk {
-            public static final byte _FD60 = 0x60;
+            public static final byte UNK_FD60 = 0x60;
         }
     }
 }

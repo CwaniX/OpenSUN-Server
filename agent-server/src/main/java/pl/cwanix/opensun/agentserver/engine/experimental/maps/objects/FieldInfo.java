@@ -1,11 +1,11 @@
-package pl.cwanix.opensun.agentserver.engine.maps.objects;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps.objects;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.engine.maps.structures.FieldInfoStructure;
+import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.FieldInfoStructure;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 import pl.cwanix.opensun.utils.files.SUNArchive;
 import pl.cwanix.opensun.utils.files.SUNArchiveChunkInfo;

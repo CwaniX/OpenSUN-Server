@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.engine.maps.structures;
+package pl.cwanix.opensun.agentserver.engine.experimental.maps.structures;
 
 import lombok.Getter;
 import lombok.Setter;

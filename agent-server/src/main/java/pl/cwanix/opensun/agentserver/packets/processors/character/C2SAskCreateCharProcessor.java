@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
 import pl.cwanix.opensun.agentserver.packets.c2s.character.C2SAskCreateCharPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.character.S2CAnsCreateCharPacket;
 import pl.cwanix.opensun.agentserver.server.AgentServerChannelHandler;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSession;
 import pl.cwanix.opensun.commonserver.packets.SUNPacketProcessor;
 import pl.cwanix.opensun.commonserver.packets.annotations.PacketProcessor;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 import pl.cwanix.opensun.model.character.CharacterModel;
 
 @Slf4j
@@ -21,7 +21,7 @@ public class C2SAskCreateCharProcessor implements SUNPacketProcessor<C2SAskCreat
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> CREATE CHAR");
 
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskCreateCharPacket packet) {
@@ -29,10 +29,10 @@ public class C2SAskCreateCharProcessor implements SUNPacketProcessor<C2SAskCreat
 
         log.info(MARKER, "Creating new character");
 
-        int slot = databaseProxyCharacterDataSourceImpl.findFreeSlot(session.getUser().getAccount().getId());
+        int slot = characterDataSource.findFreeSlot(session.getUser().getAccount().getId());
 
         if (slot > -1) {
-            databaseProxyCharacterDataSourceImpl.createCharacter(
+            characterDataSource.create(
                     session.getUser().getAccount().getId(),
                     packet.getCharName().toString(),
                     packet.getClassCode().toByte(),
@@ -40,7 +40,7 @@ public class C2SAskCreateCharProcessor implements SUNPacketProcessor<C2SAskCreat
                     packet.getFaceCode().toByte(),
                     packet.getHairCode().toByte(),
                     slot);
-            CharacterModel characterModel = databaseProxyCharacterDataSourceImpl.findCharacter(session.getUser().getAccount().getId(), slot);
+            CharacterModel characterModel = characterDataSource.findCharacter(session.getUser().getAccount().getId(), slot);
 
             ctx.writeAndFlush(new S2CAnsCreateCharPacket(characterModel));
         } else {

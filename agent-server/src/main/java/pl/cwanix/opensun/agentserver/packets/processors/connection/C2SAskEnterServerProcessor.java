@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-import pl.cwanix.opensun.agentserver.communication.DatabaseProxyCharacterDataSourceImpl;
+import pl.cwanix.opensun.model.character.CharacterDataSource;
 import pl.cwanix.opensun.model.character.CharacterModel;
 import pl.cwanix.opensun.agentserver.packets.c2s.connection.C2SAskEnterServerPacket;
 import pl.cwanix.opensun.agentserver.packets.s2c.connection.S2CAnsEnterServerPacket;
@@ -27,7 +27,7 @@ public class C2SAskEnterServerProcessor implements SUNPacketProcessor<C2SAskEnte
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> ASK ENTER SERVER");
 
     private final AgentServerSessionManager sessionManager;
-    private final DatabaseProxyCharacterDataSourceImpl databaseProxyCharacterDataSourceImpl;
+    private final CharacterDataSource characterDataSource;
 
     @Override
     public void process(final ChannelHandlerContext ctx, final C2SAskEnterServerPacket packet) {
@@ -49,7 +49,7 @@ public class C2SAskEnterServerProcessor implements SUNPacketProcessor<C2SAskEnte
 
             ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).set(session);
 
-            List<CharacterModel> characterModelList = databaseProxyCharacterDataSourceImpl.findCharactersList(session.getUser().getAccount().getId());
+            List<CharacterModel> characterModelList = characterDataSource.findCharactersList(session.getUser().getAccount().getId());
             int userId = session.getUser().getId();
 
             ctx.writeAndFlush(new S2CAnsEnterServerPacket(userId, characterModelList));

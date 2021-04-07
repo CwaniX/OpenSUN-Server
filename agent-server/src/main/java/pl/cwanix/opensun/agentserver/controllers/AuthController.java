@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.model.account.AccountDataSource;
 import pl.cwanix.opensun.model.account.UserModel;
 import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
 import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
@@ -22,18 +23,17 @@ public class AuthController {
 
     private static final Marker MARKER = MarkerFactory.getMarker("AUTH CONTROLLER");
 
-    private final RestTemplate restTemplate;
+    private final AccountDataSource accountDataSource;
     private final AgentServerSessionManager sessionManager;
-    private final AgentServerProperties properties;
 
     @PostMapping(path = "/new", produces = "application/json")
-    public Integer create(@RequestParam("userId") final int userId) {
-        log.info(MARKER, "Starting new session for user with id: {}", userId);
+    public Integer create(@RequestParam("userName") final String userName) {
+        log.info(MARKER, "Starting new session for user with name: {}", userName);
 
-        UserModel user = restTemplate.getForObject("http://" + properties.getDb().getIp() + ":" + properties.getDb().getPort() + "/user/findById?id=" + userId, UserModel.class);
+        final UserModel user = accountDataSource.findUser(userName);
 
         if (user == null) {
-            log.error(MARKER, "Unable to start session for user with id: {}", userId);
+            log.error(MARKER, "Unable to start session for user with name: {}", userName);
             return 1;
         } else {
             sessionManager.startNewSession(user);
