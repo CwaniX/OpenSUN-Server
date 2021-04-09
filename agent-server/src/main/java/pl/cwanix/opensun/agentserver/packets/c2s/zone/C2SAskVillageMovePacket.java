@@ -17,9 +17,13 @@ public class C2SAskVillageMovePacket implements Packet {
 
     private static final Marker MARKER = MarkerFactory.getMarker("C2S -> VILLAGE MOVE");
 
-    private final FixedLengthField villageMapCode;
+    private final FixedLengthField unk1;
+    private final FixedLengthField key1;
+    private final FixedLengthField key2;
 
     public C2SAskVillageMovePacket(final byte[] value) {
-        villageMapCode = new FixedLengthField(2, value);
+        unk1 = new FixedLengthField(1, value[0]);
+        key1 = new FixedLengthField(1, value[1]);
+        key2 = new FixedLengthField(1, value[2]);
     }
 }

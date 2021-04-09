@@ -127,4 +127,8 @@ public final class BytesUtils {
 
         return out.toByteArray();
     }
+
+    public static int toUnsigned(final byte signed) {
+        return signed & 0xff;
+    }
 }

@@ -10,5 +10,6 @@ public interface CharacterDataSource {
     List<CharacterModel> findCharactersList(int accountId);
     int findFreeSlot(int accountId);
     int updateCharacterPosition(int characterId, float x, float y, float z, int angle);
+    int updateCharacterRegion(int characterId, float x, float y, float z, int angle, int field);
     int updateCharacterStatistics(int characterId, byte attributeCode);
 }
