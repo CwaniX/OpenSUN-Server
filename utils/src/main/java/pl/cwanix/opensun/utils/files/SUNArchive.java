@@ -58,8 +58,8 @@ public class SUNArchive implements AutoCloseable {
             byte[] chunkInfoContent = new byte[SUNArchiveChunkInfo.CHUNK_INFO_SIZE];
             int result = inputStream.read(chunkInfoContent);
 
-            chunkInfo.setId(BytesUtils.byteArrayToShort(chunkInfoContent[0], chunkInfoContent[1]));
-            chunkInfo.setSize(BytesUtils.byteArrayToInt(chunkInfoContent[2], chunkInfoContent[3], chunkInfoContent[4], chunkInfoContent[5]));
+            chunkInfo.setId(BytesUtils.toUnsigned(BytesUtils.byteArrayToShort(chunkInfoContent[0], chunkInfoContent[1])));
+            chunkInfo.setSize(BytesUtils.toUnsigned(BytesUtils.byteArrayToInt(chunkInfoContent[2], chunkInfoContent[3], chunkInfoContent[4], chunkInfoContent[5])));
 
             return result;
         } catch (IOException e) {
@@ -81,11 +81,15 @@ public class SUNArchive implements AutoCloseable {
 
     public long skipCurrentChunk(final SUNArchiveChunkInfo chunkInfo) {
         try {
+            if (chunkInfo.getSize() == 0) {
+                throw new IOException("dupa");
+            }
+
             return inputStream.skip(chunkInfo.getSize() - SUNArchiveChunkInfo.CHUNK_INFO_SIZE);
         } catch (IOException e) {
-            log.error(MARKER, "Unable to skip chunk data");
+            //log.error(MARKER, "Unable to skip chunk data", e);
 
-            throw new RuntimeException("");
+            throw new RuntimeException("Unable to skip chunk data");
 
             //return 0;
         }

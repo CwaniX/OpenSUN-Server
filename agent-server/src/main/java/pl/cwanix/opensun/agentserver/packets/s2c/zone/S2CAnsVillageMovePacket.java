@@ -12,7 +12,7 @@ public class S2CAnsVillageMovePacket implements Packet {
 
     private final FixedLengthField fieldCode;
 
-    public S2CAnsVillageMovePacket(int fieldCode) {
+    public S2CAnsVillageMovePacket(final int fieldCode) {
         this.fieldCode = new FixedLengthField(4, fieldCode);
     }
 

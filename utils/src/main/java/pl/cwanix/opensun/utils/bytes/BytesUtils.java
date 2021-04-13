@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
+@SuppressWarnings({"checkstyle:HideUtilityClassConstructor", "checkstyle:MagicNumber"})
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BytesUtils {
 
@@ -129,6 +129,14 @@ public final class BytesUtils {
     }
 
     public static int toUnsigned(final byte signed) {
-        return signed & 0xff;
+        return Byte.toUnsignedInt(signed);
+    }
+
+    public static int toUnsigned(final short signed) {
+        return Short.toUnsignedInt(signed);
+    }
+
+    public static long toUnsigned(final int signed) {
+        return Integer.toUnsignedLong(signed);
     }
 }

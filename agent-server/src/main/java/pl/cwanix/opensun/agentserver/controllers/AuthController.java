@@ -1,19 +1,16 @@
 package pl.cwanix.opensun.agentserver.controllers;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 import pl.cwanix.opensun.model.account.AccountDataSource;
 import pl.cwanix.opensun.model.account.UserModel;
-import pl.cwanix.opensun.agentserver.properties.AgentServerProperties;
-import pl.cwanix.opensun.agentserver.server.session.AgentServerSessionManager;
 
 @Slf4j
 @RestController

@@ -55,7 +55,7 @@ public class CharacterDataSourceImpl implements CharacterDataSource {
     }
 
     @Override
-    public int updateCharacterRegion(final int characterId, final float x, final float y, final float z, final int angle, int region) {
+    public int updateCharacterRegion(final int characterId, final float x, final float y, final float z, final int angle, final int region) {
         return characterEntityRepository.updateRegion(characterId, x, y, z, angle, region);
     }
 

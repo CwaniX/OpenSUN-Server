@@ -6,8 +6,13 @@ import org.springframework.stereotype.Service;
 import pl.cwanix.opensun.agentserver.engine.maps.structures.PortalInfoStructure;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 @Service
 @RequiredArgsConstructor
 public class MapPortalInfoManager implements InitializingBean {
@@ -17,7 +22,7 @@ public class MapPortalInfoManager implements InitializingBean {
     private Map<Integer, PortalInfoStructure> portalInfoStructureMap;
     private Map<Integer, List<Integer>> waypointPortalsMap;
 
-    public PortalInfoStructure get(byte v1, byte from) {
+    public PortalInfoStructure get(final byte v1, final byte from) {
         final int fromAreaId = getFromAreaId(from);
         final int index = generateIndex(v1, from);
         final int portalId = waypointPortalsMap.get(fromAreaId).get(index - 1);
@@ -25,16 +30,16 @@ public class MapPortalInfoManager implements InitializingBean {
         return portalInfoStructureMap.get(portalId);
     }
 
-    private int getFromAreaId(byte from) {
-        return waypointPortalsMap.keySet().toArray(new Integer[0])[from/25];
+    private int getFromAreaId(final byte from) {
+        return waypointPortalsMap.keySet().toArray(new Integer[0])[from / 25];
     }
 
-    private int generateIndex(byte v1, byte from) {
+    private int generateIndex(final byte v1, final byte from) {
         int key1 = BytesUtils.toUnsigned(v1);
 
         if (key1 < 50) {
             key1 = 1;
-        } else if (key1 < 100){
+        } else if (key1 < 100) {
             key1 = 2;
         } else if (key1 < 200) {
             key1 = 3;

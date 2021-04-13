@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.FieldInfoStructure;
+import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.Vector;
 import pl.cwanix.opensun.utils.files.SUNArchive;
 import pl.cwanix.opensun.utils.files.SUNArchiveChunkInfo;
@@ -51,6 +52,10 @@ public class FieldInfo {
     }
 
     public void load(final String dataDirectory) {
+        load(dataDirectory, 0);
+    }
+
+    public void load(final String dataDirectory, final int skip) {
         SUNArchive archive = new SUNArchive();
 
         if (!archive.loadFile(dataDirectory + "/" + fieldInfoStructure.getPath())) {
@@ -59,9 +64,9 @@ public class FieldInfo {
 
         if (!worldBase.serialize(archive)) {
             log.error(MARKER, "Unable to serialize world base");
-
-            throw new RuntimeException("");
         }
+
+        archive.read(skip);
 
         loadMapObjectInfo(archive);
     }
@@ -77,23 +82,26 @@ public class FieldInfo {
                 break;
             }
 
-            archive.skipCurrentChunk(chunkInfo);
+            long skipped = archive.skipCurrentChunk(chunkInfo);
+            log.debug(MARKER, "skipped {} bytes", skipped);
         }
 
         int numbers = 0;
         int dummy = 0;
         int[] custom = new int[4];
 
-        //numbers = archive read int bytes
+        numbers = BytesUtils.byteArrayToInt(archive.read(4));
         for (int i = 0; i < numbers; i++) {
             String name = archive.readName();
-            //dummy = archive read int bytes
+            System.out.println(name);
+            dummy = BytesUtils.byteArrayToInt(archive.read(4));
         }
 
-        //numbers = archive read int bytes
+        numbers = BytesUtils.byteArrayToInt(archive.read(4));
         for (int i = 0; i < numbers; i++) {
-            //dummy = archive read int bytes
+            dummy = BytesUtils.byteArrayToInt(archive.read(4));
             String name = archive.readName();
+            System.out.println(name);
         }
 
         //numbers = archive read int bytes
@@ -109,9 +117,9 @@ public class FieldInfo {
 
             /*if (archive.getVersion() >= 138) {
                 //dummy = archive read int bytes
-            }
+            }*/
 
-            if (archive.getVersion() >= 158) {
+            /*if (archive.getVersion() >= 158) {
                 //custom[0] = archive read int bytes
                 //custom[1] = archive read int bytes
                 //custom[2] = archive read int bytes
