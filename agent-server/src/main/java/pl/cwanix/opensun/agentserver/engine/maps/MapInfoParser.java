@@ -1,4 +1,4 @@
-package pl.cwanix.opensun.agentserver.engine.experimental.maps;
+package pl.cwanix.opensun.agentserver.engine.maps;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.FieldInfoStructure;
 import pl.cwanix.opensun.agentserver.engine.experimental.maps.structures.MapInfoStructure;
@@ -22,7 +21,6 @@ import java.util.Map;
 @Getter
 @Setter
 @Service
-@Profile("experimental")
 @RequiredArgsConstructor
 public class MapInfoParser implements InitializingBean {
 
@@ -63,46 +61,45 @@ public class MapInfoParser implements InitializingBean {
                 map.setMapKind(reader.readNextIntValue());
                 map.setMName(reader.readNextStringValue());
                 map.setNCode(reader.readNextIntValue());
+                map.setFnCode(reader.readNextIntValue());
                 map.setDCode(reader.readNextIntValue());
+                map.setAnCode(reader.readNextIntValue());
+                map.setGuildEnt(reader.readNextIntValue());
+                map.setGuildItem(reader.readNextIntValue());
+                map.setTimeLim(reader.readNextIntValue());
                 map.setMKind(reader.readNextIntValue());
                 map.setMType(reader.readNextIntValue());
-                map.setQCode(reader.readNextIntValue());
-                map.setMinUserNum(reader.readNextIntValue());
-                map.setMaxUserNum(reader.readNextIntValue());
+                map.setMinUser(reader.readNextIntValue());
+                map.setMaxUser(reader.readNextIntValue());
                 map.setMinLv(reader.readNextIntValue());
                 map.setMaxLv(reader.readNextIntValue());
-                map.setMapControlId(reader.readNextStringValue());
-                map.setText1(reader.readNextIntValue());
-                map.setText2(reader.readNextIntValue());
-                map.setText3(reader.readNextIntValue());
+                map.setFreePassLv(reader.readNextIntValue());
+                map.setStartId(reader.readNextStringValue());
+                map.setStartId2(reader.readNextStringValue());
+                map.setEntCount(reader.readNextIntValue());
+                map.setClass1(reader.readNextIntValue());
+                map.setFCount(reader.readNextIntValue());
+                map.setCompleteQCode(reader.readNextIntValue());
+                map.setCompleteMCode(reader.readNextIntValue());
+                map.setContinentCode(reader.readNextIntValue());
 
-                map.setStartAreaId(reader.readNextIntValue()); //Dodac obsluge wartosci nie bedacej liczba
-
-                map.setMapClass(reader.readNextByteValue());
-
-                map.setFCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
-                map.setGCode(new String[MapInfoStructure.MAX_FIELD_NUMBER]);
+                map.setMMap(new byte[MapInfoStructure.MAX_FIELD_NUMBER]);
+                map.setPMap(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
+                map.setCMap(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
 
                 for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
-                    map.getFCode()[i] = reader.readNextIntValue();
-                    map.getGCode()[i] = reader.readNextStringValue();
+                    map.getMMap()[i] = reader.readNextByteValue();
                 }
 
-                map.setEnvironmentCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
-
                 for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
-                    map.getEnvironmentCode()[i] = reader.readNextIntValue();
+                    map.getPMap()[i] = reader.readNextIntValue();
                 }
 
-                map.setImageCode(new int[MapInfoStructure.MAX_FIELD_NUMBER]);
-
                 for (int i = 0; i < MapInfoStructure.MAX_FIELD_NUMBER; i++) {
-                    map.getImageCode()[i] = reader.readNextIntValue();
+                    map.getCMap()[i] = reader.readNextIntValue();
                 }
 
                 mapInfoStructureMap.put(map.getMapCode(), map);
-
-                //Dodac obsluge Map Group
             }
         }
 

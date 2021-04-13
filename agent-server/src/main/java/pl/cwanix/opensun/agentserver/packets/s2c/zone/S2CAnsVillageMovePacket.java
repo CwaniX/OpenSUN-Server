@@ -10,14 +10,14 @@ import pl.cwanix.opensun.utils.datatypes.FixedLengthField;
 @OutgoingPacket(category = AgentServerPacketOPCode.Zone.CATEGORY, operation = AgentServerPacketOPCode.Zone.Ans.VILLAGE_MOVE)
 public class S2CAnsVillageMovePacket implements Packet {
 
-    private final FixedLengthField unknown;
+    private final FixedLengthField fieldCode;
 
-    public S2CAnsVillageMovePacket() {
-        this.unknown = new FixedLengthField(4, 104);
+    public S2CAnsVillageMovePacket(final int fieldCode) {
+        this.fieldCode = new FixedLengthField(4, fieldCode);
     }
 
     @Override
     public Object[] getOrderedFields() {
-        return ArrayUtils.toArray(unknown);
+        return ArrayUtils.toArray(fieldCode);
     }
 }

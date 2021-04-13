@@ -25,7 +25,7 @@ public class C2SAskKeyboardMoveProcessor implements SUNPacketProcessor<C2SAskKey
     public void process(final ChannelHandlerContext ctx, final C2SAskKeyboardMovePacket packet) {
         AgentServerSession session = ctx.channel().attr(AgentServerChannelHandler.SESSION_ATTRIBUTE).get();
 
-        log.debug(MARKER, "Updating character position: {} {} {} {}",
+        log.trace(MARKER, "Updating character position: {} {} {} {}",
                 packet.getCurrentPosition().getX(),
                 packet.getCurrentPosition().getY(),
                 packet.getCurrentPosition().getZ(),

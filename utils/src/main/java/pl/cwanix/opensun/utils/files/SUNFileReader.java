@@ -14,7 +14,7 @@ public class SUNFileReader extends Reader {
     private static final String COMMENT_PREFIX = "//";
     private static final String DELIMITER = "\\t";
 
-    private BufferedReader in;
+    private final BufferedReader in;
     private Map<String, Integer> header;
     private String[] currentLine;
     private int currentLineIndex;
@@ -37,9 +37,9 @@ public class SUNFileReader extends Reader {
         while ((line = in.readLine()) != null) {
             ++currentLineIndex;
 
-            System.out.println(line.trim().startsWith(COMMENT_PREFIX));
+            line = line.trim();
 
-            if (StringUtils.isNotBlank(line) && !line.trim().startsWith(COMMENT_PREFIX)) {
+            if (StringUtils.isNotBlank(line) && !line.startsWith(COMMENT_PREFIX)) {
                 currentLine = line.split(DELIMITER);
                 currentElementIndex = 0;
                 changed = true;
