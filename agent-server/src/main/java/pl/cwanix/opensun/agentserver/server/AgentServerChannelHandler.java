@@ -16,7 +16,6 @@ public class AgentServerChannelHandler extends SUNServerChannelHandler {
     private final SUNPacketProcessorExecutor processorExecutor;
 
     @Override
-    @SuppressWarnings("unchecked")
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
         Packet packet = (Packet) msg;
         processorExecutor.process(ctx, packet);
