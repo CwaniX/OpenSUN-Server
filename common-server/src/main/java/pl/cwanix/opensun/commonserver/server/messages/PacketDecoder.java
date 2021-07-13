@@ -13,6 +13,7 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.cwanix.opensun.commonserver.packets.Packet;
+import pl.cwanix.opensun.commonserver.packets.c2s.C2SAskUnknownPacket;
 import pl.cwanix.opensun.utils.bytes.BytesUtils;
 import pl.cwanix.opensun.utils.datatypes.PacketHeader;
 import pl.cwanix.opensun.utils.functions.ThrowingFunction;
@@ -36,7 +37,7 @@ public class PacketDecoder extends MessageToMessageDecoder<byte[]> {
         ThrowingFunction<byte[], Packet, Exception> packetCreationFunction = clientPacketDefinitions.get(id);
 
         if (packetCreationFunction == null) {
-            log.error(MARKER, "Unknown packet: {}", BytesUtils.byteArrayToHexString(id.getValue()));
+            out.add(new C2SAskUnknownPacket(id, value));
         } else {
             out.add(packetCreationFunction.apply(value));
         }
